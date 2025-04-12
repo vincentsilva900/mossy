@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mossy Swamp Feed</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome, <%= currentUser.username %></h1>
+    <a href="/friends">Manage Friends</a>
+
+    <form action="/create-post" method="POST">
+      <input type="text" name="username" value="<%= currentUser.username %>" readonly hidden>
+      <textarea name="content" placeholder="Share your mossy thoughts..." required></textarea>
+      <button type="submit">Post</button>
+    </form>
+
+    <div class="feed">
+      <% posts.forEach(post => { %>
+        <div class="post">
+          <h3><%= post.username %></h3>
+          <p><%= post.content %></p>
+          <small><%= moment(post.createdAt).format('MMMM D, YYYY [at] h:mm A') %></small>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</body>
+</html>
