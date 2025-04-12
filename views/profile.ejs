@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= user.username %>'s Profile</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="/profile">Your Profile</a>
+        <a href="/friends">Friends</a>
+        <a href="/logout">Logout</a>
+      </nav>
+    <% if (user.profilePicture) { %>
+        <img src="<%= user.profilePicture %>" alt="Profile Picture" class="profile-pic">
+      <% } %>
+
+  <div class="container">
+    <h1><%= isSelf ? 'Your Profile' : `${user.username}'s Profile` %></h1>
+    <% if (isSelf) { %>
+        <form action="/upload-profile-picture" method="POST" enctype="multipart/form-data" class="upload-form" id="dropzone">
+          <label for="profilePicture" class="dropzone-label">
+            Drag & Drop or Click to Upload Profile Picture
+          </label>
+          <input type="file" name="profilePicture" id="profilePicture" style="display: none;" onchange="this.form.submit()">
+        </form>
+      <% } %>
+
+<a href= "/" class="back-button"> Back to Feed</a>
+    <% if (!isSelf) { %>
+      <% if (currentUser.friends.some(f => f._id.toString() === user._id.toString())) { %>
+        <button disabled>Already Friends</button>
+      <% } else if (currentUser.friendRequests.some(r => r._id.toString() === user._id.toString())) { %>
+        <button disabled>Request Sent</button>
+      <% } else { %>
+        <form action="/send-request/<%= user._id %>" method="POST">
+          <button type="submit">Add Friend</button>
+        </form>
+      <% } %>
+    <% } %>
+
+    <h3>Posts by <%= user.username %>:</h3>
+    <% posts.forEach(post => { %>
+      <div class="post">
+        <p><%= post.content %></p>
+        <small><%= moment(post.createdAt).format('MMMM D, YYYY [at] h:mm A') %></small>
+      </div>
+    <% }) %>
+  </div>
+  <h4>Friends:</h4>
+<ul>
+  <% user.friends.forEach(friend => { %>
+    <li>
+        <a href="/profile/<%= friend.username %>">
+            <%= friend.username %></a></li>
+  <% }) %>
+</ul>
+</body>
+</html>
