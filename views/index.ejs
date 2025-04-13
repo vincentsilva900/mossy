@@ -16,9 +16,6 @@
     <h1>Welcome, <%= currentUser.username %></h1>
     <a href="/profile">View Your Profile</a>
     <h2> Friends: <%= currentUser.friends.length %></h2>
-    <h3>
-      <a href="/profile/<%= post.username %>"><%= post.username %></a>
-    </h3>
     <a href="/friends">Manage Friends</a>
 
     <form action="/create-post" method="POST">
