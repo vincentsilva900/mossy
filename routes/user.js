@@ -47,15 +47,22 @@ router.post('/post', isLoggedIn, async (req, res) => {
 });
 
 router.post('/song', isLoggedIn, async (req, res) => {
-  try {
-    const user = await User.findById(req.session.userId);
-    user.profileSong = req.body.profileSong;
-    await user.save();
-    res.redirect('/user/profile');
-  } catch (err) {
-    console.error("❌ Failed to save song:", err);
-    res.status(500).send("Could not save profile song.");
-  }
+  const user = await User.findById(req.session.userId);
+  let song = req.body.profileSong;
+
+  // Extract the src if they pasted full <iframe>
+  const match = song.match(/src="(.*?)"/);
+  if (match) song = match[1];
+
+  user.profileSong = song;
+  await user.save();
+  res.redirect('/user/profile');
+});
+router.get('/clearsong', isLoggedIn, async (req, res) => {
+  const user = await User.findById(req.session.userId);
+  user.profileSong = '';
+  await user.save();
+  res.redirect('/user/profile');
 });
 
 
