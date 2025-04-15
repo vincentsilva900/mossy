@@ -21,15 +21,18 @@
 
 <!-- 🔁 Add/Remove Friend Button -->
 <% if (user._id.toString() !== session.userId.toString()) { %>
-  <% const isFriend = user.friends.some(friend => friend._id.toString() === session.userId.toString()); %>
+  <% const isFriend = user.friends.some(f => f._id.toString() === session.userId.toString()); %>
+  <% const hasRequested = user.friendRequests.some(r => r._id.toString() === session.userId.toString()); %>
 
-  <% if (!isFriend) { %>
-    <form action="/user/friend/<%= user._id %>" method="POST" style="margin-top: 1rem;">
-      <button type="submit">➕ Add Friend</button>
-    </form>
-  <% } else { %>
+  <% if (isFriend) { %>
     <form action="/user/unfriend/<%= user._id %>" method="POST" style="margin-top: 1rem;">
-      <button type="submit">❌ Remove Friend</button>
+      <button type="submit">❌ Unfriend</button>
+    </form>
+  <% } else if (hasRequested) { %>
+    <p style="color: gray; margin-top: 1rem;">💌 Friend Request Sent</p>
+  <% } else { %>
+    <form action="/user/request/<%= user._id %>" method="POST" style="margin-top: 1rem;">
+      <button type="submit">➕ Send Friend Request</button>
     </form>
   <% } %>
 <% } %>

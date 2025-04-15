@@ -1,5 +1,17 @@
 <%- include('partials/logoutToolbar') %>
 
+<form action="/user/search" method="GET" style="margin-bottom: 1rem;">
+  <input
+    type="text"
+    name="username"
+    placeholder="🔍 Search users by username"
+    style="padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc;"
+  />
+  <button type="submit" style="padding: 0.5rem; border-radius: 8px; background-color: #ffccf9; border: none;">
+    Search
+  </button>
+</form>
+
 
 <h2>Welcome, <%= user.username %></h2>
 <img src="<%= user.profilePic %>" width="100"/>
@@ -76,6 +88,25 @@
     </div>
   <% }) %>
 </div>
+
+<% if (user.friendRequests.length > 0) { %>
+  <h3>Friend Requests</h3>
+  <% user.friendRequests.forEach(requestor => { %>
+    <div style="margin-bottom: 1rem;">
+      <a href="/user/<%= requestor._id %>">
+        <img src="<%= requestor.profilePic %>" width="30" style="border-radius: 50%;" />
+        <%= requestor.username %>
+      </a>
+      <form action="/user/accept/<%= requestor._id %>" method="POST" style="display:inline;">
+        <button type="submit">✅ Accept</button>
+      </form>
+      <form action="/user/decline/<%= requestor._id %>" method="POST" style="display:inline;">
+        <button type="submit">❌ Decline</button>
+      </form>
+    </div>
+  <% }) %>
+<% } %>
+
 
 
 <h3>Feed</h3>

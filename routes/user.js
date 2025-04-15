@@ -10,7 +10,10 @@ function isLoggedIn(req, res, next) {
 }
 
 router.get('/profile', isLoggedIn, async (req, res) => {
-  const user = await User.findById(req.session.userId).populate('friends');
+  const user = await User.findById(req.session.userId)
+  .populate('friends')
+  .populate('friendRequests');
+
   const posts = await Post.find({ user: { $in: [...user.friends, user._id] } })
     .populate('user')
     .sort({ createdAt: -1 });
@@ -53,9 +56,60 @@ router.post('/like/:id', isLoggedIn, async (req, res) => {
   res.redirect('/user/profile');
 });
 
+router.get('/search', isLoggedIn, async (req, res) => {
+  const query = req.query.username?.trim();
+
+  if (!query) return res.redirect('/user/profile');
+
+  const users = await User.find({
+    username: { $regex: new RegExp(query, 'i') }
+  }).populate('friends'); // 🔥 Needed for friend button logic
+
+  res.render('layout', { content: 'searchResults', users });
+});
+
+
+router.post('/request/:id', isLoggedIn, async (req, res) => {
+  const target = await User.findById(req.params.id);
+  if (!target.friendRequests.includes(req.session.userId) &&
+      !target.friends.includes(req.session.userId) &&
+      target._id.toString() !== req.session.userId.toString()) {
+    target.friendRequests.push(req.session.userId);
+    await target.save();
+  }
+  res.redirect(`/user/${req.params.id}`);
+});
+
+router.post('/accept/:id', isLoggedIn, async (req, res) => {
+  const currentUser = await User.findById(req.session.userId);
+  const requestor = await User.findById(req.params.id);
+
+  if (currentUser.friendRequests.includes(requestor._id)) {
+    currentUser.friends.push(requestor._id);
+    requestor.friends.push(currentUser._id);
+
+    currentUser.friendRequests.pull(requestor._id);
+    await currentUser.save();
+    await requestor.save();
+  }
+
+  res.redirect('/user/profile');
+});
+
+
+router.post('/decline/:id', isLoggedIn, async (req, res) => {
+  const currentUser = await User.findById(req.session.userId);
+  currentUser.friendRequests.pull(req.params.id);
+  await currentUser.save();
+  res.redirect('/user/profile');
+});
+
+
+
 router.get('/:id', isLoggedIn, async (req, res) => {
   const user = await User.findById(req.params.id).populate('friends');
-  const posts = await Post.find({ user: user._id }).populate('user');
+  console.log('Session ID:', req.session.userId);
+  console.log('Visiting Profile ID:', user._id);
   res.render('layout', { content: 'userProfile', user, posts });
 });
 
@@ -71,9 +125,16 @@ router.post('/friend/:id', isLoggedIn, async (req, res) => {
 
 router.post('/unfriend/:id', isLoggedIn, async (req, res) => {
   const currentUser = await User.findById(req.session.userId);
-  currentUser.friends.pull(req.params.id);
+  const otherUser = await User.findById(req.params.id);
+
+  currentUser.friends.pull(otherUser._id);
+  otherUser.friends.pull(currentUser._id);
+
   await currentUser.save();
+  await otherUser.save();
+
   res.redirect(`/user/${req.params.id}`);
 });
+
 
 module.exports = router;

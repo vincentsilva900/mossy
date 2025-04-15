@@ -5,7 +5,9 @@ const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   password: String,
   profilePic: String,
-  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+  friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+
 });
 
 userSchema.pre('save', async function(next) {
