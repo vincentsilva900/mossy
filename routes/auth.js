@@ -28,9 +28,10 @@ router.post('/signup', async (req, res) => {
         const file = req.files.profilePic;
   
         // Upload to Cloudinary
-        const result = await cloudinary.uploader.upload(file.tempFilePath || file.tempFilePath, {
-          folder: 'mossy_profiles'
-        });
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+            folder: 'mossy_profiles'
+          });
+          
         profilePic = result.secure_url;
       }
   
