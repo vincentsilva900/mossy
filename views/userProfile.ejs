@@ -1,0 +1,33 @@
+<%- include('layout') %>
+
+<div class="center-box">
+  <h2><%= user.username %>'s Profile</h2>
+  <img src="<%= user.profilePic %>" width="100" style="border-radius: 50%;"/>
+
+  <% if (user._id.toString() !== locals.session.userId.toString()) { %>
+    <% const isFriend = user.friends.some(f => f._id.toString() === locals.session.userId.toString()); %>
+    <% if (!isFriend) { %>
+      <form action="/user/friend/<%= user._id %>" method="POST">
+        <button type="submit">➕ Add Friend</button>
+      </form>
+    <% } else { %>
+      <form action="/user/unfriend/<%= user._id %>" method="POST">
+        <button type="submit">❌ Unfriend</button>
+      </form>
+    <% } %>
+  <% } %>
+</div>
+
+<div>
+  <h3><%= user.username %>'s Posts</h3>
+  <% posts.forEach(post => { %>
+    <div class="post">
+      <a href="/user/<%= post.user._id %>"><strong><%= post.user.username %></strong></a>
+      <p><%= post.content %></p>
+      <small><%= post.createdAt.toLocaleDateString() %> @ <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></small>
+      <form action="/user/like/<%= post._id %>" method="POST">
+        <button type="submit">❤️</button> <%= post.likes.length %> likes
+      </form>
+    </div>
+  <% }) %>
+</div>

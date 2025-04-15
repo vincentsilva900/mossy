@@ -1,111 +1,23 @@
-body {
-    background-color: #1a1f1c;
-    font-family: 'Courier New', Courier, monospace;
-    color: #d1f7c4;
-    margin: 0;
-    padding: 20px;
-  }
-  
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  h1 {
-    text-align: center;
-    font-size: 2rem;
-    color: #9dd9a7;
-    margin-bottom: 20px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  input, textarea {
-    margin-bottom: 10px;
-    padding: 10px;
-    background: #2b332d;
-    color: #d1f7c4;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  button {
-    background: #607466;
-    color: #d1f7c4;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .feed {
-    margin-top: 30px;
-  }
-  
-  .post {
-    background: #29302d;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-  }
-
-  .back-button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 8px 15px;
-    background-color: #607466;
-    color: #d1f7c4;
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  
-  .back-button:hover {
-    background-color: #4b5e54;
-  }
-
-  .profile-pic {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    border: 3px solid #d1f7c4;
-    background-color: #1a1f1c;
-  }
-  
-  .upload-form {
-    margin-top: 20px;
-    text-align: center;
-    padding: 20px;
-    border: 2px dashed #9dd9a7;
-    border-radius: 10px;
-    background-color: #1a1f1c;
-    color: #9dd9a7;
-    cursor: pointer;
-  }
-  
-  .upload-form:hover {
-    background-color: #29302d;
-  }
-  .navbar {
-    background-color: #1a1f1c;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .navbar a {
-    color: #9dd9a7;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .navbar a:hover {
-    color: #d1f7c4;
-  }
-  
+body.pastel-bg {
+  background: linear-gradient(to bottom right, #ffe6fa, #e0f7ff);
+  font-family: 'Comic Sans MS', sans-serif;
+  color: #333;
+  padding: 2rem;
+}
+.center-box {
+  text-align: center;
+  padding: 3rem;
+  background: #fff6ff;
+  border: 3px dashed pink;
+  border-radius: 20px;
+}
+form, .post {
+  margin: 1rem 0;
+  background: #ffffffaa;
+  padding: 1rem;
+  border-radius: 12px;
+}
+.friends-list {
+  max-height: 150px;
+  overflow-y: scroll;
+}
