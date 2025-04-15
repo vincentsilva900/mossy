@@ -19,22 +19,32 @@ router.get('/signup', (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
-  const { username, password } = req.body;
-  let profilePic = '/images/default.png';
-
-  if (req.files && req.files.profilePic) {
-    const file = req.files.profilePic;
-    const result = await cloudinary.uploader.upload(file.tempFilePath, {
-      folder: 'mossy_profiles'
-    });
-    profilePic = result.secure_url;
-  }
-
-  const user = new User({ username, password, profilePic });
-  await user.save();
-  req.session.userId = user._id;
-  res.redirect('/user/profile');
-});
+    try {
+      const { username, password } = req.body;
+      let profilePic = '/images/default.png';
+  
+      // Check if file exists
+      if (req.files && req.files.profilePic) {
+        const file = req.files.profilePic;
+  
+        // Upload to Cloudinary
+        const result = await cloudinary.uploader.upload(file.tempFilePath || file.tempFilePath, {
+          folder: 'mossy_profiles'
+        });
+        profilePic = result.secure_url;
+      }
+  
+      const user = new User({ username, password, profilePic });
+      await user.save();
+  
+      req.session.userId = user._id;
+      res.redirect('/user/profile');
+    } catch (err) {
+      console.error('❌ SIGNUP ERROR:', err);
+      res.status(500).send("Internal Server Error. Check your terminal or logs.");
+    }
+  });
+  
 
 router.get('/login', (req, res) => {
   res.render('layout', { content: 'login' });
