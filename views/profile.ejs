@@ -65,11 +65,18 @@
 <h3>Your Friends</h3>
 <div class="friends-list">
   <% user.friends.forEach(friend => { %>
-    <a href="/user/<%= friend._id %>">
-      <img src="<%= friend.profilePic %>" width="30"/> <%= friend.username %>
-    </a>
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+      <a href="/user/<%= friend._id %>">
+        <img src="<%= friend.profilePic %>" width="30" style="border-radius: 50%; margin-right: 0.5rem;" />
+        <%= friend.username %>
+      </a>
+      <form action="/user/unfriend/<%= friend._id %>" method="POST" style="margin-left: 1rem;">
+        <button type="submit" style="font-size: 0.75rem;">❌ Unfriend</button>
+      </form>
+    </div>
   <% }) %>
 </div>
+
 
 <h3>Feed</h3>
 <% posts.forEach(post => { %>

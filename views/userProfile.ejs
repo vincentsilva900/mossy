@@ -1,6 +1,13 @@
 <%- include('partials/logoutToolbar') %>
 
-
+<!-- 🔙 Back to Your Own Profile -->
+    <div style="margin: 1rem 0;">
+      <a href="/user/profile">
+        <button style="background-color: #ffccf9; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
+          ⬅️ Back to My Profile
+        </button>
+      </a>
+    </div>
 
 <div class="center-box">
   <h2><%= user.username %>'s Profile</h2>
@@ -9,29 +16,23 @@
     <h2><%= user.username %>'s Profile</h2>
     <img src="<%= user.profilePic %>" width="100" style="border-radius: 50%;" />
   
-    <!-- 🔙 Back to Your Own Profile -->
-    <div style="margin: 1rem 0;">
-      <a href="/user/profile">
-        <button style="background-color: #ffccf9; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
-          ⬅️ Back to My Profile
-        </button>
-      </a>
-    </div>
+    
   
 
-  <% if (user._id.toString() !== locals.session.userId.toString()) { %>
-    <% const isFriend = user.friends.some(f => f._id.toString() === locals.session.userId.toString()); %>
-    <% if (!isFriend) { %>
-      <form action="/user/friend/<%= user._id %>" method="POST">
-        <button type="submit">➕ Add Friend</button>
-      </form>
-    <% } else { %>
-      <form action="/user/unfriend/<%= user._id %>" method="POST">
-        <button type="submit">❌ Unfriend</button>
-      </form>
-    <% } %>
+<!-- 🔁 Add/Remove Friend Button -->
+<% if (user._id.toString() !== session.userId.toString()) { %>
+  <% const isFriend = user.friends.some(friend => friend._id.toString() === session.userId.toString()); %>
+
+  <% if (!isFriend) { %>
+    <form action="/user/friend/<%= user._id %>" method="POST" style="margin-top: 1rem;">
+      <button type="submit">➕ Add Friend</button>
+    </form>
+  <% } else { %>
+    <form action="/user/unfriend/<%= user._id %>" method="POST" style="margin-top: 1rem;">
+      <button type="submit">❌ Remove Friend</button>
+    </form>
   <% } %>
-</div>
+<% } %>
 
 <div>
   <h3><%= user.username %>'s Posts</h3>
