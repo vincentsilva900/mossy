@@ -46,6 +46,13 @@ router.post('/post', isLoggedIn, async (req, res) => {
   res.redirect('/user/profile');
 });
 
+router.post('/song', isLoggedIn, async (req, res) => {
+  const user = await User.findById(req.session.userId);
+  user.profileSong = req.body.profileSong;
+  await user.save();
+  res.redirect('/user/profile');
+});
+
 
 router.post('/like/:id', isLoggedIn, async (req, res) => {
   const post = await Post.findById(req.params.id);

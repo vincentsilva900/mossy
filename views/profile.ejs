@@ -12,6 +12,30 @@
   </button>
 </form>
 
+<!-- 🎵 Drag-Bar Song Input -->
+<div style="
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #e0f7ff;
+  padding: 0.5rem 1rem;
+  border-bottom-right-radius: 1rem;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+">
+  <form action="/user/song" method="POST" style="display: flex; align-items: center; gap: 0.5rem;">
+    <input
+      type="text"
+      name="profileSong"
+      value="<%= user.profileSong %>"
+      placeholder="🎶 Paste YouTube/Spotify embed link"
+      style="padding: 0.3rem; border-radius: 8px; width: 220px;"
+    />
+    <button type="submit" style="padding: 0.3rem 0.7rem; border-radius: 8px; background-color: #ffccf9; border: none;">
+      Save
+    </button>
+  </form>
+</div>
 
 <h2>Welcome, <%= user.username %></h2>
 <img src="<%= user.profilePic %>" width="100"/>

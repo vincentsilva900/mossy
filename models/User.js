@@ -6,9 +6,10 @@ const userSchema = new mongoose.Schema({
   password: String,
   profilePic: String,
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
-
+  friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  profileSong: { type: String, default: '' }
 });
+
 
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
