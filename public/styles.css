@@ -21,3 +21,23 @@ form, .post {
   max-height: 150px;
   overflow-y: scroll;
 }
+.drop-zone {
+  border: 2px dashed #ffb6c1;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 20px;
+  background: #fff0fa;
+  color: #333;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.drop-zone.dragover {
+  background: #ffe3f1;
+  border-color: #ff69b4;
+}
+
+.drop-zone p {
+  margin: 0.5rem 0;
+}
