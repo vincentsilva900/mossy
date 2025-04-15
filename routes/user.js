@@ -47,10 +47,15 @@ router.post('/post', isLoggedIn, async (req, res) => {
 });
 
 router.post('/song', isLoggedIn, async (req, res) => {
-  const user = await User.findById(req.session.userId);
-  user.profileSong = req.body.profileSong;
-  await user.save();
-  res.redirect('/user/profile');
+  try {
+    const user = await User.findById(req.session.userId);
+    user.profileSong = req.body.profileSong;
+    await user.save();
+    res.redirect('/user/profile');
+  } catch (err) {
+    console.error("❌ Failed to save song:", err);
+    res.status(500).send("Could not save profile song.");
+  }
 });
 
 
