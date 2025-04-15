@@ -70,15 +70,29 @@ router.get('/search', isLoggedIn, async (req, res) => {
 
 
 router.post('/request/:id', isLoggedIn, async (req, res) => {
-  const target = await User.findById(req.params.id);
-  if (!target.friendRequests.includes(req.session.userId) &&
-      !target.friends.includes(req.session.userId) &&
-      target._id.toString() !== req.session.userId.toString()) {
-    target.friendRequests.push(req.session.userId);
+  try {
+    const target = await User.findById(req.params.id);
+    const me = await User.findById(req.session.userId);
+
+    if (
+      !target ||
+      target._id.equals(me._id) ||
+      target.friendRequests.includes(me._id) ||
+      target.friends.includes(me._id)
+    ) {
+      return res.redirect(`/user/${req.params.id}`);
+    }
+
+    target.friendRequests.push(me._id);
     await target.save();
+
+    res.redirect(`/user/${req.params.id}`);
+  } catch (err) {
+    console.error("❌ Error sending friend request:", err);
+    res.status(500).send("Oops! Couldn't send that friend request.");
   }
-  res.redirect(`/user/${req.params.id}`);
 });
+
 
 router.post('/accept/:id', isLoggedIn, async (req, res) => {
   const currentUser = await User.findById(req.session.userId);
@@ -107,11 +121,22 @@ router.post('/decline/:id', isLoggedIn, async (req, res) => {
 
 
 router.get('/:id', isLoggedIn, async (req, res) => {
-  const user = await User.findById(req.params.id).populate('friends');
-  console.log('Session ID:', req.session.userId);
-  console.log('Visiting Profile ID:', user._id);
-  res.render('layout', { content: 'userProfile', user, posts });
+  try {
+    const user = await User.findById(req.params.id)
+      .populate('friends')
+      .populate('friendRequests');
+
+    const posts = await Post.find({ user: user._id })
+      .populate('user')
+      .sort({ createdAt: -1 });
+
+    res.render('layout', { content: 'userProfile', user, posts });
+  } catch (err) {
+    console.error("❌ Error loading user profile:", err);
+    res.status(500).send("Oops! Could not load this user's profile.");
+  }
 });
+
 
 router.post('/friend/:id', isLoggedIn, async (req, res) => {
   const currentUser = await User.findById(req.session.userId);
