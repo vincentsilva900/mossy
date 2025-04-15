@@ -2,10 +2,63 @@
 <h2>Welcome, <%= user.username %></h2>
 <img src="<%= user.profilePic %>" width="100"/>
 
-<form action="/user/post" method="POST">
-  <input name="content" placeholder="What's on your mind?" />
+<form id="postForm" action="/user/post" method="POST" enctype="multipart/form-data">
+  <textarea name="content" placeholder="What's on your mind?" rows="2" style="width: 100%; margin-bottom: 1rem;"></textarea>
+
+  <div id="post-drop-zone" class="drop-zone">
+    <p>📷 Drop an image for your post (optional)</p>
+    <img id="postPreview" src="" style="max-width: 150px; display: none; margin: 0.5rem auto;" />
+    <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
+    <button type="button" onclick="document.getElementById('postFileInput').click()">Browse</button>
+  </div>
+
   <button type="submit">Post</button>
 </form>
+
+<script>
+  const postZone = document.getElementById('post-drop-zone');
+  const postFileInput = document.getElementById('postFileInput');
+  const postPreview = document.getElementById('postPreview');
+
+  postZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    postZone.classList.add('dragover');
+  });
+
+  postZone.addEventListener('dragleave', () => {
+    postZone.classList.remove('dragover');
+  });
+
+  postZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    postZone.classList.remove('dragover');
+
+    if (e.dataTransfer.files.length) {
+      const file = e.dataTransfer.files[0];
+      postFileInput.files = e.dataTransfer.files;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        postPreview.src = e.target.result;
+        postPreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  postFileInput.addEventListener('change', () => {
+    const file = postFileInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        postPreview.src = e.target.result;
+        postPreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+
 
 <h3>Your Friends</h3>
 <div class="friends-list">
@@ -21,9 +74,16 @@
   <div class="post">
     <a href="/user/<%= post.user._id %>"><%= post.user.username %></a>
     <p><%= post.content %></p>
-    <small><%= post.createdAt.toLocaleString() %></small>
+
+    <% if (post.image) { %>
+      <img src="<%= post.image %>" alt="Post image" style="max-width: 300px; margin-top: 0.5rem; border-radius: 12px;" />
+    <% } %>
+
+    <small><%= post.createdAt.toLocaleDateString() %> @ <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></small>
+    
     <form action="/user/like/<%= post._id %>" method="POST">
-      <button type="submit">❤️</button> <%= post.likes.length %>
+      <button type="submit">❤️</button> <%= post.likes.length %> likes
     </form>
   </div>
 <% }) %>
+

@@ -1,7 +1,61 @@
 <%- include('layout') %>
-<form action="/signup" method="POST" enctype="multipart/form-data">
+
+<h2>Create Your Mossy Profile</h2>
+
+<form id="signupForm" action="/signup" method="POST" enctype="multipart/form-data">
   <input name="username" placeholder="Username" required />
   <input name="password" type="password" placeholder="Password" required />
-  <input type="file" name="profilePic" />
+
+  <div id="drop-zone" class="drop-zone">
+    <p>✨ Drag your profile pic here ✨</p>
+    <img id="previewImg" src="" style="max-width: 100px; display: none; border-radius: 50%; margin: 0.5rem auto;" />
+    <input type="file" name="profilePic" id="fileInput" hidden accept="image/*" />
+    <button type="button" onclick="document.getElementById('fileInput').click()">or Browse</button>
+  </div>
+
   <button type="submit">Sign Up</button>
 </form>
+
+<script>
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('fileInput');
+  const previewImg = document.getElementById('previewImg');
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+
+    if (e.dataTransfer.files.length) {
+      const file = e.dataTransfer.files[0];
+      fileInput.files = e.dataTransfer.files;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        previewImg.src = e.target.result;
+        previewImg.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        previewImg.src = e.target.result;
+        previewImg.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>

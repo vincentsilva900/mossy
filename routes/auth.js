@@ -1,9 +1,8 @@
+// /routes/auth.js
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const path = require('path');
 const cloudinary = require('cloudinary').v2;
-const fs = require('fs');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -11,9 +10,14 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-router.get('/', (req, res) => res.render('index'));
+router.get('/', (req, res) => {
+  res.render('layout', { content: 'index' });
+});
 
-router.get('/signup', (req, res) => res.render('signup'));
+router.get('/signup', (req, res) => {
+  res.render('layout', { content: 'signup' });
+});
+
 router.post('/signup', async (req, res) => {
   const { username, password } = req.body;
   let profilePic = '/images/default.png';
@@ -32,7 +36,10 @@ router.post('/signup', async (req, res) => {
   res.redirect('/user/profile');
 });
 
-router.get('/login', (req, res) => res.render('login'));
+router.get('/login', (req, res) => {
+  res.render('layout', { content: 'login' });
+});
+
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });

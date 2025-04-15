@@ -28,6 +28,13 @@ app.use(session({
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
 }));
 
+// Add session to locals so we can access session.userId in EJS
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
+
+
 // Routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
