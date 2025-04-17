@@ -63,3 +63,36 @@
     </button>
   </form>
 </div>
+<!-- 🍄 Bouncing Mushroom -->
+<img src="/images/mushroom1.png" alt="mushroom" style="
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 60px;
+  animation: bounce 2s infinite ease-in-out;
+  z-index: 100;
+  opacity: 0.8;
+" />
+
+<!-- Optional second one on the right -->
+<img src="/images/mushroom2.png" alt="mushroom" style="
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  animation: bounce 2s infinite ease-in-out;
+  animation-delay: 1s;
+  z-index: 100;
+  opacity: 0.8;
+" />
+
+<style>
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+</style>
