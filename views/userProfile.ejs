@@ -15,20 +15,40 @@
   <div class="center-box">
     <h2><%= user.username %>'s Profile</h2>
     <img src="<%= user.profilePic %>" width="100" style="border-radius: 50%;" />
-
-   <% if (user.profileSong) { %>
-  <div style="margin-top: 1rem;">
-    <iframe
-      src="<%= user.profileSong.includes('?') ? user.profileSong + '&autoplay=0' : user.profileSong + '?autoplay=0' %>"
-      width="300"
-      height="80"
-      frameborder="0"
-      allowtransparency="true"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      style="border-radius: 12px;"
-    ></iframe>
-  </div>
-<% } %>
+    
+    
+    <% if (user.profileSong) { %>
+      <!-- 🌸 Profile Song Header -->
+      <div style="
+        background-color: #ffebf7;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        border: 2px dashed #ff99c8;
+        margin-top: 1rem;
+        width: fit-content;
+        max-width: 90%;
+      ">
+        <h4 style="
+          margin: 0 0 0.5rem 0;
+          font-size: 1rem;
+          color: #c9184a;
+          font-family: 'Comic Sans MS', cursive;
+        ">
+          🎶 <%= user.username %>'s Profile Song:
+        </h4>
+    
+        <iframe
+          src="<%= user.profileSong.includes('?') ? user.profileSong + '&autoplay=0' : user.profileSong + '?autoplay=0' %>"
+          width="300"
+          height="80"
+          frameborder="0"
+          allowtransparency="true"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          style="border-radius: 12px;"
+        ></iframe>
+      </div>
+    <% } %>
+    
  
 <!-- 🔁 Add/Remove Friend Button -->
 <% if (user._id.toString() !== session.userId.toString()) { %>
