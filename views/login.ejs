@@ -1,7 +1,65 @@
-<%- include('partials/logoutToolbar') %>
+<div style="
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  text-align: center;
+  font-family: 'Comic Sans MS', cursive;
+  color: #8a2be2;
+">
+  <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">💖 Log In to Mossy</h2>
 
-<form action="/login" method="POST">
-  <input name="username" placeholder="Username" required />
-  <input name="password" type="password" placeholder="Password" required />
-  <button type="submit">Login</button>
-</form>
+  <form action="/login" method="POST" style="
+    background-color: #fff0fa;
+    padding: 2rem;
+    border-radius: 2rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 320px;
+    max-width: 90%;
+  ">
+    <input
+      type="text"
+      name="username"
+      placeholder="Username"
+      required
+      style="
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 2px solid #ffb6c1;
+        font-size: 1.2rem;
+        background-color: #fff7fb;
+      "
+    />
+
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+      required
+      style="
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 2px solid #b5ead7;
+        font-size: 1.2rem;
+        background-color: #f0fff7;
+      "
+    />
+
+    <button type="submit" style="
+      padding: 1rem;
+      border-radius: 1.25rem;
+      background-color: #caffbf;
+      color: #2f4858;
+      font-weight: bold;
+      font-size: 1.3rem;
+      border: none;
+      transition: transform 0.2s ease;
+    " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      🌿 Log In
+    </button>
+  </form>
+</div>

@@ -1,62 +1,154 @@
 <%- include('partials/logoutToolbar') %>
 
 
-<h2>Create Your Mossy Profile</h2>
+<div style="
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  font-family: 'Comic Sans MS', cursive;
+  color: #8a2be2;
+">
+  <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">🧚‍♀️ Join Mossy</h2>
 
-<form id="signupForm" action="/signup" method="POST" enctype="multipart/form-data">
-  <input name="username" placeholder="Username" required />
-  <input name="password" type="password" placeholder="Password" required />
+  <form action="/signup" method="POST" enctype="multipart/form-data" style="
+    background-color: #fff0fa;
+    padding: 2rem;
+    border-radius: 2rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 350px;
+    max-width: 90%;
+  ">
+    <input
+      type="text"
+      name="username"
+      placeholder="Username"
+      required
+      style="
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 2px solid #ffb6c1;
+        font-size: 1.2rem;
+        background-color: #fff7fb;
+      "
+    />
 
-  <div id="drop-zone" class="drop-zone">
-    <p>✨ Drag your profile pic here ✨</p>
-    <img id="previewImg" src="" style="max-width: 100px; display: none; border-radius: 50%; margin: 0.5rem auto;" />
-    <input type="file" name="profilePic" id="fileInput" hidden accept="image/*" />
-    <button type="button" onclick="document.getElementById('fileInput').click()">or Browse</button>
-  </div>
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+      required
+      style="
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 2px solid #b5ead7;
+        font-size: 1.2rem;
+        background-color: #f0fff7;
+      "
+    />
 
-  <button type="submit">Sign Up</button>
-</form>
+    <label style="font-size: 1rem;">🖼 Upload Profile Picture:</label>
+
+<div id="drop-zone" style="
+  border: 2px dashed #ffb6c1;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: #fff7fb;
+  text-align: center;
+  cursor: pointer;
+">
+  <p style="margin: 0;">📸 Drag & Drop or Click to Upload</p>
+  <img id="preview" src="" style="max-width: 100px; margin-top: 1rem; display: none; border-radius: 50%;" />
+  <input type="file" name="profilePic" id="fileInput" accept="image/*" hidden />
+</div>
+
+
+    <button type="submit" style="
+      padding: 1rem;
+      border-radius: 1.25rem;
+      background-color: #caffbf;
+      color: #2f4858;
+      font-weight: bold;
+      font-size: 1.3rem;
+      border: none;
+      transition: transform 0.2s ease;
+    " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      ✨ Sign Up
+    </button>
+  </form>
+</div>
+
+<!-- 🍄 Bouncing Mushrooms -->
+<img src="/images/mushroom1.png" alt="mushroom" style="
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 60px;
+  animation: bounce 2s infinite ease-in-out;
+  z-index: 100;
+  opacity: 0.8;
+" />
+
+<img src="/images/mushroom2.png" alt="mushroom" style="
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  animation: bounce 2s infinite ease-in-out;
+  animation-delay: 1s;
+  z-index: 100;
+  opacity: 0.8;
+" />
+
+<style>
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+</style>
 
 <script>
   const dropZone = document.getElementById('drop-zone');
   const fileInput = document.getElementById('fileInput');
-  const previewImg = document.getElementById('previewImg');
+  const preview = document.getElementById('preview');
+
+  dropZone.addEventListener('click', () => fileInput.click());
 
   dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
-    dropZone.classList.add('dragover');
+    dropZone.style.backgroundColor = '#ffe3f1';
   });
 
   dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
+    dropZone.style.backgroundColor = '#fff7fb';
   });
 
   dropZone.addEventListener('drop', (e) => {
     e.preventDefault();
-    dropZone.classList.remove('dragover');
-
+    dropZone.style.backgroundColor = '#fff7fb';
     if (e.dataTransfer.files.length) {
-      const file = e.dataTransfer.files[0];
       fileInput.files = e.dataTransfer.files;
-
-      const reader = new FileReader();
-      reader.onload = e => {
-        previewImg.src = e.target.result;
-        previewImg.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
+      showPreview(fileInput.files[0]);
     }
   });
 
   fileInput.addEventListener('change', () => {
-    const file = fileInput.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = e => {
-        previewImg.src = e.target.result;
-        previewImg.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
+    if (fileInput.files.length) {
+      showPreview(fileInput.files[0]);
     }
   });
+
+  function showPreview(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
 </script>
