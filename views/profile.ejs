@@ -46,13 +46,25 @@
       name="profileSong"
       value="<%= user.profileSong %>"
       placeholder="Paste YouTube, youtu.be or Spotify link (we'll convert it!)"
-
+      
 
       style="padding: 0.3rem; border-radius: 8px; width: 220px;"
     />
     <button type="submit" style="padding: 0.3rem 0.7rem; border-radius: 8px; background-color: #ffccf9; border: none;">
       Save
     </button>
+    <!-- Add this inside your form, under the song input -->
+<div style="margin-top: 0.5rem;">
+  <label for="colorPicker">🎨 Box Color:</label>
+  <input
+    type="color"
+    name="songBoxColor"
+    id="colorPicker"
+    value="<%= user.songBoxColor || '#ffebf7' %>"
+    style="margin-left: 0.5rem; border: none;"
+  />
+</div>
+
   </form>
 </div>
 

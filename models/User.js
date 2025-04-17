@@ -7,7 +7,9 @@ const userSchema = new mongoose.Schema({
   profilePic: String,
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  profileSong: { type: String, default: '' }
+  profileSong: { type: String, default: '' },
+  songBoxColor: { type: String, default: '#ffebf7' }
+
 });
 
 

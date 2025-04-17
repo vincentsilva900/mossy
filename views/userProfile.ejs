@@ -18,9 +18,8 @@
     
     
     <% if (user.profileSong) { %>
-      <!-- 🌸 Profile Song Header -->
       <div style="
-        background-color: #ffebf7;
+        background-color: <%= user.songBoxColor || '#ffebf7' %>;
         padding: 0.75rem 1rem;
         border-radius: 12px;
         border: 2px dashed #ff99c8;
@@ -48,6 +47,8 @@
         ></iframe>
       </div>
     <% } %>
+    
+    
     
  
 <!-- 🔁 Add/Remove Friend Button -->

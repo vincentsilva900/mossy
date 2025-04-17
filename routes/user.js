@@ -50,34 +50,29 @@ router.post('/song', isLoggedIn, async (req, res) => {
   const user = await User.findById(req.session.userId);
   let song = req.body.profileSong.trim();
 
-  // Handle full <iframe ...> input
+  // Sanitize embed
   const iframeMatch = song.match(/src="(.*?)"/);
-  if (iframeMatch) {
-    song = iframeMatch[1];
-  }
-
-  // Convert regular YouTube link → embed format
+  if (iframeMatch) song = iframeMatch[1];
   if (song.includes('youtube.com/watch?v=')) {
-    const videoId = song.split('v=')[1].split('&')[0];
-    song = `https://www.youtube.com/embed/${videoId}`;
+    const id = song.split('v=')[1].split('&')[0];
+    song = `https://www.youtube.com/embed/${id}`;
   }
-
-  // Convert youtu.be short links
   if (song.includes('youtu.be/')) {
-    const videoId = song.split('youtu.be/')[1];
-    song = `https://www.youtube.com/embed/${videoId}`;
+    const id = song.split('youtu.be/')[1];
+    song = `https://www.youtube.com/embed/${id}`;
   }
-
-  // Optional: Handle Spotify track links
   if (song.includes('open.spotify.com/track/')) {
-    const trackId = song.split('/track/')[1].split('?')[0];
-    song = `https://open.spotify.com/embed/track/${trackId}`;
+    const id = song.split('/track/')[1].split('?')[0];
+    song = `https://open.spotify.com/embed/track/${id}`;
   }
 
+  // Save song + box color
   user.profileSong = song;
+  user.songBoxColor = req.body.songBoxColor || '#ffebf7';
   await user.save();
   res.redirect('/user/profile');
 });
+
 
 router.get('/clearsong', isLoggedIn, async (req, res) => {
   const user = await User.findById(req.session.userId);
