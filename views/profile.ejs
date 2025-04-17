@@ -14,7 +14,7 @@
 
 
 <h2>Welcome, <%= user.username %></h2>
-<img src="<%= user.profilePic %>" width="100"/>
+<img src="<%= user.profilePic %>" width="50"/>
 
 <form id="postForm" action="/user/post" method="POST" enctype="multipart/form-data">
   <textarea name="content" placeholder="What's on your mind?" rows="2" style="width: 100%; margin-bottom: 1rem;"></textarea>
