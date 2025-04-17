@@ -48,16 +48,37 @@ router.post('/post', isLoggedIn, async (req, res) => {
 
 router.post('/song', isLoggedIn, async (req, res) => {
   const user = await User.findById(req.session.userId);
-  let song = req.body.profileSong;
+  let song = req.body.profileSong.trim();
 
-  // Extract the src if they pasted full <iframe>
-  const match = song.match(/src="(.*?)"/);
-  if (match) song = match[1];
+  // Handle full <iframe ...> input
+  const iframeMatch = song.match(/src="(.*?)"/);
+  if (iframeMatch) {
+    song = iframeMatch[1];
+  }
+
+  // Convert regular YouTube link → embed format
+  if (song.includes('youtube.com/watch?v=')) {
+    const videoId = song.split('v=')[1].split('&')[0];
+    song = `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  // Convert youtu.be short links
+  if (song.includes('youtu.be/')) {
+    const videoId = song.split('youtu.be/')[1];
+    song = `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  // Optional: Handle Spotify track links
+  if (song.includes('open.spotify.com/track/')) {
+    const trackId = song.split('/track/')[1].split('?')[0];
+    song = `https://open.spotify.com/embed/track/${trackId}`;
+  }
 
   user.profileSong = song;
   await user.save();
   res.redirect('/user/profile');
 });
+
 router.get('/clearsong', isLoggedIn, async (req, res) => {
   const user = await User.findById(req.session.userId);
   user.profileSong = '';
