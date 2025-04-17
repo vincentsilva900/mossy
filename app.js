@@ -7,8 +7,7 @@ const methodOverride = require('method-override');
 const fileUpload = require('express-fileupload');
 const path = require('path');
 const app = express();
-const wishRoutes = require('./routes/wish');
-app.use('/wish', wishRoutes);
+
 
 
 mongoose.connect(process.env.MONGO_URI, {
@@ -47,5 +46,8 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 app.use('/', authRoutes);
 app.use('/user', userRoutes);
+
+const wishRoutes = require('./routes/wish');
+app.use('/', wishRoutes);
 
 app.listen(3000, () => console.log('Mossy app running on port 3000'));

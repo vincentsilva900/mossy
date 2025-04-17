@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const Wish = require('../models/Wish');
+
 const User = require('../models/User');
 
 function isLoggedIn(req, res, next) {
