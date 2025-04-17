@@ -1,0 +1,40 @@
+<div style="text-align: center; margin-top: 2rem;">
+    <h2 style="font-size: 2.3rem; color: #7b2ff2; font-family: 'Comic Sans MS', cursive;">
+      ✧ Ephemeral Wishes ✧
+    </h2>
+    <form action="/wish" method="POST" style="margin-bottom: 2rem;">
+      <textarea name="content" maxlength="180" placeholder="Write a dreamy wish..." required
+        style="width: 90%; max-width: 350px; min-height: 70px; border-radius: 1rem; padding: 0.8rem; border: 2px solid #d0cfff; font-family: inherit;"></textarea>
+      <br>
+      <button type="submit" style="background: #c1ffd7; color: #1e2e2f; border-radius: 1rem; padding: 0.6rem 1.3rem; font-size: 1.1rem; margin-top: 0.5rem; border: none;">
+        🌙 Post Wish
+      </button>
+    </form>
+    <% if (wishes.length === 0) { %>
+      <p style="color:#888;">No wishes in the mist right now...</p>
+    <% } %>
+    <% wishes.forEach(wish => { %>
+      <div style="background: linear-gradient(90deg, #f9f6ff, #f0fdff); border-radius: 1rem; margin: 1rem auto; max-width: 420px; padding: 1rem 1.5rem; box-shadow: 0 4px 12px #dfdfef77;">
+        <p style="font-size:1.15rem; color: #786fa6; margin-bottom:0.5rem;">
+          <strong><%= wish.user.username %></strong>: <%= wish.content %>
+        </p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <form action="/wish/<%= wish._id %>/water" method="POST" style="margin:0;">
+            <button type="submit" style="background: #bde0fe; border-radius: 1rem; padding: 0.3rem 0.9rem; border:none; color:#005f73;">
+              💧 Water (<%= wish.water.length %>)
+            </button>
+          </form>
+          <span style="color:#888; font-size:0.95rem;">
+            Fades in: 
+            <% 
+              const msLeft = new Date(wish.expiresAt) - Date.now();
+              const h = Math.floor(msLeft / (1000*60*60));
+              const m = Math.floor((msLeft % (1000*60*60)) / (1000*60));
+            %>
+            <%= h %>h <%= m %>m
+          </span>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+  
