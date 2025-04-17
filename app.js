@@ -8,7 +8,7 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const app = express();
 const wishRoutes = require('./routes/wish');
-app.use('/', wishRoutes);
+app.use('/wish', wishRoutes);
 
 
 mongoose.connect(process.env.MONGO_URI, {
