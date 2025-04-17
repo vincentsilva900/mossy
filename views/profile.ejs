@@ -16,6 +16,23 @@
 <h2>Welcome, <%= user.username %></h2>
 <img src="<%= user.profilePic %>" width="50"/>
 
+
+
+<form id="postForm" action="/user/post" method="POST" enctype="multipart/form-data">
+  <textarea name="content" placeholder="What's on your mind?" rows="2" style="width: 100%; margin-bottom: 1rem;"></textarea>
+
+  <div id="post-drop-zone" class="drop-zone">
+    <p>📷 Drop an image for your post (optional)</p>
+    <img id="postPreview" src="" style="max-width: 150px; display: none; margin: 0.5rem auto;" />
+    <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
+    <button type="button" onclick="document.getElementById('postFileInput').click()">Browse</button>
+  </div>
+
+  <button type="submit">Post</button>
+</form>
+
+
+
 <div style="margin-top: 1.5rem;">
   <a href="/wishes" style="
     background-color: #f6e7ff;
@@ -31,20 +48,6 @@
     🌙 Leave a Wish
   </a>
 </div>
-
-
-<form id="postForm" action="/user/post" method="POST" enctype="multipart/form-data">
-  <textarea name="content" placeholder="What's on your mind?" rows="2" style="width: 100%; margin-bottom: 1rem;"></textarea>
-
-  <div id="post-drop-zone" class="drop-zone">
-    <p>📷 Drop an image for your post (optional)</p>
-    <img id="postPreview" src="" style="max-width: 150px; display: none; margin: 0.5rem auto;" />
-    <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
-    <button type="button" onclick="document.getElementById('postFileInput').click()">Browse</button>
-  </div>
-
-  <button type="submit">Post</button>
-</form>
 
 <!-- 🎵 Profile Song Input (bottom left corner) -->
 <div style="
