@@ -34,16 +34,23 @@ router.post('/wish/:id/water', isLoggedIn, async (req, res) => {
 
 // SHOW all active wishes (friends + your own)
 router.get('/wishes', isLoggedIn, async (req, res) => {
-  const user = await User.findById(req.session.userId).populate('friends');
-  const friends = user.friends.map(f => f._id);
-  // Only wishes that haven't expired
-  const wishes = await Wish.find({
-    user: { $in: [...friends, user._id] },
-    expiresAt: { $gt: new Date() }
-  }).populate('user').sort({ createdAt: -1 });
-
-  res.render('layout', { content: 'wishes', wishes, session: req.session });
-});
+    try {
+      const user = await User.findById(req.session.userId).populate('friends');
+      const friends = user.friends.map(f => f._id);
+  
+      const wishes = await Wish.find({
+        user: { $in: [...friends, user._id] },
+        expiresAt: { $gt: new Date() }
+      }).populate('user').sort({ createdAt: -1 });
+  
+      res.render('layout', { content: 'wishes', wishes, session: req.session });
+    } catch (err) {
+      console.error('🔥 Wish Error:', err);
+      res.status(500).send('Could not load wishes');
+    }
+  });
+  
+  
 
 // AUTO-DELETE expired wishes (optional: use a scheduled job IRL)
 // You can also add a cron job or, for dev, just do it in a GET route:

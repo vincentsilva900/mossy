@@ -1,3 +1,4 @@
+
 <div style="text-align: center; margin-top: 2rem;">
     <h2 style="font-size: 2.3rem; color: #7b2ff2; font-family: 'Comic Sans MS', cursive;">
       ✧ Ephemeral Wishes ✧
@@ -24,15 +25,19 @@
               💧 Water (<%= wish.water.length %>)
             </button>
           </form>
-          <span style="color:#888; font-size:0.95rem;">
-            Fades in: 
+          <% if (wish.expiresAt) { %>
             <% 
               const msLeft = new Date(wish.expiresAt) - Date.now();
               const h = Math.floor(msLeft / (1000*60*60));
               const m = Math.floor((msLeft % (1000*60*60)) / (1000*60));
             %>
-            <%= h %>h <%= m %>m
-          </span>
+            <span style="color:#888; font-size:0.95rem;">
+              Fades in: <%= h %>h <%= m %>m
+            </span>
+          <% } else { %>
+            <span style="color:#888;">⏳ Expiration unknown</span>
+          <% } %>
+          
         </div>
       </div>
     <% }) %>

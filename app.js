@@ -8,6 +8,8 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const app = express();
 const wishRoutes = require('./routes/wish');
+app.use('/', wishRoutes);
+
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -24,7 +26,7 @@ app.use(fileUpload({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static('uploads'));
-app.use('/', wishRoutes);
+
 
 app.use(session({
   secret: 'mossySecret',
