@@ -16,6 +16,23 @@
 <h2>Welcome, <%= user.username %></h2>
 <img src="<%= user.profilePic %>" width="50"/>
 
+<div style="margin-top: 1.5rem;">
+  <a href="/wishes" style="
+    background-color: #f6e7ff;
+    color: #7b2ff2;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+  " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    🌙 Leave a Wish
+  </a>
+</div>
+
+
 <form id="postForm" action="/user/post" method="POST" enctype="multipart/form-data">
   <textarea name="content" placeholder="What's on your mind?" rows="2" style="width: 100%; margin-bottom: 1rem;"></textarea>
 
