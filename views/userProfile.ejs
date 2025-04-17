@@ -15,55 +15,21 @@
   <div class="center-box">
     <h2><%= user.username %>'s Profile</h2>
     <img src="<%= user.profilePic %>" width="100" style="border-radius: 50%;" />
-    
-    <% if (user.profileSong && user._id.toString() !== session.userId.toString()) { %>
-      <!-- 🎶 Profile Song Prompt -->
-      <div id="songPrompt" style="
-        position: fixed;
-        top: 30%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #fff0fb;
-        padding: 2rem;
-        border-radius: 20px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.15);
-        z-index: 9999;
-        text-align: center;
-      ">
-        <p style="margin-bottom: 1rem; font-weight: bold;">🎵 <%= user.username %> has a profile song. Want to play it?</p>
-        <button onclick="playSong()" style="padding: 0.5rem 1rem; margin-right: 1rem; border: none; border-radius: 8px; background-color: #b9fbc0;">Yes</button>
-        <button onclick="dismissSong()" style="padding: 0.5rem 1rem; border: none; border-radius: 8px; background-color: #ffc2d1;">No</button>
-      </div>
-    
-      <!-- 🎧 Song Player (hidden until 'Yes' clicked) -->
-      <div id="musicPlayer" style="display: none; margin-top: 1rem;">
-        <iframe
-          id="musicIframe"
-          src=""
-          width="300"
-          height="80"
-          frameborder="0"
-          allowtransparency="true"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          style="border-radius: 12px;"
-        ></iframe>
-      </div>
-    
-      <script>
-        function playSong() {
-          const songURL = "<%= user.profileSong.includes('?') ? user.profileSong + '&autoplay=1' : user.profileSong + '?autoplay=1' %>";
-          document.getElementById('musicIframe').src = songURL;
-          document.getElementById('musicPlayer').style.display = 'block';
-          document.getElementById('songPrompt').style.display = 'none';
-        }
-    
-        function dismissSong() {
-          document.getElementById('songPrompt').style.display = 'none';
-        }
-      </script>
-    <% } %>
-    
 
+   <% if (user.profileSong) { %>
+  <div style="margin-top: 1rem;">
+    <iframe
+      src="<%= user.profileSong.includes('?') ? user.profileSong + '&autoplay=0' : user.profileSong + '?autoplay=0' %>"
+      width="300"
+      height="80"
+      frameborder="0"
+      allowtransparency="true"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      style="border-radius: 12px;"
+    ></iframe>
+  </div>
+<% } %>
+ 
 <!-- 🔁 Add/Remove Friend Button -->
 <% if (user._id.toString() !== session.userId.toString()) { %>
   <% const isFriend = user.friends.some(f => f._id.toString() === session.userId.toString()); %>
