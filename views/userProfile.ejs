@@ -39,7 +39,7 @@
         <iframe
           src="<%= user.profileSong.includes('?') ? user.profileSong + '&autoplay=0' : user.profileSong + '?autoplay=0' %>"
           width="300"
-          height="80"
+          height="200"
           frameborder="0"
           allowtransparency="true"
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -69,16 +69,25 @@
   <% } %>
 <% } %>
 
-<div>
-  <h3><%= user.username %>'s Posts</h3>
+<h3 style="margin-top: 2rem;">📝 Posts by <%= user.username %></h3>
+
+<% if (posts.length === 0) { %>
+  <p>This user hasn’t posted anything yet!</p>
+<% } else { %>
   <% posts.forEach(post => { %>
-    <div class="post">
-      <a href="/user/<%= post.user._id %>"><strong><%= post.user.username %></strong></a>
+    <div class="post" style="margin-bottom: 1.5rem;">
+      <p><strong>@<%= post.user.username %></strong></p>
       <p><%= post.content %></p>
-      <small><%= post.createdAt.toLocaleDateString() %> @ <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></small>
-      <form action="/user/like/<%= post._id %>" method="POST">
-        <button type="submit">❤️</button> <%= post.likes.length %> likes
-      </form>
+
+      <% if (post.image) { %>
+        <img src="<%= post.image %>" style="max-width: 100%; border-radius: 10px; margin-top: 0.5rem;" />
+      <% } %>
+
+      <small>
+        Posted on <%= post.createdAt.toLocaleDateString() %> @
+        <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
+      </small>
     </div>
   <% }) %>
-</div>
+<% } %>
+
