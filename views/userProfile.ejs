@@ -85,6 +85,9 @@
         Posted on <%= post.createdAt.toLocaleDateString() %> @
         <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
       </small>
+      <form action="/user/like/<%= post._id %>" method="POST">
+        <button type="submit">❤️</button> <%= post.likes.length %> likes
+      </form>
     </div>
   <% }) %>
 <% } %>
