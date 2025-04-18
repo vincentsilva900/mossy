@@ -40,25 +40,22 @@ router.post('/shadowroom', isLoggedIn, async (req, res) => {
     }
   });
   
-router.post('/shadowroom/:id/react/:type', isLoggedIn, async (req, res) => {
-  const { id, type } = req.params;
-  const userId = req.session.userId;
-  try {
-    const shadow = await Shadow.findById(id);
-    if (!shadow) return res.redirect('/shadowroom');
-
-    if (type === 'glow' && !shadow.glowReacts.includes(userId)) {
-      shadow.glowReacts.push(userId);
-    } else if (type === 'mist' && !shadow.mistReacts.includes(userId)) {
-      shadow.mistReacts.push(userId);
+  router.post('/shadowroom/:id/like', isLoggedIn, async (req, res) => {
+    try {
+      const shadow = await Shadow.findById(req.params.id);
+      const userId = req.session.userId;
+  
+      const alreadyLiked = shadow.likes.includes(userId);
+      if (!alreadyLiked) {
+        shadow.likes.push(userId);
+        await shadow.save();
+      }
+  
+      res.redirect('/shadowroom');
+    } catch (err) {
+      console.error('🔥 Error liking shadow:', err);
+      res.status(500).send('Could not like shadow');
     }
-
-    await shadow.save();
-    res.redirect('/shadowroom');
-  } catch (err) {
-    console.error('🔥 Reaction Error:', err);
-    res.status(500).send('Could not react');
-  }
-});
-
+  });
+  
 module.exports = router;

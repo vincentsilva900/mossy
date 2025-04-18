@@ -16,10 +16,20 @@
       <% shadows.forEach(shadow => { %>
         <div style="background-color: #f3f3f3; padding: 1rem; border-radius: 1rem; margin: 1rem auto; max-width: 400px;">
           <p style="font-style: italic; color: #555; text-align: left;"><%= shadow.content %></p>
-          <form action="/shadowroom/<%= shadow._id %>/react" method="POST" style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
-            <button name="reaction" value="stone" style="border: none; background: none;">💎 <%= shadow.reactions.stone.length %></button>
-            <button name="reaction" value="mist" style="border: none; background: none;">🌫 <%= shadow.reactions.mist.length %></button>
+          <%
+          const hoursAgo = Math.floor((Date.now() - new Date(shadow.createdAt)) / (1000 * 60 * 60));
+        %>
+        <p style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">
+          ⏳ posted <%= hoursAgo === 0 ? 'just now' : `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago` %>
+        </p>
+        
+         
+          <form action="/shadowroom/<%= shadow._id %>/like" method="POST" style="margin-top: 0.5rem;">
+            <button type="submit" style="border: none; background: none; font-size: 1.1rem;">
+                🖤 <%= shadow.likes.length %>
+            </button>
           </form>
+          
         </div>
       <% }) %>
     <% } %>
