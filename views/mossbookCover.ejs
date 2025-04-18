@@ -1,25 +1,29 @@
-<link rel="stylesheet" href="/css/mossbook.css">
-
-
 <div class="moss-page" style="text-align: center;">
-    <h2>Your Mossbooks</h2>
+    <h2 style="font-family: 'Comic Sans MS', cursive; color: #3e6043;">📔 Your Mossbooks</h2>
   
+    <!-- Create a new Mossbook -->
+    <form action="/mossbook" method="POST" style="margin: 2rem auto;">
+      <input name="title" placeholder="Name your Mossbook..." required style="padding: 0.5rem; border-radius: 1rem; border: 2px solid #cdeacc;" />
+      <button type="submit" style="margin-left: 1rem;">🌱 Create</button>
+    </form>
+  
+    <!-- Show your list of Mossbooks -->
     <% if (mossbooks && mossbooks.length > 0) { %>
       <% mossbooks.forEach(book => { %>
-        <div style="margin: 1rem auto;">
-          <h3><%= book.title %></h3>
+        <div style="margin: 2rem auto; padding: 1.5rem; border: 4px double #8fc790; border-radius: 1.2rem; max-width: 500px; background: #f7fff6; box-shadow: 0 0 10px #dceedd;">
+          <h3 style="color: #2f5534;"><%= book.title %></h3>
+          
           <% if (book.coverImage) { %>
-            <img src="<%= book.coverImage %>" style="max-height: 100px;" />
+            <img src="<%= book.coverImage %>" style="max-height: 120px; border-radius: 1rem; margin-top: 1rem;" />
           <% } %>
-          <br>
-          <a href="/mossbook/<%= book._id %>/page/0">📖 Open</a>
+  
+          <br><br>
+          <a href="/mossbook/<%= book._id %>/cover" style="text-decoration: none; background: #cbeac9; padding: 0.5rem 1rem; border-radius: 1rem;">🌿 View Cover</a>
+          <a href="/mossbook/<%= book._id %>/page/0" style="text-decoration: none; background: #d0ffd8; padding: 0.5rem 1rem; border-radius: 1rem; margin-left: 1rem;">📖 Open Pages</a>
         </div>
       <% }) %>
     <% } else { %>
-      <p>No Mossbooks yet. Go make one!</p>
+      <p style="margin-top: 2rem; color: #777;">You don’t have any Mossbooks yet! 🥺</p>
     <% } %>
   </div>
   
-  
-  <% }) %>
-<% } %>
