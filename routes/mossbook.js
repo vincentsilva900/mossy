@@ -79,18 +79,24 @@ router.get('/mossbook/:id/page/:page', isLoggedIn, async (req, res) => {
 });
 
 // SAVE a page
-router.post('/mossbook/:id/page/:page', isLoggedIn, async (req, res) => {
-  const mossbook = await Mossbook.findById(req.params.id);
-  const page = parseInt(req.params.page);
-  if (!mossbook.owner.equals(req.session.userId) && !mossbook.members.includes(req.session.userId)) {
-    return res.status(403).send('No access');
-  }
-  mossbook.pages[page] = {
-    image: req.body.image || '',
-    text: req.body.text || ''
-  };
-  await mossbook.save();
-  res.redirect(`/mossbook/${mossbook._id}/page/${page}`);
-});
+router.post('/mossbook/:id/page/:page', isLoggedIn, upload.single('imageUpload'), async (req, res) => {
+    const mossbook = await Mossbook.findById(req.params.id);
+    const page = parseInt(req.params.page);
+  
+    if (!mossbook.owner.equals(req.session.userId) && !mossbook.members.includes(req.session.userId)) {
+      return res.status(403).send('No access');
+    }
+  
+    // ✅ Preserve existing image unless new one uploaded
+    const currentPage = mossbook.pages[page] || {};
+    mossbook.pages[page] = {
+      image: req.file ? req.file.path : currentPage.image || '',
+      text: req.body.text || ''
+    };
+  
+    await mossbook.save();
+    res.redirect(`/mossbook/${mossbook._id}/page/${page}`);
+  });
+  
 
 module.exports = router;
