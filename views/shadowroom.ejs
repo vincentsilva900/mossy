@@ -1,5 +1,5 @@
 <div style="text-align: center; margin-top: 2rem;">
-    <h2 style="font-family: 'Comic Sans MS', cursive; color: #444;">🖤 The Shadowroom</h2>
+    <h2 style="font-family: 'Comic Sans MS', cursive; color: #444;">🖤 Shadowroom</h2>
   
     <form action="/shadowroom" method="POST" style="margin: 2rem auto; max-width: 400px;">
       <textarea name="content" required maxlength="300" placeholder="Let it out... (only mutuals can see)"
@@ -15,8 +15,8 @@
     <% } else { %>
       <% shadows.forEach(shadow => { %>
         <div style="background-color: #f3f3f3; padding: 1rem; border-radius: 1rem; margin: 1rem auto; max-width: 400px;">
-          <p style="font-style: italic; color: #555;"><%= shadow.content %></p>
-          <form action="/shadowroom/<%= shadow._id %>/react" method="POST" style="display: flex; justify-content: space-between;">
+          <p style="font-style: italic; color: #555; text-align: left;"><%= shadow.content %></p>
+          <form action="/shadowroom/<%= shadow._id %>/react" method="POST" style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
             <button name="reaction" value="stone" style="border: none; background: none;">💎 <%= shadow.reactions.stone.length %></button>
             <button name="reaction" value="mist" style="border: none; background: none;">🌫 <%= shadow.reactions.mist.length %></button>
           </form>
