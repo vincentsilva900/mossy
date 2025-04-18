@@ -2,22 +2,28 @@
 
 
 
-<h2 style="text-align:center;">🌿 Your Mossbooks</h2>
-
-<form action="/mossbook" method="POST" style="text-align:center; margin:2rem 0;">
-  <input name="title" placeholder="Name your Mossbook" required />
-  <button type="submit">📖 Create Mossbook</button>
-</form>
-
-<% if (mossbooks && mossbooks.length) { %>
-  <% mossbooks.forEach(book => { %>
-    <div style="margin: 1rem auto; text-align:center;">
-      <h3><%= book.title %></h3>
-      <% if (book.coverImage) { %>
-        <img src="<%= book.coverImage %>" style="max-height: 120px;" />
-      <% } %>
+<div class="moss-page" style="text-align: center;">
+    <h2>📖 Mossbook Cover</h2>
+  
+    <% if (mossbook.coverImage) { %>
+      <img src="<%= mossbook.coverImage %>" style="max-height: 180px; border-radius: 1rem; margin-bottom: 1rem;" />
+    <% } %>
+  
+    <% if (session.userId.toString() === mossbook.owner.toString()) { %>
+      <form action="/mossbook/<%= mossbook._id %>/cover" method="POST">
+        <input name="title" value="<%= mossbook.title %>" placeholder="Mossbook Title" required />
+        <br><br>
+        <input name="coverImage" placeholder="Cover Image URL" value="<%= mossbook.coverImage %>" />
+        <br><br>
+        <button type="submit">💾 Save Cover</button>
+      </form>
       <br>
-      <a href="/mossbook/<%= book._id %>/page/0">📖 Open</a>
-    </div>
+      <a href="/mossbook/<%= mossbook._id %>/members">👥 Manage Members</a>
+    <% } %>
+  
+    <br>
+    <a href="/mossbook/<%= mossbook._id %>/page/0">➡️ Enter Mossbook</a>
+  </div>
+  
   <% }) %>
 <% } %>

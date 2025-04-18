@@ -9,13 +9,13 @@ const isLoggedIn = (req, res, next) => {
 
 // GET all your Mossbooks
 router.get('/mossbook', isLoggedIn, async (req, res) => {
-  const mossbooks = await Mossbook.find({ 
+  const mossbook = await Mossbook.find({ 
     $or: [
       { owner: req.session.userId }, 
       { members: req.session.userId }
     ]
   });
-  res.render('layout', { content: 'mossbookCover', mossbooks,
+  res.render('layout', { content: 'mossbookCover', mossbook,
     pageClass: 'mossbook-mode' });
 });
 
@@ -58,8 +58,13 @@ router.get('/mossbook/:id/page/:page', isLoggedIn, async (req, res) => {
   if (!mossbook.owner.equals(req.session.userId) && !mossbook.members.includes(req.session.userId)) {
     return res.status(403).send('No access');
   }
-  res.render('layout', { content: 'mossbookPages', mossbook, page,
-    pageClass: 'mossbook-mode' });
+  res.render('layout', {
+    content: 'mossbookPages',
+    mossbook,
+    page,
+    pageClass: 'mossbook-mode'
+  });
+  
 });
 
 // SAVE a page
