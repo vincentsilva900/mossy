@@ -9,16 +9,15 @@ const isLoggedIn = (req, res, next) => {
 
 // GET all your Mossbooks
 router.get('/mossbook', isLoggedIn, async (req, res) => {
-  const mossbook = await Mossbook.find({ 
-    $or: [
-      { owner: req.session.userId }, 
-      { members: req.session.userId }
-    ]
+    const mossbooks = await Mossbook.find({
+      $or: [
+        { owner: req.session.userId },
+        { members: req.session.userId }
+      ]
+    });
+    res.render('layout', { content: 'mossbookCover', mossbooks, pageClass: 'mossbook-mode' });
   });
-  res.render('layout', { content: 'mossbookCover', mossbook,
-    pageClass: 'mossbook-mode' });
-});
-
+  
 // CREATE a new Mossbook
 router.post('/mossbook', isLoggedIn, async (req, res) => {
   const newMossbook = new Mossbook({

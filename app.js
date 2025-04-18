@@ -50,9 +50,9 @@ const wishRoutes = require('./routes/wish');
 app.use('/', wishRoutes);
 const shadowRoutes = require('./routes/shadow');
 app.use('/', shadowRoutes);
-const mossbookRoutes = require('./routes/mossbook');
-app.use('/', mossbookRoutes);
 const authRoutes = require('./routes/auth');
 app.use('/', authRoutes);
+const mossbookRoutes = require('./routes/mossbook');
+app.use('/', mossbookRoutes);
 
 app.listen(3000, () => console.log('Mossy app running on port 3000'));
