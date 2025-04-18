@@ -31,16 +31,16 @@ router.get('/mossbook', isLoggedIn, async (req, res) => {
   
 // CREATE a new Mossbook
 router.post('/mossbook', isLoggedIn, async (req, res) => {
-  const newMossbook = new Mossbook({
-    title: req.body.title,
-    owner: req.session.userId,
-    members: [],
-    pages: Array(25).fill({})
+    const newMossbook = new Mossbook({
+      title: req.body.title,
+      owner: req.session.userId,
+      members: [],
+      pages: Array(25).fill({})
+    });
+    await newMossbook.save();
+    res.redirect(`/mossbook/${newMossbook._id}/page/0`); // ✅ GO STRAIGHT INTO PAGE 1
   });
-  await newMossbook.save();
-  res.redirect(`/mossbook/${newMossbook._id}/cover`);
-});
-
+  
 // GET Mossbook cover
 router.get('/mossbook/:id/cover', isLoggedIn, async (req, res) => {
   const mossbook = await Mossbook.findById(req.params.id);
