@@ -16,12 +16,13 @@
 
 
 <form action="/mossbook/<%= mossbook._id %>/page/<%= page %>" method="POST" style="text-align:center;">
-    <div class="drop-zone" ondrop="handleDrop(event)" ondragover="event.preventDefault()">
-        <p>📸 Drag and drop an image here</p>
-        <input type="hidden" name="image" id="hiddenImageInput" value="<%= mossbook.pages[page].image || '' %>">
-        <img id="previewImage" src="<%= mossbook.pages[page].image || '' %>" style="max-width: 200px; margin-top: 1rem;" />
+  
+    <div id="post-drop-zone" class="drop-zone">
+        <p>📷 Drop an image for your post (optional)</p>
+        <img id="postPreview" src="" style="max-width: 150px; display: none; margin: 0.5rem auto;" />
+        <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
+        <button type="button" onclick="document.getElementById('postFileInput').click()">UploadImage</button>
       </div>
-      
   <textarea name="text" rows="5" cols="40" placeholder="Write your memory..."><%= mossbook.pages[page].text || '' %></textarea>
   <br><br>
   <button type="submit">💾 Save Page</button>
@@ -35,3 +36,47 @@
     <a href="/mossbook/<%= mossbook._id %>/page/<%= page + 1 %>" style="margin-left:2rem;">Next ➡️</a>
   <% } %>
 </div>
+<script>
+    const postZone = document.getElementById('post-drop-zone');
+    const postFileInput = document.getElementById('postFileInput');
+    const postPreview = document.getElementById('postPreview');
+  
+    postZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      postZone.classList.add('dragover');
+    });
+  
+    postZone.addEventListener('dragleave', () => {
+      postZone.classList.remove('dragover');
+    });
+  
+    postZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      postZone.classList.remove('dragover');
+  
+      if (e.dataTransfer.files.length) {
+        const file = e.dataTransfer.files[0];
+        postFileInput.files = e.dataTransfer.files;
+  
+        const reader = new FileReader();
+        reader.onload = e => {
+          postPreview.src = e.target.result;
+          postPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  
+    postFileInput.addEventListener('change', () => {
+      const file = postFileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          postPreview.src = e.target.result;
+          postPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+  
