@@ -8,21 +8,23 @@ function isLoggedIn(req, res, next) {
   if (!req.session.userId) return res.redirect('/login');
   next();
 }
-
 router.get('/shadowroom', isLoggedIn, async (req, res) => {
-  try {
     const user = await User.findById(req.session.userId).populate('friends');
-    const mutuals = user.friends.filter(f => f.friends.includes(user._id));
-
+  
+    // find mutual friends
+    const mutuals = user.friends.filter(friend =>
+      friend.friends.includes(user._id)
+    );
+  
+    // include YOUR OWN posts too
+    const userAndMutuals = [...mutuals.map(f => f._id), user._id];
+  
     const shadows = await Shadow.find({
-      author: { $in: mutuals.map(f => f._id) }
+      user: { $in: userAndMutuals }
     }).sort({ createdAt: -1 });
+  
 
     res.render('layout', { content: 'shadowroom', shadows });
-  } catch (err) {
-    console.error('🔥 Shadowroom Error:', err);
-    res.status(500).send('Could not load Shadowroom');
-  }
 });
 
 router.post('/shadowroom', isLoggedIn, async (req, res) => {
