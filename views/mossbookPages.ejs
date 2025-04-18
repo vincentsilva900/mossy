@@ -15,7 +15,8 @@
 <script src="/js/mossbook.js" defer></script>
 
 
-<form action="/mossbook/<%= mossbook._id %>/page/<%= page %>" method="POST" style="text-align:center;">
+<form action="/mossbook/<%= mossbook._id %>/page/<%= page %>" method="POST" enctype="multipart/form-data" style="text-align:center;">
+
   
     <div id="post-drop-zone" class="drop-zone">
         <p>📷 Drop an image for your post (optional)</p>
@@ -23,6 +24,13 @@
         <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
         <button type="button" onclick="document.getElementById('postFileInput').click()">UploadImage</button>
       </div>
+      <% if (mossbook.pages[page].image) { %>
+        <div style="margin-top: 1rem;">
+          <p style="color: #446144;">🌿 Current Saved Image:</p>
+          <img src="<%= mossbook.pages[page].image %>" style="max-width: 200px; border-radius: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
+        </div>
+      <% } %>
+      
   <textarea name="text" rows="5" cols="40" placeholder="Write your memory..."><%= mossbook.pages[page].text || '' %></textarea>
   <br><br>
   <button type="submit">💾 Save Page</button>
