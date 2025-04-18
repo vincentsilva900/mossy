@@ -3,7 +3,11 @@
 <head>
   <title>Mossy</title>
   <link rel="stylesheet" href="/css/style.css">
+  <% if (typeof pageClass !== 'undefined' && pageClass === 'mossbook-mode') { %>
+    <link rel="stylesheet" href="/css/mossbook.css">
+  <% } %>
 </head>
 <body class="<%= typeof pageClass !== 'undefined' ? pageClass : '' %>">
+  <%- include(content) %>
 </body>
 </html>
