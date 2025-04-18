@@ -12,6 +12,10 @@
   </button>
 </form>
 
+<a href="/mossbook" style="background: #dfffe2; padding: 0.5rem 1rem; border-radius: 1rem; text-decoration: none; font-weight: bold;">
+  📔 My Mossbooks
+</a>
+
 
 <h2>Welcome, <%= user.username %></h2>
 <img src="<%= user.profilePic %>" width="50"/>
@@ -25,7 +29,7 @@
     <p>📷 Drop an image for your post (optional)</p>
     <img id="postPreview" src="" style="max-width: 150px; display: none; margin: 0.5rem auto;" />
     <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
-    <button type="button" onclick="document.getElementById('postFileInput').click()">Browse</button>
+    <button type="button" onclick="document.getElementById('postFileInput').click()">UploadImage</button>
   </div>
 
   <button type="submit">Post</button>
@@ -40,7 +44,7 @@
   text-decoration: none;
   color: #333;
   font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 ">
   🖤 Shadowroom
 </a>

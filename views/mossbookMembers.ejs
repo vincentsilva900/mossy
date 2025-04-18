@@ -1,0 +1,29 @@
+<h2 style="text-align:center;">👥 Manage Members of "<%= mossbook.title %>"</h2>
+
+<form action="/mossbook/<%= mossbook._id %>/members/add" method="POST">
+  <label for="friendId">Add a friend:</label>
+  <select name="friendId" id="friendId">
+    <% friends.forEach(f => { %>
+      <% if (!mossbook.members.includes(f._id.toString())) { %>
+        <option value="<%= f._id %>"><%= f.username %></option>
+      <% } %>
+    <% }) %>
+  </select>
+  <button type="submit">➕ Add</button>
+</form>
+
+<h3>Current Members:</h3>
+<ul>
+  <% mossbook.members.forEach(m => { %>
+    <% const friend = friends.find(f => f._id.toString() === m.toString()); %>
+    <% if (friend) { %>
+      <li>
+        <%= friend.username %>
+        <form action="/mossbook/<%= mossbook._id %>/members/remove" method="POST" style="display:inline;">
+          <input type="hidden" name="friendId" value="<%= friend._id %>">
+          <button type="submit">❌ Remove</button>
+        </form>
+      </li>
+    <% } %>
+  <% }) %>
+</ul>

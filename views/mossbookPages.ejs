@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/css/mossbook.css">
+
+
+
+<h2 style="text-align:center;"><%= mossbook.title %></h2>
+<h4 style="text-align:center;">Page <%= page + 1 %> / 25</h4>
+
+<script src="/js/mossbook.js" defer></script>
+
+
+<form action="/mossbook/<%= mossbook._id %>/page/<%= page %>" method="POST" style="text-align:center;">
+    <div class="drop-zone" ondrop="handleDrop(event)" ondragover="event.preventDefault()">
+        <p>📸 Drag and drop an image here</p>
+        <input type="hidden" name="image" id="hiddenImageInput" value="<%= mossbook.pages[page].image || '' %>">
+        <img id="previewImage" src="<%= mossbook.pages[page].image || '' %>" style="max-width: 200px; margin-top: 1rem;" />
+      </div>
+      
+  <textarea name="text" rows="5" cols="40" placeholder="Write your memory..."><%= mossbook.pages[page].text || '' %></textarea>
+  <br><br>
+  <button type="submit">💾 Save Page</button>
+</form>
+
+<div style="text-align:center; margin-top: 2rem;">
+  <% if (page > 0) { %>
+    <a href="/mossbook/<%= mossbook._id %>/page/<%= page - 1 %>">⬅️ Previous</a>
+  <% } %>
+  <% if (page < 24) { %>
+    <a href="/mossbook/<%= mossbook._id %>/page/<%= page + 1 %>" style="margin-left:2rem;">Next ➡️</a>
+  <% } %>
+</div>

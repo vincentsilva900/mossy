@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="/css/mossbook.css">
+
+
+
+<h2 style="text-align:center;">🌿 Your Mossbooks</h2>
+
+<form action="/mossbook" method="POST" style="text-align:center; margin:2rem 0;">
+  <input name="title" placeholder="Name your Mossbook" required />
+  <button type="submit">📖 Create Mossbook</button>
+</form>
+
+<% if (mossbooks && mossbooks.length) { %>
+  <% mossbooks.forEach(book => { %>
+    <div style="margin: 1rem auto; text-align:center;">
+      <h3><%= book.title %></h3>
+      <% if (book.coverImage) { %>
+        <img src="<%= book.coverImage %>" style="max-height: 120px;" />
+      <% } %>
+      <br>
+      <a href="/mossbook/<%= book._id %>/page/0">📖 Open</a>
+    </div>
+  <% }) %>
+<% } %>

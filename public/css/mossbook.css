@@ -1,0 +1,80 @@
+body.mossbook-mode {
+    background: linear-gradient(#e6ffe6, #d2f5c4);
+    font-family: 'Comic Sans MS', cursive;
+    color: #304020;
+  }
+  
+  /* Main container for each page */
+  .moss-page {
+    background: #fafff4;
+    border: 8px double #7a9e7e;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    max-width: 700px;
+    margin: 2rem auto;
+    box-shadow: 0 0 20px rgba(82, 110, 82, 0.2);
+    position: relative;
+  }
+  
+  /* Drop zone */
+  .drop-zone {
+    border: 2px dashed #9bbf8f;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #f4fff4;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .drop-zone:hover {
+    background-color: #e4f7e4;
+  }
+  
+  /* Preview image */
+  #previewImage {
+    display: block;
+    margin: 1rem auto;
+    border-radius: 1rem;
+    border: 4px solid #a9cba5;
+    box-shadow: 0 0 10px rgba(115, 155, 115, 0.3);
+  }
+  
+  /* Navigation buttons */
+  .moss-nav a {
+    font-size: 1.2rem;
+    text-decoration: none;
+    background: #c6ebc9;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    margin: 0 1rem;
+    color: #2c432c;
+    transition: transform 0.2s ease;
+  }
+  .moss-nav a:hover {
+    transform: scale(1.05);
+    background: #b0dbb3;
+  }
+  
+  /* Save button */
+  button {
+    background: #a9d1a6;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    color: #2f4d2f;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #94c691;
+  }
+  
+  /* Member list */
+  .moss-members {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #f4fff4;
+    border: 2px solid #c2e4c2;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+  }
+  
