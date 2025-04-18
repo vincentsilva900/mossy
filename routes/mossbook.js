@@ -54,15 +54,16 @@ router.get('/mossbook/:id/cover', isLoggedIn, async (req, res) => {
 });
 
 // POST cover title & image
-router.post('/mossbook/:id/cover', isLoggedIn, async (req, res) => {
-  const mossbook = await Mossbook.findById(req.params.id);
-  if (mossbook.owner.equals(req.session.userId)) {
-    mossbook.title = req.body.title;
-    mossbook.coverImage = req.body.coverImage;
-    await mossbook.save();
-  }
-  res.redirect(`/mossbook/${mossbook._id}/cover`);
-});
+router.post('/mossbook/:id/cover', isLoggedIn, upload.single('coverImageUpload'), async (req, res) => {
+    const mossbook = await Mossbook.findById(req.params.id);
+    if (mossbook.owner.equals(req.session.userId)) {
+      mossbook.title = req.body.title;
+      mossbook.coverImage = req.file ? req.file.path : mossbook.coverImage;
+      await mossbook.save();
+    }
+    res.redirect(`/mossbook/${mossbook._id}/cover`);
+  });
+  
 
 // VIEW a specific page
 router.get('/mossbook/:id/page/:page', isLoggedIn, async (req, res) => {
