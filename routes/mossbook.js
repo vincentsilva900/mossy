@@ -82,7 +82,7 @@ router.get('/mossbook/:id/page/:page', isLoggedIn, async (req, res) => {
 });
 
 // SAVE a page
-router.post('/mossbook/:id/page/:page', isLoggedIn, upload.single('imageUpload'), async (req, res) => {
+router.post('/mossbook/:id/page/:page', isLoggedIn, upload.single('image'), async (req, res) => {
     const mossbook = await Mossbook.findById(req.params.id);
     const page = parseInt(req.params.page);
   
@@ -90,8 +90,8 @@ router.post('/mossbook/:id/page/:page', isLoggedIn, upload.single('imageUpload')
       return res.status(403).send('No access');
     }
   
-    // ✅ Preserve existing image unless new one uploaded
     const currentPage = mossbook.pages[page] || {};
+  
     mossbook.pages[page] = {
       image: req.file ? req.file.path : currentPage.image || '',
       text: req.body.text || ''
