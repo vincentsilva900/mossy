@@ -2,11 +2,14 @@ const express = require('express');
 const router = express.Router();
 const Mossbook = require('../models/Mossbook');
 const User = require('../models/User');
-const { storage } = require('../utils/cloudinary');
 const isLoggedIn = (req, res, next) => {
   if (!req.session.userId) return res.redirect('/login');
   next();
 };
+
+const multer = require('multer');
+const { storage } = require('../utils/cloudinary');
+const upload = multer({ storage });
 
 // GET all your Mossbooks
 router.get('/mossbook', isLoggedIn, async (req, res) => {
