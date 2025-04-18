@@ -34,16 +34,27 @@ router.get('/mossbook', isLoggedIn, async (req, res) => {
   });
   
 // CREATE a new Mossbook
-router.post('/mossbook', isLoggedIn, async (req, res) => {
-    const newMossbook = new Mossbook({
-      title: req.body.title,
-      owner: req.session.userId,
-      members: [],
-      pages: Array(25).fill({})
-    });
-    await newMossbook.save();
-    res.redirect(`/mossbook/${newMossbook._id}/page/0`); // ✅ GO STRAIGHT INTO PAGE 1
+router.get('/mossbook', isLoggedIn, async (req, res) => {
+    try {
+      const mossbooks = await Mossbook.find({
+        $or: [
+          { owner: req.session.userId },
+          { members: req.session.userId }
+        ]
+      });
+  
+      res.render('layout', {
+        content: 'mossbookCover', // ✅ must match your EJS file
+        mossbooks,
+        pageClass: 'mossbook-mode'
+      });
+  
+    } catch (err) {
+      console.error('🔥 Mossbook Route Error:', err);
+      res.status(500).send('Could not load Mossbooks');
+    }
   });
+  
   
 // GET Mossbook cover
 router.get('/mossbook/:id/cover', isLoggedIn, async (req, res) => {

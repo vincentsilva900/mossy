@@ -12,34 +12,24 @@
     <h2 style="font-family: 'Comic Sans MS', cursive; color: #3e6043;">📔 Your Mossbooks</h2>
   
     <!-- Create a new Mossbook -->
-    <form action="/mossbook/<%= mossbook._id %>/cover" method="POST" enctype="multipart/form-data">
-        <input type="text" name="title" placeholder="Mossbook Title" value="<%= mossbook.title %>" required />
-      
-        <p style="margin-top:1rem;">📸 Upload Cover Image</p>
-        <input type="file" name="coverImageUpload" accept="image/*" />
-      
-        <br><br>
-        <button type="submit">💾 Save Cover</button>
+    <form action="/mossbook" method="POST" style="text-align:center; margin: 1rem;">
+        <input name="title" placeholder="Name your Mossbook..." required />
+        <button type="submit">🌿 Create</button>
       </form>
       
-  
-    <!-- Show your list of Mossbooks -->
-    <% if (mossbooks && mossbooks.length > 0) { %>
-      <% mossbooks.forEach(book => { %>
-        <div style="margin: 2rem auto; padding: 1.5rem; border: 4px double #8fc790; border-radius: 1.2rem; max-width: 500px; background: #f7fff6; box-shadow: 0 0 10px #dceedd;">
-          <h3 style="color: #2f5534;"><%= book.title %></h3>
-          
-          <% if (book.coverImage) { %>
-            <img src="<%= book.coverImage %>" style="max-height: 120px; border-radius: 1rem; margin-top: 1rem;" />
-          <% } %>
-  
-          <br><br>
-          <a href="/mossbook/<%= book._id %>/cover" style="text-decoration: none; background: #cbeac9; padding: 0.5rem 1rem; border-radius: 1rem;">🌿 View Cover</a>
-          <a href="/mossbook/<%= book._id %>/page/0" style="text-decoration: none; background: #d0ffd8; padding: 0.5rem 1rem; border-radius: 1rem; margin-left: 1rem;">📖 Open Pages</a>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p style="margin-top: 2rem; color: #777;">You don’t have any Mossbooks yet! 🥺</p>
-    <% } %>
-  </div>
-  
+      <% if (mossbooks && mossbooks.length > 0) { %>
+        <% mossbooks.forEach(book => { %>
+          <div style="margin: 2rem auto; max-width: 400px; text-align: center; padding: 1rem; border: 3px dashed #bde0fe; border-radius: 1rem;">
+            <h3><%= book.title %></h3>
+            <% if (book.coverImage) { %>
+              <img src="<%= book.coverImage %>" style="max-height: 120px; border-radius: 1rem; margin: 0.5rem 0;" />
+            <% } %>
+            <div style="margin-top: 0.5rem;">
+              <a href="/mossbook/<%= book._id %>/cover">🎨 View Cover</a> |
+              <a href="/mossbook/<%= book._id %>/page/0">📖 Open</a>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p style="text-align:center;">You haven’t made any Mossbooks yet 🌿</p>
+      <% } %>
