@@ -11,7 +11,7 @@ cloudinary.config({
 });
 
 router.get('/', (req, res) => {
-  res.render('layout', { content: 'index' });
+  res.render('layout', { content: 'index', pageClass: '' });
 });
 
 router.get('/signup', (req, res) => {
