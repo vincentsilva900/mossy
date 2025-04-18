@@ -49,5 +49,7 @@ app.use('/user', userRoutes);
 
 const wishRoutes = require('./routes/wish');
 app.use('/', wishRoutes);
+const shadowRoutes = require('./routes/shadow');
+app.use('/', shadowRoutes);
 
 app.listen(3000, () => console.log('Mossy app running on port 3000'));

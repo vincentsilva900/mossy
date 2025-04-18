@@ -1,0 +1,33 @@
+<!-- 📁 views/shadowroom.ejs -->
+<div style="text-align: center; padding: 2rem; font-family: 'Comic Sans MS', cursive;">
+    <h2 style="color: #444; font-size: 2rem;">🫥 Shadowroom</h2>
+    <p style="color:#777; margin-bottom: 2rem;">A safe space for anonymous feelings from mutuals only.</p>
+  
+    <form action="/shadowroom" method="POST" style="margin-bottom: 2rem;">
+      <textarea name="content" maxlength="300" placeholder="Let it out..." required
+        style="width: 90%; max-width: 400px; min-height: 80px; border-radius: 1rem; padding: 1rem; border: 2px solid #ccc;"></textarea>
+      <br>
+      <button type="submit" style="background: #b8c0ff; color: #2f2f2f; border-radius: 1rem; padding: 0.6rem 1.4rem; margin-top: 0.7rem; border: none;">
+        🖤 Submit
+      </button>
+    </form>
+  
+    <% if (shadows.length === 0) { %>
+      <p style="color:#999;">It's quiet here... nothing yet.</p>
+    <% } else { %>
+      <% shadows.forEach(shadow => { %>
+        <div style="background-color: #f6f6f6; margin: 1rem auto; max-width: 500px; padding: 1rem 1.2rem; border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+          <p style="color:#333; font-size: 1rem;">🫥 <%= shadow.content %></p>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem;">
+            <form action="/shadowroom/<%= shadow._id %>/react/glow" method="POST">
+              <button type="submit" style="background:#d0f4de; border:none; border-radius:1rem; padding:0.3rem 0.8rem;">💎 (<%= shadow.glowReacts.length %>)</button>
+            </form>
+            <form action="/shadowroom/<%= shadow._id %>/react/mist" method="POST">
+              <button type="submit" style="background:#e0e0f8; border:none; border-radius:1rem; padding:0.3rem 0.8rem;">🌫 (<%= shadow.mistReacts.length %>)</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+  
