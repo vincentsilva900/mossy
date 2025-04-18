@@ -6,6 +6,7 @@ const Wish = require('../models/Wish');
 
 const User = require('../models/User');
 
+
 function isLoggedIn(req, res, next) {
   if (!req.session.userId) return res.redirect('/login');
   next();
