@@ -11,11 +11,8 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: 'mossbooks',
-    allowed_formats: ['jpeg', 'jpg', 'png']
+    allowed_formats: ['jpg', 'jpeg', 'png']
   }
 });
 
-module.exports = {
-  cloudinary,
-  storage
-};
+module.exports = { cloudinary, storage };
