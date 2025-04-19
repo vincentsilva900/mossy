@@ -1,41 +1,43 @@
 <link rel="stylesheet" href="/css/mossbook.css">
 
-<!-- 🔙 Back to Your Own Profile -->
-<div style="margin: 1rem 0;">
-    <a href="/user/profile">
-      <button style="background-color: #ffccf9; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
-        ⬅️ Back to My Profile
-      </button>
-    </a>
-  </div>
+<!-- 🔙 Back to Profile -->
+<div style="margin: 1rem;">
+  <a href="/user/profile">
+    <button style="background-color: #ffccf9; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
+      ⬅️ Back to Profile
+    </button>
+  </a>
+</div>
 
-<h2 style="text-align:center;"><%= mossbook.title %></h2>
+<h2 style="text-align:center; font-family: 'Comic Sans MS', cursive;">📖 <%= mossbook.title %></h2>
 <h4 style="text-align:center;">Page <%= page + 1 %> / 25</h4>
 
-<script src="/js/mossbook.js" defer></script>
+<form action="/mossbook/<%= mossbook._id %>/page/<%= page %>" method="POST" enctype="multipart/form-data" style="text-align:center; margin-top: 2rem;">
 
+  <!-- 🌱 Drag & Drop Upload Zone -->
+  <div id="post-drop-zone" class="drop-zone" style="margin-bottom: 1rem;">
+    <p>📷 Drop an image or click to upload</p>
+    <img id="postPreview" src="" style="max-width: 180px; display: none; margin: 0.5rem auto;" />
+    <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
+    <button type="button" onclick="document.getElementById('postFileInput').click()">Upload Image</button>
+  </div>
 
-<form action="/mossbook/<%= mossbook._id %>/page/<%= page %>" method="POST" enctype="multipart/form-data" style="text-align:center;">
+  <!-- 🌿 Already saved image (persistent) -->
+  <% if (mossbook.pages[page].image) { %>
+    <div style="margin-top: 1rem;">
+      <p style="color: #446144;">🌿 Saved Image:</p>
+      <img src="<%= mossbook.pages[page].image %>" style="max-width: 250px; border-radius: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
+    </div>
+  <% } %>
 
-  
-    <div id="post-drop-zone" class="drop-zone">
-        <p>📷 Drop an image for your post (optional)</p>
-        <img id="postPreview" src="" style="max-width: 150px; display: none; margin: 0.5rem auto;" />
-        <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
-        <button type="button" onclick="document.getElementById('postFileInput').click()">UploadImage</button>
-      </div>
-      <% if (mossbook.pages[page].image) { %>
-        <div style="margin-top: 1rem;">
-          <p style="color: #446144;">🌿 Current Saved Image:</p>
-          <img src="<%= mossbook.pages[page].image %>" style="max-width: 200px; border-radius: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" />
-        </div>
-      <% } %>
-      
-  <textarea name="text" rows="5" cols="40" placeholder="Write your memory..."><%= mossbook.pages[page].text || '' %></textarea>
+  <!-- 📓 Journal Entry -->
+  <textarea name="text" rows="5" cols="50" placeholder="Write your memory here..." style="margin-top: 1rem;"><%= mossbook.pages[page].text || '' %></textarea>
   <br><br>
-  <button type="submit">💾 Save Page</button>
+
+  <button type="submit" style="padding: 0.5rem 1.5rem; font-size: 1rem; border-radius: 1rem; background-color: #b5ead7; color: #2f4858;">💾 Save Page</button>
 </form>
 
+<!-- 📖 Page Navigation -->
 <div style="text-align:center; margin-top: 2rem;">
   <% if (page > 0) { %>
     <a href="/mossbook/<%= mossbook._id %>/page/<%= page - 1 %>">⬅️ Previous</a>
@@ -44,47 +46,48 @@
     <a href="/mossbook/<%= mossbook._id %>/page/<%= page + 1 %>" style="margin-left:2rem;">Next ➡️</a>
   <% } %>
 </div>
+
+<!-- 🍄 Drop Zone JS Preview Script -->
 <script>
-    const postZone = document.getElementById('post-drop-zone');
-    const postFileInput = document.getElementById('postFileInput');
-    const postPreview = document.getElementById('postPreview');
-  
-    postZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      postZone.classList.add('dragover');
-    });
-  
-    postZone.addEventListener('dragleave', () => {
-      postZone.classList.remove('dragover');
-    });
-  
-    postZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      postZone.classList.remove('dragover');
-  
-      if (e.dataTransfer.files.length) {
-        const file = e.dataTransfer.files[0];
-        postFileInput.files = e.dataTransfer.files;
-  
-        const reader = new FileReader();
-        reader.onload = e => {
-          postPreview.src = e.target.result;
-          postPreview.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  
-    postFileInput.addEventListener('change', () => {
-      const file = postFileInput.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          postPreview.src = e.target.result;
-          postPreview.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  </script>
-  
+  const postZone = document.getElementById('post-drop-zone');
+  const postFileInput = document.getElementById('postFileInput');
+  const postPreview = document.getElementById('postPreview');
+
+  postZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    postZone.classList.add('dragover');
+  });
+
+  postZone.addEventListener('dragleave', () => {
+    postZone.classList.remove('dragover');
+  });
+
+  postZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    postZone.classList.remove('dragover');
+
+    if (e.dataTransfer.files.length) {
+      const file = e.dataTransfer.files[0];
+      postFileInput.files = e.dataTransfer.files;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        postPreview.src = e.target.result;
+        postPreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  postFileInput.addEventListener('change', () => {
+    const file = postFileInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        postPreview.src = e.target.result;
+        postPreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>

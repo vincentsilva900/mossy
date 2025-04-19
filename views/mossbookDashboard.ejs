@@ -1,0 +1,41 @@
+<!-- 🔙 Back to Your Own Profile -->
+<div style="margin: 1rem 0;">
+    <a href="/user/profile">
+      <button style="background-color: #ffccf9; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
+        ⬅️ Back to My Profile
+      </button>
+    </a>
+  </div>
+
+
+<h2 style="text-align: center;">📔 Your Mossbooks</h2>
+
+<form action="/mossbook" method="POST" style="text-align: center; margin: 2rem 0;">
+  <input name="title" placeholder="Mossbook Title" required />
+  <label>Add friends (comma-separated usernames):</label><br>
+  <input name="members" placeholder="e.g. mossyfriend1,mossyfriend2" />
+  <button type="submit">🌱 Create</button>
+</form>
+
+<% if (mossbooks.length === 0) { %>
+  <p style="text-align:center;">No Mossbooks yet.</p>
+<% } else { %>
+  <% mossbooks.forEach(book => { %>
+    <div style="border: 2px dashed #c8facc; margin: 1rem auto; max-width: 400px; padding: 1rem; border-radius: 1rem;">
+      <h3><%= book.title %></h3>
+      <p>👑 Owner: <%= book.owner.toString() === session.userId ? 'You' : 'Someone Else' %></p>
+      <p>👯 Members: <%= book.members.map(m => m.username).join(', ') %></p>
+      <a href="/mossbook/<%= book._id %>/page/0">📖 Open</a>
+      <% if (book.owner.toString() === session.userId) { %>
+        <form action="/mossbook/<%= book._id %>/delete" method="POST" style="display:inline;">
+          <button type="submit">❌ Delete</button>
+        </form>
+        <form action="/mossbook/<%= book._id %>/members" method="POST" style="margin-top:0.5rem;">
+          <label>Update Members:</label><br>
+          <input name="members" placeholder="user1,user2" />
+          <button type="submit">💾 Save</button>
+        </form>
+      <% } %>
+    </div>
+  <% }) %>
+<% } %>
