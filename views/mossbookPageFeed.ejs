@@ -1,5 +1,8 @@
 <h2 style="text-align:center;"><%= mossbook.title %></h2>
-<h4 style="text-align:center;">Page <%= page + 1 %> / <%= pageCount %></h4>
+<h4 style="text-align:center;">
+    Page <%= pageCount === 0 ? 0 : page + 1 %> / <%= pageCount %>
+  </h4>
+  
 
 <% if (entry) { %>
   <div style="text-align:center; margin-top:2rem; max-width:600px; margin:auto; background:#f8fff8; padding:1rem; border-radius:1rem; box-shadow: 0 0 12px rgba(0,0,0,0.05);">

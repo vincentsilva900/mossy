@@ -94,21 +94,36 @@ router.get('/mossbook/:id/page/:page', isLoggedIn, async (req, res) => {
 
 // 💾 Post a new scrapbook entry
 router.post('/mossbook/:id/entry', isLoggedIn, upload.single('image'), async (req, res) => {
-  const mossbook = await Mossbook.findById(req.params.id);
-  const userId = req.session.userId;
+  try {
+    const mossbook = await Mossbook.findById(req.params.id);
+    const userId = req.session.userId;
 
-  const isAllowed = mossbook.owner.equals(userId) || mossbook.members.includes(userId);
-  if (!isAllowed) return res.status(403).send('Forbidden');
+    const isAllowed =
+      mossbook.owner.equals(userId) ||
+      mossbook.members.includes(userId);
 
-  mossbook.entries.push({
-    image: req.file ? req.file.path : '',
-    text: req.body.text || '',
-    postedBy: userId
-  });
+    if (!isAllowed) return res.status(403).send('Forbidden');
 
-  await mossbook.save();
-  res.redirect(`/mossbook/${mossbook._id}/page/${mossbook.entries.length - 1}`);
+    // ⬇️ NEW: console logging to debug
+    console.log('🔥 POST ENTRY:', {
+      file: req.file,
+      text: req.body.text
+    });
+
+    mossbook.entries.push({
+      image: req.file ? req.file.path : '',
+      text: req.body.text || '',
+      postedBy: userId
+    });
+
+    await mossbook.save();
+    res.redirect(`/mossbook/${mossbook._id}/page/${mossbook.entries.length - 1}`);
+  } catch (err) {
+    console.error('🧨 Mossbook post error:', err);
+    res.status(500).send('Failed to post entry.');
+  }
 });
+
 
 module.exports = router;
 
