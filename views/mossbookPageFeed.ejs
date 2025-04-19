@@ -1,0 +1,34 @@
+<h2 style="text-align:center;"><%= mossbook.title %></h2>
+<h4 style="text-align:center;">Page <%= page + 1 %> / <%= pageCount %></h4>
+
+<% if (entry) { %>
+  <div style="text-align:center; margin-top:2rem; max-width:600px; margin:auto; background:#f8fff8; padding:1rem; border-radius:1rem; box-shadow: 0 0 12px rgba(0,0,0,0.05);">
+    <% if (entry.image) { %>
+      <img src="<%= entry.image %>" style="max-width:100%; border-radius: 1rem; margin-bottom:1rem;" />
+    <% } %>
+    <p style="font-family: 'Comic Sans MS', cursive; font-size: 1.1rem; color:#446144;">
+      <%= entry.text %>
+    </p>
+    <p style="font-size: 0.9rem; color:#aaa;">Posted <%= new Date(entry.createdAt).toLocaleString() %></p>
+  </div>
+<% } else { %>
+  <p style="text-align:center;">No entry on this page yet 🌿</p>
+<% } %>
+
+<!-- NAV -->
+<div style="text-align:center; margin-top: 2rem;">
+  <% if (page > 0) { %>
+    <a href="/mossbook/<%= mossbook._id %>/page/<%= page - 1 %>">⬅️ Previous</a>
+  <% } %>
+  <% if (page < pageCount - 1) { %>
+    <a href="/mossbook/<%= mossbook._id %>/page/<%= page + 1 %>" style="margin-left:2rem;">Next ➡️</a>
+  <% } %>
+</div>
+
+<!-- ✏️ POST NEW ENTRY -->
+<form action="/mossbook/<%= mossbook._id %>/entry" method="POST" enctype="multipart/form-data" style="text-align:center; margin-top:3rem;">
+  <h3>🌱 Add a New Scrapbook Entry</h3>
+  <input type="file" name="image" accept="image/*" /><br><br>
+  <textarea name="text" rows="4" cols="50" placeholder="Write your journal moment..." required></textarea><br><br>
+  <button type="submit" style="background:#b5ead7; padding: 0.5rem 1.5rem; border-radius: 1rem;">💾 Post to Scrapbook</button>
+</form>
