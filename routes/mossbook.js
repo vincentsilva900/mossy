@@ -88,17 +88,34 @@ router.post('/mossbook/:id/page/:page', isLoggedIn, upload.single('image'), asyn
   const mossbook = await Mossbook.findById(req.params.id);
   const page = parseInt(req.params.page);
 
-  const isAllowed = mossbook.owner.equals(req.session.userId) || mossbook.members.includes(req.session.userId);
+  const isOwner = mossbook.owner.equals(req.session.userId);
+  const isAllowed = isOwner || mossbook.members.includes(req.session.userId);
   if (!isAllowed) return res.status(403).send('Forbidden');
 
   const currentPage = mossbook.pages[page] || {};
+
+  // If already locked and not the owner, reject edits
+  if (currentPage.locked && !isOwner) {
+    return res.status(403).send('Page is locked');
+  }
+
   mossbook.pages[page] = {
     image: req.file ? req.file.path : currentPage.image || '',
-    text: req.body.text || ''
+    text: req.body.text || '',
+    locked: !isOwner // lock page if saved by non-owner
   };
 
   await mossbook.save();
   res.redirect(`/mossbook/${mossbook._id}/page/${page}`);
 });
+router.post('/mossbook/:id/page/:page/unlock', isLoggedIn, async (req, res) => {
+  const mossbook = await Mossbook.findById(req.params.id);
+  const page = parseInt(req.params.page);
+  if (!mossbook.owner.equals(req.session.userId)) return res.status(403).send('Nope');
+  mossbook.pages[page].locked = false;
+  await mossbook.save();
+  res.redirect(`/mossbook/${mossbook._id}/page/${page}`);
+});
+
 
 module.exports = router;

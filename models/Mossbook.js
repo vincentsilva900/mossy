@@ -5,7 +5,9 @@ const mossbookSchema = new mongoose.Schema({
   members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   pages: [{
     image: String,
-    text: String
+    text: String,
+    locked: { type: Boolean, default: false }
   }]
+  
 });
 module.exports = mongoose.model('Mossbook', mossbookSchema);
