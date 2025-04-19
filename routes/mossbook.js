@@ -111,7 +111,7 @@ router.post('/mossbook/:id/entry', isLoggedIn, upload.single('image'), async (re
     });
 
     mossbook.entries.push({
-      image: req.file ? req.file.path : '',
+      image: (req.file && req.file.path) ? req.file.path : '',
       text: req.body.text || '',
       postedBy: userId
     });
