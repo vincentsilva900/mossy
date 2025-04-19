@@ -12,10 +12,13 @@
     <h2 style="font-family: 'Comic Sans MS', cursive; color: #3e6043;">📔 Your Mossbooks</h2>
   
     <!-- Create a new Mossbook -->
-    <form action="/mossbook" method="POST" style="text-align:center; margin: 1rem;">
-        <input name="title" placeholder="Name your Mossbook..." required />
-        <button type="submit">🌿 Create</button>
-      </form>
+    <form action="/mossbook/<%= mossbook._id %>/cover" method="POST" enctype="multipart/form-data">
+      <input name="title" value="<%= mossbook.title %>" />
+      <input type="file" name="coverImageUpload" />
+      <button type="submit">Save Cover</button>
+    </form>
+    
+    
       
       <% if (mossbooks && mossbooks.length > 0) { %>
         <% mossbooks.forEach(book => { %>

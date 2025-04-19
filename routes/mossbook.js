@@ -34,27 +34,17 @@ router.get('/mossbook', isLoggedIn, async (req, res) => {
   });
   
 // CREATE a new Mossbook
-router.get('/mossbook', isLoggedIn, async (req, res) => {
-    try {
-      const mossbooks = await Mossbook.find({
-        $or: [
-          { owner: req.session.userId },
-          { members: req.session.userId }
-        ]
-      });
-  
-      res.render('layout', {
-        content: 'mossbookCover', // ✅ must match your EJS file
-        mossbooks,
-        pageClass: 'mossbook-mode'
-      });
-  
-    } catch (err) {
-      console.error('🔥 Mossbook Route Error:', err);
-      res.status(500).send('Could not load Mossbooks');
-    }
+router.post('/mossbook', isLoggedIn, async (req, res) => {
+  const newMossbook = new Mossbook({
+    title: req.body.title,
+    owner: req.session.userId,
+    members: [],
+    pages: Array(25).fill({})
   });
-  
+  await newMossbook.save();
+  res.redirect(`/mossbook/${newMossbook._id}/page/0`);
+});
+
   
 // GET Mossbook cover
 router.get('/mossbook/:id/cover', isLoggedIn, async (req, res) => {
@@ -65,15 +55,20 @@ router.get('/mossbook/:id/cover', isLoggedIn, async (req, res) => {
 });
 
 // POST cover title & image
+// POST cover title & image
 router.post('/mossbook/:id/cover', isLoggedIn, upload.single('coverImageUpload'), async (req, res) => {
-    const mossbook = await Mossbook.findById(req.params.id);
-    if (mossbook.owner.equals(req.session.userId)) {
-      mossbook.title = req.body.title;
-      mossbook.coverImage = req.file ? req.file.path : mossbook.coverImage;
-      await mossbook.save();
-    }
-    res.redirect(`/mossbook/${mossbook._id}/cover`);
-  });
+  const mossbook = await Mossbook.findById(req.params.id);
+  if (!mossbook) return res.status(404).send('Not found');
+
+  if (mossbook.owner.equals(req.session.userId)) {
+    mossbook.title = req.body.title;
+    mossbook.coverImage = req.file ? req.file.path : mossbook.coverImage;
+    await mossbook.save();
+  }
+
+  res.redirect(`/mossbook/${mossbook._id}/cover`);
+});
+
   
 
 // VIEW a specific page
