@@ -1,8 +1,10 @@
-const express = require('express');
-const router = express.Router();
 const multer = require('multer');
 const { storage } = require('../utils/cloudinary');
 const upload = multer({ storage });
+
+const express = require('express');
+const router = express.Router();
+
 
 const Mossbook = require('../models/Mossbook');
 const User = require('../models/User');
@@ -94,22 +96,28 @@ router.get('/mossbook/:id/page/:page', isLoggedIn, async (req, res) => {
 
 // 💾 SAVE scrapbook page (image + journal entry)
 router.post('/mossbook/:id/page/:page', isLoggedIn, upload.single('image'), async (req, res) => {
-  const mossbook = await Mossbook.findById(req.params.id);
-  const page = parseInt(req.params.page);
+  try {
+    const mossbook = await Mossbook.findById(req.params.id);
+    const page = parseInt(req.params.page);
 
-  const isAllowed =
-    mossbook.owner.equals(req.session.userId) ||
-    mossbook.members.includes(req.session.userId);
+    const isAllowed =
+      mossbook.owner.equals(req.session.userId) ||
+      mossbook.members.includes(req.session.userId);
 
-  if (!isAllowed) return res.status(403).send('Forbidden');
+    if (!isAllowed) return res.status(403).send('Forbidden');
 
-  mossbook.pages[page] = {
-    image: req.file ? req.file.path : mossbook.pages[page].image || '',
-    text: req.body.text || ''
-  };
+    mossbook.pages[page] = {
+      image: req.file ? req.file.path : mossbook.pages[page].image || '',
+      text: req.body.text || ''
+    };
 
-  await mossbook.save();
-  res.redirect(`/mossbook/${mossbook._id}/page/${page}`);
+    await mossbook.save();
+    res.redirect(`/mossbook/${mossbook._id}/page/${page}`);
+  } catch (err) {
+    console.error('🔥 Save page error:', err);
+    res.status(500).send('Something went wrong while saving your Mossbook page.');
+  }
 });
+
 
 module.exports = router;
