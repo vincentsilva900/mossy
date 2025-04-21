@@ -197,7 +197,7 @@
     <p><%= post.content %></p>
 
     <% if (post.image) { %>
-      <img src="<%= post.image %>" alt="Post image" style="max-width: 300px; margin-top: 0.5rem; border-radius: 12px;" />
+      <img src="<%= post.image %>" alt="Post image" style="max-width: 100px; margin-top: 0.5rem; border-radius: 12px;" />
     <% } %>
 
     <small><%= post.createdAt.toLocaleDateString() %> @ <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></small>
