@@ -38,13 +38,14 @@
 </div>
 
 <!-- ✏️ POST NEW ENTRY -->
-<form action="/mossbook/<%= mossbook._id %>/entry" method="POST" enctype="multipart/form-data">
-    <label>📸 Upload Image:</label><br>
-    <input type="file" name="image" accept="image/*"><br><br>
-  
-    <label>📓 Memory Entry:</label><br>
-    <textarea name="text" rows="4" cols="50" required></textarea><br><br>
-  
-    <button type="submit">💾 Save Page</button>
-  </form>
-  
+<form id="mossbookForm" action="/mossbook/<%= mossbook._id %>/entry" method="POST" enctype="multipart/form-data">
+
+  <label>📸 Upload Image:</label><br>
+  <input type="file" name="image" accept="image/*"><br><br> <!-- optional -->
+
+  <label>📓 Memory Entry:</label><br>
+  <textarea name="text" rows="4" cols="50"></textarea><br><br> <!-- also optional -->
+
+  <button type="submit">💾 Save Page</button>
+</form>
+

@@ -9,6 +9,22 @@
 </head>
 <body class="<%= typeof pageClass !== 'undefined' ? pageClass : '' %>">
   <%- include(content) %>
+
+  <script>
+    document.getElementById('mossbookForm').addEventListener('submit', function (e) {
+      const fileInput = document.querySelector('input[type="file"][name="image"]');
+      const textArea = document.querySelector('textarea[name="text"]');
+      
+      const fileSelected = fileInput && fileInput.files.length > 0;
+      const textEntered = textArea && textArea.value.trim().length > 0;
+  
+      if (!fileSelected && !textEntered) {
+        e.preventDefault(); // stop form from submitting
+        alert("🌿 Mossbook pages need a little something!\nPlease add text, a photo, or both to continue.");
+      }
+    });
+  </script>
+  
 </body>
 </html>
 <!-- Add this to your footer.ejs or layout.ejs -->

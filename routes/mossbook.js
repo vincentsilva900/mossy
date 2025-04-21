@@ -93,7 +93,7 @@ router.get('/mossbook/:id/page/:page', isLoggedIn, async (req, res) => {
 });
 
 // 💾 Post a new scrapbook entry
-router.post('/mossbook/:id/entry', isLoggedIn, upload.single('image'), async (req, res) => {
+router.post('/mossbook/:id/entry', isLoggedIn, async (req, res) => {
   try {
     const mossbook = await Mossbook.findById(req.params.id);
     const userId = req.session.userId;
@@ -104,15 +104,17 @@ router.post('/mossbook/:id/entry', isLoggedIn, upload.single('image'), async (re
 
     if (!isAllowed) return res.status(403).send('Forbidden');
 
-    // ⬇️ NEW: console logging to debug
-    console.log('🔥 POST ENTRY:', {
-      file: req.file,
-      text: req.body.text
-    });
+    let imageUrl = '';
+    if (req.files && req.files.image) {
+      const result = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
+        folder: 'mossbook_entries'
+      });
+      imageUrl = result.secure_url;
+    }
 
     mossbook.entries.push({
-      image: (req.file && req.file.path) ? req.file.path : '',
-      text: req.body.text || '',
+      image: imageUrl, // empty string is fine if no upload
+      text: req.body.text || '', // optional text
       postedBy: userId
     });
 
@@ -123,6 +125,7 @@ router.post('/mossbook/:id/entry', isLoggedIn, upload.single('image'), async (re
     res.status(500).send('Failed to post entry.');
   }
 });
+
 
 
 module.exports = router;

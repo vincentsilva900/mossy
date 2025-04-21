@@ -9,6 +9,7 @@ const path = require('path');
 const app = express();
 
 const fileUpload = require('express-fileupload');
+app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload({ useTempFiles: true }));
 
 
@@ -18,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log('MongoDB connected'));
 
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: true }));
+
 app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
