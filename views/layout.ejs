@@ -2,12 +2,14 @@
 <html>
 <head>
   <link rel="canonical" href="https://mossbook.site">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
 
   <title>Mossy</title>
   <link rel="stylesheet" href="/css/style.css">
   <% if (typeof pageClass !== 'undefined' && pageClass === 'mossbook-mode') { %>
     <link rel="stylesheet" href="/css/mossbook.css">
   <% } %>
+  <link rel="stylesheet" href="/style/brand.css">
 </head>
 <body class="<%= typeof pageClass !== 'undefined' ? pageClass : '' %>">
   <%- include(content) %>

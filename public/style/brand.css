@@ -1,0 +1,49 @@
+/* 🧚 MOSSY BRAND STYLES */
+:root {
+    --mossy-green: #8BAA91;
+    --mossy-dark: #3E5540;
+    --mossy-gray: #C7C8CC;
+    --mossy-glow: #A3F6D0;
+  }
+  
+  body {
+    font-family: 'EB Garamond', serif;
+    background-color: var(--mossy-gray);
+    color: var(--mossy-dark);
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1, h2, h3 {
+    font-weight: normal;
+    color: var(--mossy-dark);
+    text-shadow: 0 1px 2px var(--mossy-glow);
+  }
+  
+  a {
+    color: var(--mossy-dark);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: var(--mossy-glow);
+    text-shadow: 0 0 6px var(--mossy-glow);
+  }
+  
+  button {
+    background-color: var(--mossy-green);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  button:hover {
+    background-color: var(--mossy-glow);
+    color: var(--mossy-dark);
+    transition: all 0.2s ease-in-out;
+  }
+  
