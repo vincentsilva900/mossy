@@ -50,5 +50,13 @@ const authRoutes = require('./routes/auth');
 app.use('/', authRoutes);
 const mossbookRoutes = require('./routes/mossbook');
 app.use('/', mossbookRoutes);
+app.get('/terms', (req, res) => {
+  res.render('terms');
+});
+
+app.get('/privacy', (req, res) => {
+  res.render('privacy');
+});
+
 
 app.listen(3000, () => console.log('Mossy app running on port 3000'));
