@@ -8,6 +8,8 @@ const methodOverride = require('method-override');
 const path = require('path');
 const app = express();
 
+const fileUpload = require('express-fileupload');
+app.use(fileUpload({ useTempFiles: true }));
 
 
 mongoose.connect(process.env.MONGO_URI, {
