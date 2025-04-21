@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="/style/brand.css">
 </head>
 <body class="<%= typeof pageClass !== 'undefined' ? pageClass : '' %>">
+  <!-- Add this to layout.ejs body tag -->
+<div class="mossy-overlay"></div>
+
   <%- include(content) %>
 
   <script>
