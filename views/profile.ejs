@@ -15,6 +15,7 @@
 <div style="text-align: left; margin-bottom: 1rem;">
 <a href="/shadowroom" style="
   background-color: #fdfb5b;
+  font-size: 1.5rem;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   text-decoration: none;
@@ -34,7 +35,7 @@
     border-radius: 1rem;
     font-weight: bold;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     transition: transform 0.2s ease;
   " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
@@ -42,6 +43,11 @@
   </a>
 </div>
 
+<div style="text-align: left; margin-bottom: 1rem;">
+  <a href="/mossbook" style="background-color: #53a134; color: #fdfb5b; font-size: 1.5rem; padding: 0.5rem 1rem; border-radius: 1rem; font-weight: bold; text-decoration: none;">
+    📔 Your Mossbook Collection 
+  </a>
+</div>
 
 
 <h2>Welcome, <%= user.username %></h2>
@@ -54,7 +60,10 @@
   <textarea name="content" placeholder="What's on your mind?" rows="2" style="width: 100%; margin-bottom: 1rem;"></textarea>
 
   <div id="post-drop-zone" class="drop-zone">
-    <p>📷 Drop an image for your post (optional)</p>
+    <p style="font-size: 1.3rem; font-weight: bold; color: #e1ffe1;">
+      📷 Drop an image for your post (optional)
+    </p>
+    
     <img id="postPreview" src="" style="max-width: 150px; display: none; margin: 0.5rem auto;" />
 
     <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
@@ -89,13 +98,6 @@
 <br> 
 
 
-<div style="text-align: left; margin-bottom: 1rem;">
-  <a href="/mossbook" style="background-color: #53a134; color: #fdfb5b; font-size: 1.5rem; padding: 0.5rem 1rem; border-radius: 1rem; font-weight: bold; text-decoration: none;">
-    📔 Your Mossbooks
-  </a>
-</div>
-
-
 <!-- 🎵 Profile Song Input (bottom left corner) -->
 <div style="
   position: fixed;
@@ -121,7 +123,7 @@
       Save
     </button>
     <!-- Add this inside your form, under the song input -->
-<div style="margin-top: 0.5rem;">
+<div style="margin-top: 0.5rem; color: #010201;">
   <label for="colorPicker">🎨 Box Color:</label>
   <input
     type="color"
@@ -181,7 +183,10 @@
 </script>
 
 
-<h3>Your Friends</h3>
+<h3 style="font-size: 2rem; color: #e1ffe1; font-weight: bold; margin-bottom: 1rem;">
+  Your Friends
+</h3>
+
 <div class="friends-list">
   <% user.friends.forEach(friend => { %>
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
@@ -197,7 +202,9 @@
 </div>
 
 <% if (user.friendRequests.length > 0) { %>
-  <h3>Friend Requests</h3>
+  <h3>
+    Friend Requests
+  </h3>
   <% user.friendRequests.forEach(requestor => { %>
     <div style="margin-bottom: 1rem;">
       <a href="/user/<%= requestor._id %>">
@@ -216,7 +223,9 @@
 
 
 
-<h3>Feed</h3>
+<h3 style="font-size: 2rem; color: #e1ffe1; font-weight: bold; margin-bottom: 1rem;">
+  Feed
+</h3>
 <% posts.forEach(post => { %>
   <div class="post">
     <a href="/user/<%= post.user._id %>"><%= post.user.username %></a>
