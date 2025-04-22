@@ -1,7 +1,7 @@
 <!-- 🔙 Back to Your Own Profile -->
 <div style="margin: 1rem 0;">
     <a href="/user/profile">
-      <button style="background-color: #ffccf9; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
+      <button style="background-color: #D0CA84; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
         ⬅️ Back to My Profile
       </button>
     </a>
@@ -11,7 +11,7 @@
 
 <!-- 📁 views/wishes.ejs -->
 <div style="text-align: center; margin-top: 2rem;">
-    <h2 style="font-size: 2.3rem; color: #7b2ff2; font-family: 'Comic Sans MS', cursive;">
+    <h2 style="font-size: 3rem; color: #c1ffd7; font-family: 'Comic Sans MS', cursive;">
       ✧ Wishboard ✧
     </h2>
     <form action="/wish" method="POST" style="margin-bottom: 2rem;">
@@ -24,7 +24,7 @@
     </form>
   
     <% if (!wishes || wishes.length === 0) { %>
-      <p style="color:#888;">No wishes in the mist right now...</p>
+      <p style="color:#c1ffd7;">No wishes in the mist right now...</p>
     <% } else { %>
       <% wishes.forEach(wish => { %>
         <div style="background: linear-gradient(90deg, #f9f6ff, #f0fdff); border-radius: 1rem; margin: 1rem auto; max-width: 420px; padding: 1rem 1.5rem; box-shadow: 0 4px 12px #dfdfef77;">

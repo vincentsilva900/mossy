@@ -56,12 +56,36 @@
   <div id="post-drop-zone" class="drop-zone">
     <p>📷 Drop an image for your post (optional)</p>
     <img id="postPreview" src="" style="max-width: 150px; display: none; margin: 0.5rem auto;" />
+
     <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
-    <button type="button" onclick="document.getElementById('postFileInput').click()">UploadImage</button>
+    
+    <!-- BIGGER Upload Button -->
+    <button type="button" onclick="document.getElementById('postFileInput').click()" style="
+      width: 100%;
+      font-size: 1.2rem;
+      padding: 0.75rem;
+      border-radius: 0.75rem;
+      background-color: #7fbf7f;
+      color: #fff;
+      border: none;
+      margin-top: 0.5rem;
+    ">Upload Image</button>
   </div>
 
-  <button type="submit">Post</button>
+  <!-- BIGGER Post Button -->
+  <button type="submit" style="
+    width: 100%;
+    font-size: 1.3rem;
+    padding: 0.8rem;
+    border-radius: 0.75rem;
+    background-color: #446944;
+    color: #fffbe6;
+    border: none;
+    margin-top: 1rem;
+    font-weight: bold;
+  ">Post</button>
 </form>
+
 <br> 
 
 
