@@ -1,9 +1,19 @@
 body.mossbook-mode {
-    background: linear-gradient(#e6ffe6, #d2f5c4);
-    font-family: 'Comic Sans MS', cursive;
-    color: #304020;
-  }
-  
+  background: url('/images/bg-mossy-portal.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Comic Sans MS', cursive;
+  color: #304020;
+}
+body.mossbook-mode::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(230, 255, 230, 0.4); /* dreamy green haze */
+  z-index: -1;
+}
+
   /* Main container for each page */
   .moss-page {
     background: #fafff4;
