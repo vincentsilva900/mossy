@@ -42,9 +42,10 @@
     🌙 Wishboard
   </a>
 </div>
+<br>
 
 <div style="text-align: left; margin-bottom: 1rem;">
-  <a href="/mossbook" style="background-color: #53a134; color: #fdfb5b; font-size: 1.5rem; padding: 0.5rem 1rem; border-radius: 1rem; font-weight: bold; text-decoration: none;">
+  <a href="/mossbook" style="background-color: #53a134; color: #fdfb5b; font-size: 1rem; padding: 0.5rem 1rem; border-radius: 1rem; font-weight: bold; text-decoration: none;">
     📔 Your Mossbook Collection 
   </a>
 </div>
@@ -191,11 +192,15 @@
   <% user.friends.forEach(friend => { %>
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
       <a href="/user/<%= friend._id %>">
-        <img src="<%= friend.profilePic %>" width="30" style="border-radius: 50%; margin-right: 0.5rem;" />
-        <%= friend.username %>
+        <img src="<%= friend.profilePic %>" width="70" style="border-radius: 50%; margin-right: 0.5rem;" />
+        <span style="font-size: 1.3rem; font-weight: bold; color: #e1ffe1;"><%= friend.username %></span>
       </a>
+      
       <form action="/user/unfriend/<%= friend._id %>" method="POST" style="margin-left: 1rem;">
-        <button type="submit" style="font-size: 0.75rem;">❌ Unfriend</button>
+        <button type="submit" style="font-size: 1rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: bold; background-color: #ffe6e6; border: none;">
+          ❌ Unfriend
+        </button>
+        
       </form>
     </div>
   <% }) %>
@@ -208,14 +213,14 @@
   <% user.friendRequests.forEach(requestor => { %>
     <div style="margin-bottom: 1rem;">
       <a href="/user/<%= requestor._id %>">
-        <img src="<%= requestor.profilePic %>" width="30" style="border-radius: 50%;" />
-        <%= requestor.username %>
+        <img src="<%= requestor.profilePic %>" width="70" style="border-radius: 50%;" />
+        <span style="font-size: 1.3rem; font-weight: bold; color: #e1ffe1;"><%= requestor.username %></span>
       </a>
       <form action="/user/accept/<%= requestor._id %>" method="POST" style="display:inline;">
-        <button type="submit">✅ Accept</button>
+        <button type="submit" style="font-size: 1rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: bold; background-color: #ffe6e6; border: none;">✅ Accept</button>
       </form>
       <form action="/user/decline/<%= requestor._id %>" method="POST" style="display:inline;">
-        <button type="submit">❌ Decline</button>
+        <button type="submit" style="font-size: 1rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: bold; background-color: #ffe6e6; border: none;">❌ Decline</button>
       </form>
     </div>
   <% }) %>
