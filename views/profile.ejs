@@ -12,12 +12,41 @@
   </button>
 </form>
 
+<div style="text-align: left; margin-bottom: 1rem;">
+<a href="/shadowroom" style="
+  background-color: #f0f0f0;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+">
+  🖤 Shadowroom
+</a>
+</div>
+
+<div style="text-align: left; margin-top: 1.5rem;">
+  <a href="/wishes" style="
+    background-color: #f6e7ff;
+    color: #EAB99A;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+  " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    🌙 Wishboard
+  </a>
+</div>
+
 <div style="text-align: center; margin-bottom: 1rem;">
   <a href="/mossbook" style="background-color: #EAD587; color: #9E8A42; padding: 0.5rem 1rem; border-radius: 1rem; font-weight: bold; text-decoration: none;">
     📔 Your Mossbooks
   </a>
 </div>
-
 
 
 <h2>Welcome, <%= user.username %></h2>
@@ -38,20 +67,6 @@
 
   <button type="submit">Post</button>
 </form>
-
-
-
-<a href="/shadowroom" style="
-  background-color: #f0f0f0;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-">
-  🖤 Shadowroom
-</a>
 
 
 
