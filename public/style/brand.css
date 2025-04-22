@@ -1,9 +1,9 @@
 /* 🧚 MOSSY BRAND STYLES */
 :root {
-    --mossy-green: #96c9a0;
-    --mossy-dark: #e9f357;
+    --mossy-green: #C6B19C;
+    --mossy-dark: #FFEBBD;
     --mossy-gray: #C7C8CC;
-    --mossy-glow: #A3F6D0;
+    --mossy-glow: #C4C37D;
   }
   
   body {
@@ -58,5 +58,13 @@
     background-color: var(--mossy-glow);
     color: var(--mossy-dark);
     transition: all 0.2s ease-in-out;
+  }
+  .profile-pic {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%; /* makes it a circle */
+    object-fit: cover;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    border: 2px solid #88aa88; /* soft mossy border */
   }
   
