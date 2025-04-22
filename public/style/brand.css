@@ -44,8 +44,9 @@
   }
   
   button {
-    background-color: var(--mossy-green);
-    color: white;
+    background-color: #bdff67;
+    color: rgb(31, 32, 22);
+    font-size: 2.2rem;
     border: none;
     padding: 0.6rem 1.2rem;
     border-radius: 1rem;

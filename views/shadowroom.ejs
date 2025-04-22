@@ -1,7 +1,7 @@
 <!-- 🔙 Back to Your Own Profile -->
 <div style="margin: 1rem 0;">
     <a href="/user/profile">
-      <button style="background-color: #ffccf9; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
+      <button style="background-color: #D0CA84; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
         ⬅️ Back to My Profile
       </button>
     </a>
@@ -21,7 +21,7 @@
     </form>
   
     <% if (shadows.length === 0) { %>
-      <p style="color:#aaa;">It’s quiet in here... no shadows yet.</p>
+      <p style="color:#fdfb5b;">It’s quiet in here... no shadows yet.</p>
     <% } else { %>
       <% shadows.forEach(shadow => { %>
         <div style="background-color: #f3f3f3; padding: 1rem; border-radius: 1rem; margin: 1rem auto; max-width: 400px;">
@@ -29,7 +29,7 @@
           <%
           const hoursAgo = Math.floor((Date.now() - new Date(shadow.createdAt)) / (1000 * 60 * 60));
         %>
-        <p style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">
+        <p style="font-size: 0.85rem; color: #fdfb5b; margin-top: 0.5rem;">
           ⏳ posted <%= hoursAgo === 0 ? 'just now' : `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago` %>
         </p>
         
