@@ -16,7 +16,12 @@ router.get('/:friendId', async (req, res) => {
   }).sort({ createdAt: 1 }).populate('sender receiver');
 
   const friend = await User.findById(friendId);
-  res.render('chat', { messages, friend });
+  res.render('layout', {
+    content: 'chat',
+    messages,
+    friend
+  });
+  
 });
 
 // POST send a message
