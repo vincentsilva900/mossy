@@ -14,7 +14,7 @@
     background-attachment: fixed;
     background-color: #0f1c13; /* backup dark green in case image fails */
     color: var(--mossy-dark);
-    font-family: 'EB Garamond', serif;
+    font-family: 'Quicksand', sans-serif;
     position: relative;
     z-index: 0;
   }
