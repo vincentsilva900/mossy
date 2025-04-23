@@ -12,7 +12,15 @@
 <div class="center-box">
   <h2 style="color: #D0CA84;"><%= user.username %>'s Profile</h2>
   
-  <img src="<%= user.profilePic %>" width="50"/>
+  <img src="<%= user.profilePic %>"
+  style="
+       width: 70px; 
+       height: 70px; 
+       border-radius: 50%; 
+       object-fit: cover; 
+       margin-right: 0.5rem;
+       box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+     " />
 
   <% if (session.userId !== user._id.toString()) { %>
     <a href="/messages/<%= user._id %>" style="
