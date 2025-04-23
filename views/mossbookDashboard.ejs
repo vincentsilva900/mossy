@@ -78,7 +78,7 @@
 
 
 <!-- 🌿 Mossbook UI -->
-<h2 style="color: #D0CA84;">📔 Your Mossbook Collection</h2>
+<h2 style="color: #38ad14;">📔 Your Mossbook Collection</h2>
 
 <form action="/mossbook" method="POST">
   <label>Add Title:</label>
@@ -95,7 +95,7 @@
 <% } else { %>
   <% mossbooks.forEach(book => { %>
     <div class="mossbook-card">
-      <h3 style="color: #D0CA84;"><%= book.title %></h3>
+      <h3 style="color: #0c0e0c;"><%= book.title %></h3>
       <p>👑 Owner: <%= book.owner.toString() === session.userId ? 'You' : 'Someone Else' %></p>
       <p>👯 Members: <%= book.members.map(m => m.username).join(', ') %></p>
       <a href="/mossbook/<%= book._id %>/page/0">📖 Open</a>
