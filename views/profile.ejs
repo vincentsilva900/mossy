@@ -12,43 +12,54 @@
   </button>
 </form>
 
-<div style="text-align: left; margin-bottom: 1rem;">
-<a href="/shadowroom" style="
-  background-color: #fdfb5b;
-  font-size: 1.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-">
-  🖤 Shadowroom
-</a>
-</div>
-
-<div style="text-align: left; margin-top: 1.5rem;">
-  <a href="/wishes" style="
-    background-color: #6b2792;
-    color: #eee6f3;
-    padding: 0.5rem 1rem;
+<div style="display: flex; justify-content: center; gap: 1rem; margin: 2rem 0;">
+  <a href="/shadowroom" style="
+    background-color: #60b43c;
+    color: #2b560f;
+    font-size: 1.2rem;
+    padding: 0.75rem 1.25rem;
     border-radius: 1rem;
     font-weight: bold;
     text-decoration: none;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 1;
+    text-align: center;
+    max-width: 250px;
+  ">🖤 Shadowroom</a>
+
+  <a href="/wishes" style="
+    background-color: #60b43c;
+    color: #2b560f;
+    font-size: 1.2rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 1;
+    text-align: center;
+    max-width: 250px;
     transition: transform 0.2s ease;
   " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
     🌙 Wishboard
   </a>
-</div>
-<br>
 
-<div style="text-align: left; margin-bottom: 1rem;">
-  <a href="/mossbook" style="background-color: #53a134; color: #fdfb5b; font-size: 1rem; padding: 0.5rem 1rem; border-radius: 1rem; font-weight: bold; text-decoration: none;">
-    📔 Your Mossbook Collection 
-  </a>
+  <a href="/mossbook" style="
+    background-color: #60b43c;
+    color: #2b560f;
+    font-size: 1.2rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 1;
+    text-align: center;
+    max-width: 250px;
+  ">📔 Your Mossbook Collection</a>
 </div>
+
+
 
 
 <h2>Welcome, <%= user.username %></h2>
