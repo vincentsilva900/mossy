@@ -6,33 +6,106 @@
       </button>
     </a>
   </div>
+<!-- 🌿 Page-Specific Styling for Mossbook Dashboard -->
+<style>
+  body {
+    font-family: 'Trebuchet MS', sans-serif;
+  }
+
+  h2, h3, p, label, input, button, a {
+    font-size: 1.2rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  input {
+    padding: 0.6rem;
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    width: 80%;
+    max-width: 300px;
+  }
+
+  button {
+    font-size: 1.2rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 1rem;
+    background-color: #60b43c;
+    color: #2b560f;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+
+  a {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #60b43c;
+    text-decoration: none;
+    margin-top: 0.5rem;
+  }
+
+  label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+    font-weight: bold;
+    color: #2b560f;
+  }
+
+  form {
+    text-align: center;
+    margin: 2rem 0;
+  }
+
+  .mossbook-card {
+    border: 2px dashed #c8facc;
+    margin: 1.5rem auto;
+    max-width: 500px;
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    background-color: #f7fff4;
+  }
+</style>
 
 
-<h2 style="text-align: center;">📔 Your Mossbook Collection</h2>
+<!-- 🌿 Mossbook UI -->
+<h2>📔 Your Mossbook Collection</h2>
 
-<form action="/mossbook" method="POST" style="text-align: center; margin: 2rem 0;">
+<form action="/mossbook" method="POST">
+  <label>Add Title:</label>
   <input name="title" placeholder="Mossbook Title" required />
-  <label>Add Title :</label><br>
+
+  <label>Add friends (e.g. user1, user2, user3):</label>
   <input name="members" placeholder="Add usernames" />
-  <label>Add friends (e.g. user1, user2, user3):</label><br>
+
   <button type="submit">🌱 Create</button>
 </form>
 
 <% if (mossbooks.length === 0) { %>
-  <p style="text-align:center;">No Mossbooks yet.</p>
+  <p style="text-align:center; font-size: 1.2rem;">No Mossbooks yet.</p>
 <% } else { %>
   <% mossbooks.forEach(book => { %>
-    <div style="border: 2px dashed #c8facc; margin: 1rem auto; max-width: 400px; padding: 1rem; border-radius: 1rem;">
+    <div class="mossbook-card">
       <h3><%= book.title %></h3>
       <p>👑 Owner: <%= book.owner.toString() === session.userId ? 'You' : 'Someone Else' %></p>
       <p>👯 Members: <%= book.members.map(m => m.username).join(', ') %></p>
       <a href="/mossbook/<%= book._id %>/page/0">📖 Open</a>
+
       <% if (book.owner.toString() === session.userId) { %>
         <form action="/mossbook/<%= book._id %>/delete" method="POST" style="display:inline;">
           <button type="submit">❌ Delete</button>
         </form>
-        <form action="/mossbook/<%= book._id %>/members" method="POST" style="margin-top:0.5rem;">
-          <label>Update Members:</label><br>
+
+        <form action="/mossbook/<%= book._id %>/members" method="POST">
+          <label>Update Members:</label>
           <input name="members" placeholder="user1,user2" />
           <button type="submit">💾 Save</button>
         </form>
