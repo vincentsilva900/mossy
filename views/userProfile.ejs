@@ -10,7 +10,7 @@
     </div>
 
 <div class="center-box">
-  <h2><%= user.username %>'s Profile</h2>
+  <h2 style="color: #D0CA84;"><%= user.username %>'s Profile</h2>
   <img src="<%= user.profilePic %>" width="50"/>
   <div class="center-box">
   
@@ -67,27 +67,32 @@
   <% } %>
 <% } %>
 
-<h3 style="margin-top: 2rem;">📝 Posts by <%= user.username %></h3>
+<h3 style="color: #D0CA84; margin-top: 2rem;">📝 Posts by <%= user.username %></h3>
 
 <% if (posts.length === 0) { %>
   <p>This user hasn’t posted anything yet!</p>
 <% } else { %>
   <% posts.forEach(post => { %>
     <div class="post" style="margin-bottom: 1.5rem;">
-      <p><strong>@<%= post.user.username %></strong></p>
-      <p><%= post.content %></p>
+      <p style="color: #D0CA84; font-size: 1.2rem;"><strong>@<%= post.user.username %></strong></p>
+<p style="color: #faef75; font-size: 1.1rem;"><%= post.content %></p>
 
       <% if (post.image) { %>
         <img src="<%= post.image %>" style="max-width: 100%; border-radius: 10px; margin-top: 0.5rem;" />
       <% } %>
 
-      <small>
+      <small style="color: #faef75; font-size: 0.9rem;">
         Posted on <%= post.createdAt.toLocaleDateString() %> @
         <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
       </small>
-      <form action="/user/like/<%= post._id %>" method="POST">
-        <button type="submit">❤️</button> <%= post.likes.length %> likes
+      
+      <form action="/user/like/<%= post._id %>" method="POST" style="margin-top: 0.3rem;">
+        <button type="submit" style="font-size: 1.1rem;">❤️</button>
+        <span style="color: #faef75; font-weight: bold; font-size: 1.1rem;">
+          <%= post.likes.length %> likes
+        </span>
       </form>
+      
     </div>
   <% }) %>
 <% } %>

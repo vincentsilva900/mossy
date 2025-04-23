@@ -266,10 +266,13 @@
       <img src="<%= post.image %>" alt="Post image" style="max-width: 100px; margin-top: 0.5rem; border-radius: 12px;" />
     <% } %>
 
-    <small><%= post.createdAt.toLocaleDateString() %> @ <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></small>
+    <small style="color: #faef75; font-size: 0.9rem;"><%= post.createdAt.toLocaleDateString() %> @ <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></small>
     
     <form action="/user/like/<%= post._id %>" method="POST">
-      <button type="submit">❤️</button> <%= post.likes.length %> likes
+      <button type="submit" style="font-size: 1.1rem;">❤️</button> 
+      <span style="color: #faef75; font-weight: bold; font-size: 1.1rem;">
+      <%= post.likes.length %> likes
+    </span>
     </form>
   </div>
 <% }) %>
