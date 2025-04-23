@@ -203,12 +203,21 @@
   <% user.friends.forEach(friend => { %>
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
       <a href="/user/<%= friend._id %>">
-        <img src="<%= friend.profilePic %>" width="70" style="border-radius: 50%; margin-right: 0.5rem;" />
+        <img src="<%= friend.profilePic %>" 
+     style="
+       width: 70px; 
+       height: 70px; 
+       border-radius: 50%; 
+       object-fit: cover; 
+       margin-right: 0.5rem;
+       box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+     " />
+
         <span style="font-size: 1.3rem; font-weight: bold; color: #fdfb5b;"><%= friend.username %></span>
       </a>
       
       <form action="/user/unfriend/<%= friend._id %>" method="POST" style="margin-left: 1rem;">
-        <button type="submit" style="font-size: 1rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: bold; background-color: #ffe6e6; border: none;">
+        <button type="submit" style="font-size: 1rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: bold; background-color: #60b43c; border: none;">
           ❌ Unfriend
         </button>
         
