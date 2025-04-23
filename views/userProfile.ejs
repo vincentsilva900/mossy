@@ -11,7 +11,27 @@
 
 <div class="center-box">
   <h2 style="color: #D0CA84;"><%= user.username %>'s Profile</h2>
+  
   <img src="<%= user.profilePic %>" width="50"/>
+
+  <% if (session.userId !== user._id.toString()) { %>
+    <a href="/messages/<%= user._id %>" style="
+      display: inline-block;
+      background-color: #60b43c;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 1rem;
+    ">
+      💌 Message
+    </a>
+  <% } %>
+  
+
+
+
   <div class="center-box">
   
     

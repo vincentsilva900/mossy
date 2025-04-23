@@ -1,0 +1,17 @@
+<h2 style="text-align:center;">Chat with <%= friend.username %></h2>
+
+<div style="max-width:600px; margin:auto;">
+  <% messages.forEach(msg => { %>
+    <div style="text-align:<%= msg.sender._id.equals(session.userId) ? 'right' : 'left' %>; margin: 1rem 0;">
+      <p style="background:#f2fff2; display:inline-block; padding:0.6rem 1rem; border-radius:1rem; max-width:70%;">
+        <%= msg.content %><br>
+        <small style="color:#888;"><%= new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></small>
+      </p>
+    </div>
+  <% }) %>
+
+  <form action="/messages/<%= friend._id %>" method="POST" style="text-align:center; margin-top:2rem;">
+    <textarea name="content" rows="3" style="width:90%; border-radius: 1rem; padding:0.5rem;" placeholder="Type a message..." required></textarea><br>
+    <button type="submit" style="margin-top:0.5rem;">📩 Send</button>
+  </form>
+</div>

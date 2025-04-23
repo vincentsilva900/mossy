@@ -53,6 +53,9 @@ const authRoutes = require('./routes/auth');
 app.use('/', authRoutes);
 const mossbookRoutes = require('./routes/mossbook');
 app.use('/', mossbookRoutes);
+const messageRoutes = require('./routes/message');
+app.use('/messages', messageRoutes);
+
 app.get('/terms', (req, res) => {
   res.render('terms');
 });
