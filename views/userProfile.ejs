@@ -109,6 +109,13 @@
         <img src="<%= post.image %>" style="max-width: 100%; border-radius: 10px; margin-top: 0.5rem;" />
       <% } %>
 
+      <% if (post.video) { %>
+        <video class="mossy-video" controls>
+          <source src="<%= post.video %>" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      <% } %>
+      
       <small style="color: #faef75; font-size: 0.9rem;">
         Posted on <%= post.createdAt.toLocaleDateString() %> @
         <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
