@@ -32,22 +32,33 @@ cloudinary.config({
 
 router.post('/post', isLoggedIn, async (req, res) => {
   let imageUrl = '';
-  if (req.files && req.files.image) {
-    const file = req.files.image;
-    const result = await cloudinary.uploader.upload(file.tempFilePath, {
+  let videoUrl = '';
+
+  if (req.files?.image) {
+    const result = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
       folder: 'mossy_posts'
     });
     imageUrl = result.secure_url;
   }
 
+  if (req.files?.video) {
+    const result = await cloudinary.uploader.upload(req.files.video.tempFilePath, {
+      resource_type: 'video',
+      folder: 'mossy_post_videos'
+    });
+    videoUrl = result.secure_url;
+  }
+
   await Post.create({
     user: req.session.userId,
     content: req.body.content,
-    image: imageUrl
+    image: imageUrl,
+    video: videoUrl
   });
 
   res.redirect('/user/profile');
 });
+
 router.post('/delete-post/:id', isLoggedIn, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);

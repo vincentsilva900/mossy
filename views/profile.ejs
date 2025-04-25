@@ -104,6 +104,8 @@ max-width: 250px;
     <img id="postPreview" src="" style="max-width: 150px; display: none; margin: 0.5rem auto;" />
 
     <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
+<input type="file" name="video" accept="video/*" style="margin-top: 0.5rem;" />
+
     
     <!-- BIGGER Upload Button -->
     <button type="button" onclick="document.getElementById('postFileInput').click()" style="
@@ -290,6 +292,14 @@ max-width: 250px;
     <% if (post.image) { %>
       <img src="<%= post.image %>" alt="Post image" style="max-width: 100px; margin-top: 0.5rem; border-radius: 12px;" />
     <% } %>
+    <% if (post.video) { %>
+      <video class="mossy-video" controls>
+        <source src="<%= post.video %>" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    <% } %>
+    
+    
 
     <small style="color: #faef75; font-size: 0.9rem;"><%= post.createdAt.toLocaleDateString() %> @ <%= post.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></small>
     

@@ -67,4 +67,15 @@
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
     border: 2px solid #88aa88; /* soft mossy border */
   }
+  .mossy-video {
+    max-width: 100%;
+    border: 3px solid #b5ead7;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(143, 180, 143, 0.3);
+    background-color: #f0fff4;
+    margin-top: 1rem;
+  }
+  .mossy-video::-webkit-media-controls-panel {
+    background-color: #e3fbe7;
+  }
   

@@ -59,24 +59,34 @@ router.get('/:friendId', isLoggedIn, async (req, res) => {
   });
 });
 
-// 📎 Send a Message (with optional image)
 router.post('/:friendId', isLoggedIn, async (req, res) => {
   const userId = req.session.userId;
   const friendId = req.params.friendId;
 
   let imageUrl = '';
-  if (req.files && req.files.image) {
+  let videoUrl = '';
+
+  if (req.files?.image) {
     const result = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
       folder: 'mossy_chat_images'
     });
     imageUrl = result.secure_url;
   }
 
+  if (req.files?.video) {
+    const result = await cloudinary.uploader.upload(req.files.video.tempFilePath, {
+      resource_type: 'video',
+      folder: 'mossy_chat_videos'
+    });
+    videoUrl = result.secure_url;
+  }
+
   await Message.create({
     sender: userId,
     receiver: friendId,
     content: req.body.content,
-    image: imageUrl
+    image: imageUrl,
+    video: videoUrl
   });
 
   res.redirect(`/messages/${friendId}`);
