@@ -283,9 +283,12 @@
     </span>
     </form>
 
-    <form action="/user/delete-post/<%= post._id %>" method="POST" style="margin-top: 0.5rem;">
-      <button type="submit" style="font-size: 0.9rem; background-color: #ffb3b3; border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem;">🗑 Delete</button>
-    </form>
+    <% if (post.user._id.toString() === user._id.toString()) { %>
+      <form action="/user/delete-post/<%= post._id %>" method="POST" style="margin-top: 0.5rem;">
+        <button type="submit" style="font-size: 0.9rem; background-color: #ffb3b3; border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem;">🗑 Delete</button>
+      </form>
+    <% } %>
+    
     
   </div>
 <% }) %>
