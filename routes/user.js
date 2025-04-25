@@ -3,7 +3,10 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const Post = require('../models/Post');
+// ADD to routes/user.js
+const fs = require('fs'); // In case you handle local image deletions in the future
 
+const { unlink } = require('fs/promises'); // For deleting temp files if needed
 function isLoggedIn(req, res, next) {
   if (!req.session.userId) return res.redirect('/login');
   next();
@@ -45,7 +48,43 @@ router.post('/post', isLoggedIn, async (req, res) => {
 
   res.redirect('/user/profile');
 });
+router.post('/delete-post/:id', isLoggedIn, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post || post.user.toString() !== req.session.userId) {
+      return res.status(403).send("You're not allowed to delete this post");
+    }
 
+    await Post.findByIdAndDelete(req.params.id);
+    res.redirect('/user/profile');
+  } catch (err) {
+    console.error("❌ Error deleting post:", err);
+    res.status(500).send("Oops! Couldn't delete this post.");
+  }
+});
+
+router.post('/delete-profile-pic', isLoggedIn, async (req, res) => {
+  const user = await User.findById(req.session.userId);
+  user.profilePic = '/images/default-profile.jpg';
+  await user.save();
+  res.redirect('/user/profile');
+});
+
+router.post('/update-profile-pic', isLoggedIn, async (req, res) => {
+  try {
+    if (!req.files || !req.files.profilePic) return res.redirect('/user/profile');
+    const result = await cloudinary.uploader.upload(req.files.profilePic.tempFilePath, {
+      folder: 'mossy_profile_pics'
+    });
+    const user = await User.findById(req.session.userId);
+    user.profilePic = result.secure_url;
+    await user.save();
+    res.redirect('/user/profile');
+  } catch (err) {
+    console.error("❌ Error updating profile picture:", err);
+    res.status(500).send("Couldn't update your profile pic");
+  }
+});
 router.post('/song', isLoggedIn, async (req, res) => {
   const user = await User.findById(req.session.userId);
   let song = req.body.profileSong.trim();

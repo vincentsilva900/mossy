@@ -65,6 +65,14 @@
 <h2 style="color: #D0CA84;">Welcome, <%= user.username %></h2>
 <img src="<%= user.profilePic %>" class="profile-pic" />
 
+<form action="/user/delete-profile-pic" method="POST" style="margin-top: 0.5rem;">
+  <button type="submit" style="background-color: #ffe6e6; border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem;">🧹 Remove Profile Pic</button>
+</form>
+
+<form action="/user/update-profile-pic" method="POST" enctype="multipart/form-data" style="margin-top: 0.5rem;">
+  <input type="file" name="profilePic" accept="image/*" required style="margin-bottom: 0.3rem;" />
+  <button type="submit" style="background-color: #d0f0c0; border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem;">🌸 Update Profile Pic</button>
+</form>
 
 
 
@@ -274,6 +282,11 @@
       <%= post.likes.length %> likes
     </span>
     </form>
+
+    <form action="/user/delete-post/<%= post._id %>" method="POST" style="margin-top: 0.5rem;">
+      <button type="submit" style="font-size: 0.9rem; background-color: #ffb3b3; border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem;">🗑 Delete</button>
+    </form>
+    
   </div>
 <% }) %>
 
