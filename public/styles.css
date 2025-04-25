@@ -46,4 +46,19 @@ label a:hover {
   color: #3a5f3a;
   font-weight: bold;
 }
-
+.terms-section.dmca-policy {
+  padding: 2rem;
+  background: #f4f9f4;
+  border: 2px solid #cce3cc;
+  border-radius: 12px;
+  font-family: 'Georgia', serif;
+}
+.terms-section.dmca-policy h2,
+.terms-section.dmca-policy h3 {
+  color: #446644;
+  margin-bottom: 1rem;
+}
+.terms-section.dmca-policy a {
+  color: #336633;
+  font-weight: bold;
+}
