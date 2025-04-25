@@ -52,7 +52,8 @@ router.post('/delete-post/:id', isLoggedIn, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post || post.user.toString() !== req.session.userId) {
-      return res.status(403).send("You're not allowed to delete this post");
+      return res.send(`<script>alert("🚫 You can only delete your own posts!"); window.location.href = "/user/profile";</script>`);
+
     }
 
     await Post.findByIdAndDelete(req.params.id);
