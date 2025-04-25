@@ -2,9 +2,45 @@ const express = require('express');
 const router = express.Router();
 const Message = require('../models/Message');
 const User = require('../models/User');
+const cloudinary = require('cloudinary').v2;
 
-// GET chat with a specific friend
-router.get('/:friendId', async (req, res) => {
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+function isLoggedIn(req, res, next) {
+  if (!req.session.userId) return res.redirect('/login');
+  next();
+}
+
+// 💌 Inbox View (Your Mossages Overview)
+router.get('/', isLoggedIn, async (req, res) => {
+  const userId = req.session.userId;
+  const messages = await Message.find({
+    $or: [
+      { sender: userId },
+      { receiver: userId }
+    ]
+  }).populate('sender receiver');
+
+  const conversationIds = new Set();
+  const conversations = [];
+
+  messages.reverse().forEach(msg => {
+    const friend = msg.sender._id.equals(userId) ? msg.receiver : msg.sender;
+    if (!conversationIds.has(friend._id.toString())) {
+      conversations.push({ friend, latestMessage: msg });
+      conversationIds.add(friend._id.toString());
+    }
+  });
+
+  res.render('layout', { content: 'inbox', conversations });
+});
+
+// 🧚‍♀️ Chat with a Specific Friend
+router.get('/:friendId', isLoggedIn, async (req, res) => {
   const userId = req.session.userId;
   const friendId = req.params.friendId;
 
@@ -21,21 +57,41 @@ router.get('/:friendId', async (req, res) => {
     messages,
     friend
   });
-  
 });
 
-// POST send a message
-router.post('/:friendId', async (req, res) => {
+// 📎 Send a Message (with optional image)
+router.post('/:friendId', isLoggedIn, async (req, res) => {
   const userId = req.session.userId;
   const friendId = req.params.friendId;
+
+  let imageUrl = '';
+  if (req.files && req.files.image) {
+    const result = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
+      folder: 'mossy_chat_images'
+    });
+    imageUrl = result.secure_url;
+  }
 
   await Message.create({
     sender: userId,
     receiver: friendId,
-    content: req.body.content
+    content: req.body.content,
+    image: imageUrl
   });
 
   res.redirect(`/messages/${friendId}`);
 });
 
+// 🗑 Delete Your Own Message
+router.post('/delete/:messageId', isLoggedIn, async (req, res) => {
+  const message = await Message.findById(req.params.messageId);
+  if (!message) return res.status(404).send("Message not found");
+  if (!message.sender.equals(req.session.userId)) return res.status(403).send("Unauthorized");
+
+  const receiverId = message.receiver;
+  await Message.findByIdAndDelete(req.params.messageId);
+  res.redirect(`/messages/${receiverId}`);
+});
+
 module.exports = router;
+
