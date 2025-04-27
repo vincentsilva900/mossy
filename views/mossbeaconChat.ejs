@@ -1,13 +1,13 @@
 <%- include('partials/logoutToolbar') %>
 
 <!-- 🔙 Back to Your Own Profile -->
-    <div style="margin: 1rem 0;">
-      <a href="/user/profile">
-        <button style="background-color: #D0CA84; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
-          ⬅️ Back to My Profile
-        </button>
-      </a>
-    </div>
+<div style="margin: 1rem 0;">
+  <a href="/user/profile">
+    <button style="background-color: #D0CA84; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
+      ⬅️ Back to My Profile
+    </button>
+  </a>
+</div>
 
 <div class="mossbeacon-chat-container">
   <h1>Mossbeacon Music Portal 🎵✨</h1>
@@ -28,7 +28,33 @@
 
   <hr>
 
-  <h2>Your Sent Songs</h2>
-  <!-- You can add a list here of sent songs if you want -->
-</div>
+  <h2>Music You Sent 🎵</h2>
+  <div style="margin-bottom: 2rem;">
+    <% if (messagesSent.length > 0) { %>
+      <% messagesSent.forEach(msg => { %>
+        <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 10px;">
+          <p><strong>To: <%= msg.receiver.username %></strong></p>
+          <p><a href="<%= msg.musicLink %>" target="_blank"><%= msg.musicLink %></a></p>
+          <p style="font-size: 0.8rem; color: gray;"><%= msg.timestamp.toLocaleString() %></p>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>You haven't sent any music yet 🌙</p>
+    <% } %>
+  </div>
 
+  <h2>Music You Received 🎶</h2>
+  <div style="margin-bottom: 2rem;">
+    <% if (messagesReceived.length > 0) { %>
+      <% messagesReceived.forEach(msg => { %>
+        <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 10px;">
+          <p><strong>From: <%= msg.sender.username %></strong></p>
+          <p><a href="<%= msg.musicLink %>" target="_blank"><%= msg.musicLink %></a></p>
+          <p style="font-size: 0.8rem; color: gray;"><%= msg.timestamp.toLocaleString() %></p>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No one has sent you music yet 🌙</p>
+    <% } %>
+  </div>
+</div>
