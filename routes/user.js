@@ -253,7 +253,7 @@ router.post('/toggle-mossbeacon', async (req, res) => {
     const user = await User.findById(userId);
     user.mossbeacon = !user.mossbeacon;
     await user.save();
-    res.redirect('/profile/' + user.username); // or wherever your profile route is
+    res.redirect('/user/' + user.username); // or wherever your profile route is
   } catch (err) {
     console.error(err);
     res.redirect('back');
