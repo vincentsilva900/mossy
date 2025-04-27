@@ -246,6 +246,18 @@ router.post('/unfriend/:id', isLoggedIn, async (req, res) => {
 
   res.redirect(`/user/${req.params.id}`);
 });
-
+// Toggle Mossbeacon
+router.post('/toggle-mossbeacon', async (req, res) => {
+  try {
+    const userId = req.session.userId;
+    const user = await User.findById(userId);
+    user.mossbeacon = !user.mossbeacon;
+    await user.save();
+    res.redirect('/profile/' + user.username); // or wherever your profile route is
+  } catch (err) {
+    console.error(err);
+    res.redirect('back');
+  }
+});
 
 module.exports = router;

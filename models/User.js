@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   profileSong: { type: String, default: '' },
-  songBoxColor: { type: String, default: '#ffebf7' }
-
+  songBoxColor: { type: String, default: '#ffebf7' },
+  mossbeacon: { type: Boolean, default: false }, // <<<< add this
 });
 
 

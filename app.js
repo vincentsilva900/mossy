@@ -55,6 +55,8 @@ const mossbookRoutes = require('./routes/mossbook');
 app.use('/', mossbookRoutes);
 const messageRoutes = require('./routes/message');
 app.use('/messages', messageRoutes);
+const mossbeaconRoutes = require('./routes/mossbeacon');
+app.use('/mossbeacon', mossbeaconRoutes);
 
 app.get('/terms', (req, res) => {
   res.render('terms');

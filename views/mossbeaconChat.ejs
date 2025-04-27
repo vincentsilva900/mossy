@@ -1,0 +1,28 @@
+<!-- views/mossbeaconChat.ejs -->
+
+<%- include('partials/header') %>
+
+<div class="mossbeacon-chat-container">
+  <h1>Mossbeacon Music Portal 🎵✨</h1>
+
+  <form action="/mossbeacon/send" method="POST">
+    <label for="receiverId">Choose someone to send a song to:</label>
+    <select name="receiverId" required>
+      <% otherBeaconUsers.forEach(friend => { %>
+        <option value="<%= friend._id %>"><%= friend.username %></option>
+      <% }); %>
+    </select>
+
+    <label for="musicLink">Music Link (Spotify, YouTube, etc):</label>
+    <input type="url" name="musicLink" required placeholder="Paste link here">
+
+    <button type="submit">Send ✉️</button>
+  </form>
+
+  <hr>
+
+  <h2>Your Sent Songs</h2>
+  <!-- You can add a list here of sent songs if you want -->
+</div>
+
+<%- include('partials/footer') %>
