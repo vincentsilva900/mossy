@@ -77,16 +77,15 @@ max-width: 250px;
 </div>
 
 
-<!-- Somewhere in your profile.ejs -->
-
-<form action="/user/toggle-mossbeacon" method="POST">
+<div id="mossbeacon-section">
   <% if (user.mossbeacon) { %>
-    <button type="submit">🌟 Turn Off Mossbeacon</button>
-    <a href="/mossbeacon">Enter Mossbeacon Chat 🎶</a>
+    <button id="toggleMossbeacon" data-on="true">🌟 Turn Off Mossbeacon</button>
+    <a id="mossbeaconChatLink" href="/mossbeacon">Enter Mossbeacon Chat 🎶</a>
   <% } else { %>
-    <button type="submit">✨ Light Your Mossbeacon</button>
+    <button id="toggleMossbeacon" data-on="false">✨ Light Your Mossbeacon</button>
+    <a id="mossbeaconChatLink" href="/mossbeacon" style="display:none;">Enter Mossbeacon Chat 🎶</a>
   <% } %>
-</form>
+</div>
 
 
 <h2 style="color: #D0CA84;">Welcome, <%= user.username %></h2>
@@ -230,7 +229,36 @@ max-width: 250px;
     }
   });
 </script>
-
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('toggleMossbeacon');
+    const mossbeaconChatLink = document.getElementById('mossbeaconChatLink');
+  
+    toggleButton.addEventListener('click', async () => {
+      try {
+        const res = await fetch('/user/toggle-mossbeacon', { method: 'POST' });
+        if (res.ok) {
+          const currentlyOn = toggleButton.getAttribute('data-on') === 'true';
+          if (currentlyOn) {
+            toggleButton.innerHTML = '✨ Light Your Mossbeacon';
+            toggleButton.setAttribute('data-on', 'false');
+            mossbeaconChatLink.style.display = 'none';
+          } else {
+            toggleButton.innerHTML = '🌟 Turn Off Mossbeacon';
+            toggleButton.setAttribute('data-on', 'true');
+            mossbeaconChatLink.style.display = 'inline-block';
+          }
+        } else {
+          alert('Something went wrong toggling your Mossbeacon 😭');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Could not connect to Mossy server 🧹');
+      }
+    });
+  });
+  </script>
+  
 
 <h3 style="font-size: 2rem; color: #e1ffe1; font-weight: bold; margin-bottom: 1rem;">
   Your Friends
