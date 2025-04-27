@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const MossbeaconMessage = require('../models/MossbeaconMessage');
+const MossbeaconMessage = require('../models/MossbeaconMessage'); // <<< ADD THIS LINE
 
 // GET Mossbeacon Chat
 router.get('/', async (req, res) => {
@@ -11,8 +11,12 @@ router.get('/', async (req, res) => {
     const userId = req.session.userId;
     const user = await User.findById(userId);
 
+    if (!user) {
+      return res.redirect('/login');
+    }
+
     if (!user.mossbeacon) {
-      return res.redirect('/profile/' + user.username);
+      return res.redirect('/user/' + user.username);
     }
 
     // Find other beacon users except yourself
@@ -21,7 +25,7 @@ router.get('/', async (req, res) => {
     res.render('mossbeaconChat', { user, otherBeaconUsers });
   } catch (err) {
     console.error(err);
-    res.redirect('back');
+    res.status(500).send('Internal Server Error');
   }
 });
 
