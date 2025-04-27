@@ -79,7 +79,7 @@ max-width: 250px;
 
 <!-- Somewhere in your profile.ejs -->
 
-<form action="/profile/toggle-mossbeacon" method="POST">
+<form action="/user/toggle-mossbeacon" method="POST">
   <% if (user.mossbeacon) { %>
     <button type="submit">🌟 Turn Off Mossbeacon</button>
     <a href="/mossbeacon">Enter Mossbeacon Chat 🎶</a>
