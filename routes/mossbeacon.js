@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
         messagesSent,
         messagesReceived,
         bodyClass: 'mossbeacon-bg', // if you want custom class
-        pageClass: 'mossbook-mode'  // to keep using mossbook styles
+        pageClass: 'mossbeacon-bg'  // to keep using mossbook styles
       });
       
   } catch (err) {
