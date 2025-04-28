@@ -100,7 +100,39 @@ max-width: 250px;
   <button type="submit" style="background-color: #d0f0c0; border: none; padding: 0.4rem 0.8rem; border-radius: 0.5rem;">🌸 Update Profile Pic</button>
 </form>
 
-
+<div class="center-box">
+  
+    
+  <% if (user.profileSong) { %>
+    <div style="
+      background-color: <%= user.songBoxColor || '#ffebf7' %>;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      border: 2px dashed #ff99c8;
+      margin-top: 1rem;
+      width: fit-content;
+      max-width: 90%;
+    ">
+      <h4 style="
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        color: #387924;
+        font-family: 'Quicksand', sans-serif;
+      ">
+        🎶 <%= user.username %>'s Profile Song:
+      </h4>
+  
+      <iframe
+        src="<%= user.profileSong.includes('?') ? user.profileSong + '&autoplay=0' : user.profileSong + '?autoplay=0' %>"
+        width="300"
+        height="200"
+        frameborder="0"
+        allowtransparency="true"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        style="border-radius: 12px;"
+      ></iframe>
+    </div>
+  <% } %>
 
 <form id="postForm" action="/user/post" method="POST" enctype="multipart/form-data">
   <textarea name="content" placeholder="What's on your mind?" rows="2" style="width: 100%; margin-bottom: 1rem;"></textarea>
