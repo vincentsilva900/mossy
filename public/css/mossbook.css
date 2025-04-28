@@ -13,13 +13,7 @@ body.mossbook-mode::before {
   background: rgba(230, 255, 230, 0.4); /* dreamy green haze */
   z-index: -1;
 }
-body.mossbeacon-bg {
-  background-image: url('/images/bg-misty-portal.png'); /* or whatever misty vibe you want */
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-}
+
 
   /* Main container for each page */
   .moss-page {
