@@ -62,10 +62,3 @@ label a:hover {
   color: #336633;
   font-weight: bold;
 }
-body.mossbeacon-bg {
-  background-image: url('/images/bg-misty-portal.jpg'); /* or whatever misty vibe you want */
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-}
