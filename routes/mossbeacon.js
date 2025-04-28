@@ -25,10 +25,16 @@ router.get('/', async (req, res) => {
     const messagesSent = await MossbeaconMessage.find({ sender: userId }).populate('sender receiver');
     const messagesReceived = await MossbeaconMessage.find({ receiver: userId }).populate('sender receiver');
 
-    res.render('mossbeaconChat', { user, otherBeaconUsers, 
-        messagesSent, 
+    res.render('layout', {
+        content: 'mossbeaconChat', // pass mossbeaconChat.ejs into layout
+        user,
+        otherBeaconUsers,
+        messagesSent,
         messagesReceived,
-        bodyClass: 'mossbeacon-bg'  });
+        bodyClass: 'mossbeacon-bg', // if you want custom class
+        pageClass: 'mossbook-mode'  // to keep using mossbook styles
+      });
+      
   } catch (err) {
     console.error('Mossbeacon Error:', err);
     res.status(500).send('Internal Server Error');
