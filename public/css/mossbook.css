@@ -14,7 +14,7 @@ body.mossbook-mode::before {
   z-index: -1;
 }
 body.mossbeacon-bg {
-  background-image: url('/images/bg-misty-portal.jpg'); /* or whatever misty vibe you want */
+  background-image: url('/images/bg-misty-portal.png'); /* or whatever misty vibe you want */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
