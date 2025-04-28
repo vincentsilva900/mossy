@@ -26,7 +26,13 @@ body.mossbook-mode::before {
     box-shadow: 0 0 20px rgba(82, 110, 82, 0.2);
     position: relative;
   }
-  
+  body.mossbeacon-bg {
+    background-image: url('/images/bg-misty-portal.png'); /* or whatever misty vibe you want */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
   /* Drop zone */
   .drop-zone {
     border: 2px dashed #9bbf8f;
