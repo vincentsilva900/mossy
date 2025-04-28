@@ -12,30 +12,31 @@
 </div>
 
 <div class="mossbeacon-chat-container">
-  <h1>Mossbeacon Music Portal 🎵✨</h1>
+  <h1 style="color: #D0CA84;">Mossbeacon Music Portal 🎵✨</h1>
 
   <form action="/mossbeacon/send" method="POST">
-    <label for="receiverId">Choose someone to send a song to:</label>
+    <label for="receiverId" style="color: #D0CA84;">Choose someone to send a song to:</label>
     <select name="receiverId" required>
       <% otherBeaconUsers.forEach(friend => { %>
         <option value="<%= friend._id %>"><%= friend.username %></option>
       <% }); %>
     </select>
-
-    <label for="musicLink">Music Link (Spotify, YouTube, etc):</label>
+  
+    <label for="musicLink" style="color: #D0CA84;">Music Link (Spotify, YouTube, etc):</label>
     <input type="url" name="musicLink" required placeholder="Paste link here">
-
+  
     <button type="submit">Send ✉️</button>
   </form>
+  
 
   <hr>
 
-  <h2>Music You Sent 🎵</h2>
+  <h2 style="color: #D0CA84;">Music You Sent 🎵</h2>
   <div style="margin-bottom: 2rem;">
     <% if (messagesSent.length > 0) { %>
       <% messagesSent.forEach(msg => { %>
         <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 10px;">
-          <p><strong>To: <%= msg.receiver.username %></strong></p>
+          <p style="color: #D0CA84;"><strong>To: <%= msg.receiver.username %></strong></p>
           <p><a href="<%= msg.musicLink %>" target="_blank"><%= msg.musicLink %></a></p>
           <p style="font-size: 0.8rem; color: gray;"><%= msg.timestamp.toLocaleString() %></p>
         </div>
@@ -45,12 +46,12 @@
     <% } %>
   </div>
 
-  <h2>Music You Received 🎶</h2>
+  <h2 style="color: #D0CA84;">Music You Received 🎶</h2>
   <div style="margin-bottom: 2rem;">
     <% if (messagesReceived.length > 0) { %>
       <% messagesReceived.forEach(msg => { %>
         <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 10px;">
-          <p><strong>From: <%= msg.sender.username %></strong></p>
+          <p style="color: #D0CA84;"><strong>From: <%= msg.sender.username %></strong></p>
           <p><a href="<%= msg.musicLink %>" target="_blank"><%= msg.musicLink %></a></p>
           <p style="font-size: 0.8rem; color: gray;"><%= msg.timestamp.toLocaleString() %></p>
         </div>
