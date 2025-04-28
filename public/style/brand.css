@@ -78,11 +78,5 @@
   .mossy-video::-webkit-media-controls-panel {
     background-color: #e3fbe7;
   }
-  body.mossbeacon-bg {
-    background-image: url('/images/bg-misty-portal.jpg'); /* or whatever misty vibe you want */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-  }
+
   
