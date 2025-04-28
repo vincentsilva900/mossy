@@ -35,10 +35,10 @@
   <div style="margin-bottom: 2rem;">
     <% if (messagesSent.length > 0) { %>
       <% messagesSent.forEach(msg => { %>
-        <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 10px; background-color: #d0e7c2;">
-          <p style="color: #e6da58;"><strong>To: <%= msg.receiver.username %></strong></p>
+        <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 10px; background-color: #e6ffe6;">
+          <p style="color: #437c1c;"><strong>To: <%= msg.receiver.username %></strong></p>
           <p><a href="<%= msg.musicLink %>" target="_blank"><%= msg.musicLink %></a></p>
-          <p style="font-size: 0.8rem; color: #dfd674;"><%= msg.timestamp.toLocaleString() %></p>
+          <p style="font-size: 0.8rem; color: #437c1c;"><%= msg.timestamp.toLocaleString() %></p>
         </div>
       <% }); %>
     <% } else { %>
@@ -50,7 +50,7 @@
   <div style="margin-bottom: 2rem;">
     <% if (messagesReceived.length > 0) { %>
       <% messagesReceived.forEach(msg => { %>
-        <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 10px; background-color: #d0e7c2;">
+        <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 10px; background-color: #e6ffe6;">
           <p style="color: #e6da58;"><strong>From: <%= msg.sender.username %></strong></p>
           <p><a href="<%= msg.musicLink %>" target="_blank"><%= msg.musicLink %></a></p>
           <p style="font-size: 0.8rem; color: #dfd674;"><%= msg.timestamp.toLocaleString() %></p>
