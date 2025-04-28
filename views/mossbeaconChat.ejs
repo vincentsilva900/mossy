@@ -4,9 +4,104 @@
   <meta charset="UTF-8">
   <title>Mossbeacon Chat</title>
   <link rel="stylesheet" href="/css/brand.css">
+  <style>
+    /* 🌿 Mossy Misty Moving Background */
+    .mossy-animated-background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: -1;
+      background: radial-gradient(ellipse at bottom, #cfe7cf 0%, #c4e1c4 100%);
+    }
+    
+    .moss-spore {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgba(143, 180, 143, 0.5);
+      border-radius: 50%;
+      animation: floaty 15s infinite ease-in-out;
+    }
+    
+    .moss-spore:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    
+    .moss-spore:nth-child(2) {
+      top: 60%;
+      left: 30%;
+      animation-delay: 2s;
+    }
+    
+    .moss-spore:nth-child(3) {
+      top: 40%;
+      left: 70%;
+      animation-delay: 4s;
+    }
+    
+    .moss-spore:nth-child(4) {
+      top: 80%;
+      left: 50%;
+      animation-delay: 6s;
+    }
+    
+    .moss-spore:nth-child(5) {
+      top: 30%;
+      left: 90%;
+      animation-delay: 8s;
+    }
+    
+    @keyframes floaty {
+      0% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+      50% { transform: translateY(-40px) translateX(10px); opacity: 0.9; }
+      100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+    }
+    
+    /* 🎵 Music Bubble Fairycore Style */
+    .music-bubble {
+      background: rgba(220, 255, 220, 0.7);
+      border: 2px solid #a6dba6;
+      border-radius: 20px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 12px rgba(143, 180, 143, 0.3);
+      backdrop-filter: blur(6px);
+      transition: transform 0.3s ease;
+    }
+    
+    .music-bubble:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(143, 180, 143, 0.5);
+    }
+    
+    .music-bubble a {
+      color: #406d40;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    
+    .timestamp {
+      font-size: 0.8rem;
+      color: #5c755c;
+      margin-top: 0.5rem;
+    }
+    </style>
+    
 </head>
 
 <body class="<%= bodyClass %>">
+    <div class="mossy-animated-background">
+        <div class="moss-spore"></div>
+        <div class="moss-spore"></div>
+        <div class="moss-spore"></div>
+        <div class="moss-spore"></div>
+        <div class="moss-spore"></div>
+      </div>
+      
 
 <%- include('partials/logoutToolbar') %>
 
@@ -42,11 +137,12 @@
   <div style="margin-bottom: 2rem;">
     <% if (messagesSent.length > 0) { %>
       <% messagesSent.forEach(msg => { %>
-        <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 10px;">
-          <p><strong>To: <%= msg.receiver.username %></strong></p>
-          <p><a href="<%= msg.musicLink %>" target="_blank"><%= msg.musicLink %></a></p>
-          <p style="font-size: 0.8rem; color: gray;"><%= msg.timestamp.toLocaleString() %></p>
-        </div>
+        <div class="music-bubble">
+            <p><strong>To: <%= msg.receiver.username %></strong></p>
+            <p><a href="<%= msg.musicLink %>" target="_blank"><%= msg.musicLink %></a></p>
+            <p class="timestamp"><%= msg.timestamp.toLocaleString() %></p>
+          </div>
+          
       <% }); %>
     <% } else { %>
       <p>You haven't sent any music yet 🌙</p>
@@ -57,11 +153,12 @@
   <div style="margin-bottom: 2rem;">
     <% if (messagesReceived.length > 0) { %>
       <% messagesReceived.forEach(msg => { %>
-        <div style="margin-bottom: 1rem; padding: 0.5rem; border: 1px solid #ccc; border-radius: 10px;">
-          <p><strong>From: <%= msg.sender.username %></strong></p>
-          <p><a href="<%= msg.musicLink %>" target="_blank"><%= msg.musicLink %></a></p>
-          <p style="font-size: 0.8rem; color: gray;"><%= msg.timestamp.toLocaleString() %></p>
-        </div>
+        <div class="music-bubble">
+            <p><strong>To: <%= msg.receiver.username %></strong></p>
+            <p><a href="<%= msg.musicLink %>" target="_blank"><%= msg.musicLink %></a></p>
+            <p class="timestamp"><%= msg.timestamp.toLocaleString() %></p>
+          </div>
+          
       <% }); %>
     <% } else { %>
       <p>No one has sent you music yet 🌙</p>
