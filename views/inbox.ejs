@@ -11,12 +11,6 @@
   
 <h2 style="text-align: center; color: #b5ead7;">📬 Your Conversations</h2>
 <div style="max-width: 600px; margin: auto;">
-  <% conversations.forEach(conv => { %>
-    <div style="background: #f0fff4; padding: 1rem; margin-bottom: 1rem; border-radius: 1rem; position: relative;">
-      <a href="/messages/<%= conv.friend._id %>" style="text-decoration: none; color: inherit;">
-        <strong style="color: #2f4858;"><%= conv.friend.username %></strong><br>
-        <span style="color: #555;"><%= conv.latestMessage.content %></span>
-      </a>
   <!-- 💬 Start New Conversation -->
 <div style="text-align: center; margin-top: 2rem;">
   <form action="/messages/start" method="POST">
@@ -26,6 +20,14 @@
     </button>
   </form>
 </div>
+
+  <% conversations.forEach(conv => { %>
+    <div style="background: #f0fff4; padding: 1rem; margin-bottom: 1rem; border-radius: 1rem; position: relative;">
+      <a href="/messages/<%= conv.friend._id %>" style="text-decoration: none; color: inherit;">
+        <strong style="color: #2f4858;"><%= conv.friend.username %></strong><br>
+        <span style="color: #555;"><%= conv.latestMessage.content %></span>
+      </a>
+  
 
       <!-- 🗑 Delete Button -->
       <form action="/messages/delete-conversation/<%= conv.friend._id %>" method="POST" style="position: absolute; top: 1rem; right: 1rem;">
