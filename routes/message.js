@@ -102,6 +102,28 @@ router.post('/delete/:messageId', isLoggedIn, async (req, res) => {
   await Message.findByIdAndDelete(req.params.messageId);
   res.redirect(`/messages/${receiverId}`);
 });
+router.post('/delete-conversation/:friendId', isLoggedIn, async (req, res) => {
+  const userId = req.session.userId;
+  const friendId = req.params.friendId;
+
+  await Message.deleteMany({
+    $or: [
+      { sender: userId, receiver: friendId },
+      { sender: friendId, receiver: userId }
+    ]
+  });
+
+  res.redirect('/messages');
+});
+router.post('/start', isLoggedIn, async (req, res) => {
+  const userId = req.session.userId;
+  const { username } = req.body;
+
+  const friend = await User.findOne({ username });
+  if (!friend) return res.send("User not found");
+
+  res.redirect(`/messages/${friend._id}`);
+});
 
 module.exports = router;
 
