@@ -52,12 +52,18 @@ router.get('/:friendId', isLoggedIn, async (req, res) => {
   }).sort({ createdAt: 1 }).populate('sender receiver');
 
   const friend = await User.findById(friendId);
+
+  if (!friend) {
+    return res.send("🚫 Friend not found.");
+  }
+
   res.render('layout', {
     content: 'chat',
     messages,
     friend
   });
 });
+
 
 router.post('/:friendId', isLoggedIn, async (req, res) => {
   const userId = req.session.userId;
@@ -128,19 +134,19 @@ router.post('/start', isLoggedIn, async (req, res) => {
 
     const currentUser = await User.findById(currentUserId);
 
-    const isFriend = currentUser.friends.includes(friendUser._id);
-
-    if (!isFriend) {
+    // Check if they're friends
+    if (!currentUser.friends.includes(friendUser._id)) {
       return res.send("🚫 That user is not your friend.");
     }
 
-    // ✅ Redirect to the same route used in the profile button
-    res.redirect(`/messages/${friendUser._id}`);
+    // ✅ Redirect to chat page
+    return res.redirect(`/messages/${friendUser._id}`);
   } catch (err) {
     console.error("Start chat error:", err);
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 
 
