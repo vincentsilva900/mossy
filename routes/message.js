@@ -15,29 +15,29 @@ function isLoggedIn(req, res, next) {
   next();
 }
 
-// 💌 Inbox View (Your Mossages Overview)
+// 💌 Inbox View (List All Friends with Start Chat Option)
 router.get('/', isLoggedIn, async (req, res) => {
-  const userId = req.session.userId;
+  const user = await User.findById(req.session.userId).populate('friends');
+
   const messages = await Message.find({
-    $or: [
-      { sender: userId },
-      { receiver: userId }
-    ]
+    $or: [{ sender: user._id }, { receiver: user._id }]
   }).populate('sender receiver');
 
-  const conversationIds = new Set();
-  const conversations = [];
+  const latestMessagesMap = {};
 
   messages.reverse().forEach(msg => {
-    const friend = msg.sender._id.equals(userId) ? msg.receiver : msg.sender;
-    if (!conversationIds.has(friend._id.toString())) {
-      conversations.push({ friend, latestMessage: msg });
-      conversationIds.add(friend._id.toString());
-    }
+    const otherUser = msg.sender._id.equals(user._id) ? msg.receiver : msg.sender;
+    latestMessagesMap[otherUser._id.toString()] = msg;
   });
 
-  res.render('layout', { content: 'inbox', conversations });
+  const friendsList = user.friends.map(friend => ({
+    friend,
+    latestMessage: latestMessagesMap[friend._id.toString()] || null
+  }));
+
+  res.render('layout', { content: 'inbox', conversations: friendsList });
 });
+
 
 // 🧚‍♀️ Chat with a Specific Friend
 router.get('/:friendId', isLoggedIn, async (req, res) => {

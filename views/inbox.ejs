@@ -11,31 +11,34 @@
   
 <h2 style="text-align: center; color: #b5ead7;">📬 Your Conversations</h2>
 <div style="max-width: 600px; margin: auto;">
-  <!-- 💬 Start New Conversation -->
-<div style="text-align: center; margin-top: 2rem;">
-  <form action="/messages/start" method="POST">
-    <input type="text" name="username" placeholder="Friend's username" required style="padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #ccc;">
-    <button type="submit" style="padding: 0.5rem 1rem; background-color: #a3d9a5; border: none; border-radius: 0.5rem; margin-left: 0.5rem; cursor: pointer;">
-      ➕ Start Chat
-    </button>
-  </form>
-</div>
-
   <% conversations.forEach(conv => { %>
     <div style="background: #f0fff4; padding: 1rem; margin-bottom: 1rem; border-radius: 1rem; position: relative;">
-      <a href="/messages/<%= conv.friend._id %>" style="text-decoration: none; color: inherit;">
-        <strong style="color: #2f4858;"><%= conv.friend.username %></strong><br>
-        <span style="color: #555;"><%= conv.latestMessage.content %></span>
-      </a>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <strong style="color: #2f4858;"><%= conv.friend.username %></strong><br>
+          <% if (conv.latestMessage) { %>
+            <span style="color: #555;"><%= conv.latestMessage.content %></span>
+          <% } else { %>
+            <span style="color: #aaa;">No messages yet</span>
+          <% } %>
+        </div>
+        <form action="/messages/<%= conv.friend._id %>" method="GET">
+          <button style="background-color: #a3d9a5; border: none; border-radius: 8px; padding: 0.5rem; cursor: pointer;">
+            📩 Start Mossage
+          </button>
+        </form>
+      </div>
   
-
-      <!-- 🗑 Delete Button -->
-      <form action="/messages/delete-conversation/<%= conv.friend._id %>" method="POST" style="position: absolute; top: 1rem; right: 1rem;">
-        <button type="submit" style="background-color: #ffaaaa; border: none; border-radius: 8px; padding: 0.25rem 0.5rem; font-size: 0.8rem; cursor: pointer;">
-          ❌ Delete
-        </button>
-      </form>
+      <% if (conv.latestMessage) { %>
+        <!-- 🗑 Delete Button -->
+        <form action="/messages/delete-conversation/<%= conv.friend._id %>" method="POST" style="position: absolute; top: 1rem; right: 1rem;">
+          <button type="submit" style="background-color: #ffaaaa; border: none; border-radius: 8px; padding: 0.25rem 0.5rem; font-size: 0.8rem; cursor: pointer;">
+            ❌ Delete
+          </button>
+        </form>
+      <% } %>
     </div>
   <% }) %>
+  
   
 </div>
