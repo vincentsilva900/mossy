@@ -25,7 +25,7 @@
     flex: 1;
     text-align: center;
     max-width: 250px;
-  ">🖤 Shadowroom</a>
+  ">🖤 Shadowboard</a>
 
   <a href="/wishes" style="
     background-color: #60b43c;
@@ -56,7 +56,7 @@
     flex: 1;
     text-align: center;
     max-width: 250px;
-  ">📔 Your Mossbook Collection</a>
+  ">📔 Your Mossbook Gallery</a>
 
 <a href="/messages" style="
 background-color: #60b43c;
@@ -144,8 +144,23 @@ max-width: 250px;
     
     <img id="postPreview" src="" style="max-width: 150px; display: none; margin: 0.5rem auto;" />
 
-    <input type="file" name="image" id="postFileInput" hidden accept="image/*" />
-<input type="file" name="video" accept="video/*" style="margin-top: 0.5rem;" />
+    <!-- Hidden Video Input -->
+<input type="file" name="video" id="postVideoInput" hidden accept="video/*" />
+
+<!-- Styled Upload Button -->
+<button type="button" onclick="document.getElementById('postVideoInput').click()" style="
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background-color: #7fbf7f;
+  color: #fff;
+  border: none;
+  margin-top: 0.5rem;
+">
+  Upload Video
+</button>
+
 
     
     <!-- BIGGER Upload Button -->
