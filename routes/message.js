@@ -120,27 +120,28 @@ router.post('/start', isLoggedIn, async (req, res) => {
   const { username } = req.body;
 
   try {
-    const currentUser = await User.findById(currentUserId).populate('friends');
     const friendUser = await User.findOne({ username });
 
     if (!friendUser) {
       return res.send("🚫 No user with that username.");
     }
 
-    const isFriend = currentUser.friends.some(friend =>
-      friend._id.toString() === friendUser._id.toString()
-    );
+    const currentUser = await User.findById(currentUserId);
+
+    const isFriend = currentUser.friends.includes(friendUser._id);
 
     if (!isFriend) {
       return res.send("🚫 That user is not your friend.");
     }
 
+    // ✅ Redirect to the same route used in the profile button
     res.redirect(`/messages/${friendUser._id}`);
   } catch (err) {
     console.error("Start chat error:", err);
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 
 module.exports = router;
