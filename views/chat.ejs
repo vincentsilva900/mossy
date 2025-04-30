@@ -1,23 +1,10 @@
-<% if (!friend) { %>
-  <p style="color: red; text-align: center;">🚫 No friend found for this chat.</p>
-<% } else { %>
-  <!-- your existing chat.ejs code -->
-<% } %>
-<%
-function linkify(text) {
-  const urlPattern = /(\bhttps?:\/\/[^\s<]+)/gi;
-  return text.replace(urlPattern, '<a href="$1" target="_blank" style="color: #3b82f6; text-decoration: underline;">$1</a>');
-}
-%>
-
-
 <%- include('partials/logoutToolbar') %>
 
 <!-- 🔙 Back to Your Own Profile -->
     <div style="margin: 1rem 0;">
       <a href="/messages">
         <button style="background-color: #D0CA84; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-weight: bold; cursor: pointer;">
-          ⬅️ Back to Mossages 
+          ⬅️ Back to My Profile
         </button>
       </a>
     </div>
@@ -30,7 +17,7 @@ function linkify(text) {
   <% messages.forEach(msg => { %>
     <div style="text-align:<%= msg.sender._id.equals(session.userId) ? 'right' : 'left' %>; margin: 1rem 0;">
       <p style="background:#e6ffe6; color:#437c1c; padding:0.8rem 1.2rem; border-radius:1.2rem; display:inline-block; max-width:70%;">
-        <%- linkify(message.content) %><br>
+        <%= msg.content %><br>
   
         <% if (msg.image) { %>
           <img src="<%= msg.image %>" style="margin-top: 0.5rem; max-width: 200px; border-radius: 12px;" />

@@ -15,29 +15,29 @@ function isLoggedIn(req, res, next) {
   next();
 }
 
-// 💌 Inbox View (List All Friends with Start Chat Option)
+// 💌 Inbox View (Your Mossages Overview)
 router.get('/', isLoggedIn, async (req, res) => {
-  const user = await User.findById(req.session.userId).populate('friends');
-
+  const userId = req.session.userId;
   const messages = await Message.find({
-    $or: [{ sender: user._id }, { receiver: user._id }]
+    $or: [
+      { sender: userId },
+      { receiver: userId }
+    ]
   }).populate('sender receiver');
 
-  const latestMessagesMap = {};
+  const conversationIds = new Set();
+  const conversations = [];
 
   messages.reverse().forEach(msg => {
-    const otherUser = msg.sender._id.equals(user._id) ? msg.receiver : msg.sender;
-    latestMessagesMap[otherUser._id.toString()] = msg;
+    const friend = msg.sender._id.equals(userId) ? msg.receiver : msg.sender;
+    if (!conversationIds.has(friend._id.toString())) {
+      conversations.push({ friend, latestMessage: msg });
+      conversationIds.add(friend._id.toString());
+    }
   });
 
-  const friendsList = user.friends.map(friend => ({
-    friend,
-    latestMessage: latestMessagesMap[friend._id.toString()] || null
-  }));
-
-  res.render('layout', { content: 'inbox', conversations: friendsList });
+  res.render('layout', { content: 'inbox', conversations });
 });
-
 
 // 🧚‍♀️ Chat with a Specific Friend
 router.get('/:friendId', isLoggedIn, async (req, res) => {
@@ -52,18 +52,12 @@ router.get('/:friendId', isLoggedIn, async (req, res) => {
   }).sort({ createdAt: 1 }).populate('sender receiver');
 
   const friend = await User.findById(friendId);
-
-  if (!friend) {
-    return res.send("🚫 Friend not found.");
-  }
-
   res.render('layout', {
     content: 'chat',
     messages,
     friend
   });
 });
-
 
 router.post('/:friendId', isLoggedIn, async (req, res) => {
   const userId = req.session.userId;
@@ -108,47 +102,6 @@ router.post('/delete/:messageId', isLoggedIn, async (req, res) => {
   await Message.findByIdAndDelete(req.params.messageId);
   res.redirect(`/messages/${receiverId}`);
 });
-router.post('/delete-conversation/:friendId', isLoggedIn, async (req, res) => {
-  const userId = req.session.userId;
-  const friendId = req.params.friendId;
-
-  await Message.deleteMany({
-    $or: [
-      { sender: userId, receiver: friendId },
-      { sender: friendId, receiver: userId }
-    ]
-  });
-
-  res.redirect('/messages');
-});
-router.post('/start', isLoggedIn, async (req, res) => {
-  const currentUserId = req.session.userId;
-  const { username } = req.body;
-
-  try {
-    const friendUser = await User.findOne({ username });
-
-    if (!friendUser) {
-      return res.send("🚫 No user with that username.");
-    }
-
-    const currentUser = await User.findById(currentUserId);
-
-    // Check if they're friends
-    if (!currentUser.friends.includes(friendUser._id)) {
-      return res.send("🚫 That user is not your friend.");
-    }
-
-    // ✅ Redirect to chat page
-    return res.redirect(`/messages/${friendUser._id}`);
-  } catch (err) {
-    console.error("Start chat error:", err);
-    res.status(500).send("Internal Server Error");
-  }
-});
-
-
-
 
 module.exports = router;
 

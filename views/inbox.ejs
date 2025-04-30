@@ -12,40 +12,11 @@
 <h2 style="text-align: center; color: #b5ead7;">📬 Your Conversations</h2>
 <div style="max-width: 600px; margin: auto;">
   <% conversations.forEach(conv => { %>
-    <div style="background: #f0fff4; padding: 1rem; margin-bottom: 1rem; border-radius: 1rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <!-- Friend info + latest message -->
-        <div>
-          <strong style="color: #2f4858;"><%= conv.friend.username %></strong><br>
-          <% if (conv.latestMessage) { %>
-            <span style="color: #555;"><%= conv.latestMessage.content %></span>
-          <% } else { %>
-            <span style="color: #aaa;">No messages yet</span>
-          <% } %>
-        </div>
-  
-        <!-- Buttons -->
-        <div style="display: flex; gap: 0.5rem; align-items: center;">
-          <!-- Start Mossage -->
-          <form action="/messages/<%= conv.friend._id %>" method="GET">
-            <button style="background-color: #a3d9a5; border: none; border-radius: 8px; padding: 0.5rem; cursor: pointer;">
-              📩 Start Mossage
-            </button>
-          </form>
-  
-          <!-- Delete Conversation -->
-          <% if (conv.latestMessage) { %>
-            <form action="/messages/delete-conversation/<%= conv.friend._id %>" method="POST">
-              <button type="submit" style="background-color: #ffaaaa; border: none; border-radius: 8px; padding: 0.5rem; cursor: pointer;">
-                ❌ Delete
-              </button>
-            </form>
-          <% } %>
-        </div>
+    <a href="/messages/<%= conv.friend._id %>" style="text-decoration: none;">
+      <div style="background: #f0fff4; padding: 1rem; margin-bottom: 1rem; border-radius: 1rem;">
+        <strong style="color: #2f4858;"><%= conv.friend.username %></strong><br>
+        <span style="color: #555;"><%= conv.latestMessage.content %></span>
       </div>
-    </div>
+    </a>
   <% }) %>
-  
-  
-  
 </div>
