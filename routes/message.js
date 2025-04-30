@@ -116,14 +116,32 @@ router.post('/delete-conversation/:friendId', isLoggedIn, async (req, res) => {
   res.redirect('/messages');
 });
 router.post('/start', isLoggedIn, async (req, res) => {
-  const userId = req.session.userId;
+  const currentUserId = req.session.userId;
   const { username } = req.body;
 
-  const friend = await User.findOne({ username });
-  if (!friend) return res.send("User not found");
+  try {
+    const currentUser = await User.findById(currentUserId).populate('friends');
+    const friendUser = await User.findOne({ username });
 
-  res.redirect(`/messages/${friend._id}`);
+    if (!friendUser) {
+      return res.send("🚫 No user with that username.");
+    }
+
+    const isFriend = currentUser.friends.some(friend =>
+      friend._id.toString() === friendUser._id.toString()
+    );
+
+    if (!isFriend) {
+      return res.send("🚫 That user is not your friend.");
+    }
+
+    res.redirect(`/messages/${friendUser._id}`);
+  } catch (err) {
+    console.error("Start chat error:", err);
+    res.status(500).send("Internal Server Error");
+  }
 });
+
 
 module.exports = router;
 
