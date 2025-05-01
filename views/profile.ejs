@@ -3,14 +3,23 @@
   <style>
     body {
       background-image: url("<%= user.backgroundImage %>");
-      background-size: 100% auto; 
-      background-position: center center;  /* Zoomed out feel by shifting the focus upward */
+      background-size: cover; /* Fills screen, crops if needed */
       background-repeat: no-repeat;
+      background-position: center center;
       background-attachment: fixed;
+      background-color: #000;
       min-height: 100vh;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        background-attachment: scroll; /* Prevents weird fixed behavior on mobile */
+        background-position: top center;
+      }
     }
   </style>
 <% } %>
+
 
 
 
