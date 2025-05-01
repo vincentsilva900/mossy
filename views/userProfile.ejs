@@ -4,6 +4,16 @@
     <strong>Background preview:</strong><br>
     <img src="<%= user.backgroundImage %>" style="max-width: 100%; border-radius: 12px; border: 2px solid #758E5C;" />
   </div>
+  <style>
+    body {
+      background-image: url("<%= user.backgroundImage %>");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+    }
+  </style>
+  
 <% } %>
 
 <!-- 🔙 Back to Your Own Profile -->
