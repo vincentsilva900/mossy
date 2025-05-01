@@ -1,15 +1,19 @@
-// /routes/user.js
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const Post = require('../models/Post');
-// ADD to routes/user.js
 
-
-const multer = require('multer');
+const cloudinary = require('cloudinary').v2; // ✅ Move this up
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
 
-const storage = new CloudinaryStorage({
+cloudinary.config({ // ✅ Also move this up
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({ // ✅ Now cloudinary is defined
   cloudinary,
   params: {
     folder: 'mossy/backgrounds',
@@ -40,12 +44,7 @@ router.get('/profile', isLoggedIn, async (req, res) => {
   res.render('layout', { content: 'profile', user, posts });
 });
 
-const cloudinary = require('cloudinary').v2;
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
+
 router.post('/update-background', isLoggedIn, upload.single('backgroundImage'), async (req, res) => {
   try {
     const user = await User.findById(req.session.userId);
