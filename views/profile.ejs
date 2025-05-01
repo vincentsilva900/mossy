@@ -1,4 +1,15 @@
 <%- include('partials/logoutToolbar') %>
+<% if (user.backgroundImage) { %>
+  <style>
+    body {
+      background-image: url("<%= user.backgroundImage %>");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+  </style>
+<% } %>
+
 
 
 <form action="/user/search" method="GET" style="margin-bottom: 1rem;">
