@@ -1,4 +1,10 @@
 <%- include('partials/logoutToolbar') %>
+<% if (user.backgroundImage) { %>
+  <div style="margin: 1rem 0;">
+    <strong>Background preview:</strong><br>
+    <img src="<%= user.backgroundImage %>" style="max-width: 100%; border-radius: 12px; border: 2px solid #758E5C;" />
+  </div>
+<% } %>
 
 <!-- 🔙 Back to Your Own Profile -->
     <div style="margin: 1rem 0;">

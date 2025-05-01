@@ -122,7 +122,8 @@ router.post('/update-background', isLoggedIn, async (req, res) => {
     const user = await User.findById(req.session.userId);
     user.backgroundImage = result.secure_url;
     await user.save();
-    res.redirect('/user/profile');
+    res.redirect(`/user/${user._id}`);
+
   } catch (err) {
     console.error("❌ Error updating background:", err);
     res.status(500).send("Couldn't update your background");
@@ -239,9 +240,11 @@ router.post('/decline/:id', isLoggedIn, async (req, res) => {
 
 router.get('/:id', isLoggedIn, async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
-      .populate('friends')
-      .populate('friendRequests');
+    const isSelf = req.params.id === req.session.userId;
+    const user = isSelf
+      ? await User.findById(req.session.userId).populate('friends').populate('friendRequests')
+      : await User.findById(req.params.id).populate('friends').populate('friendRequests');
+
 
     const posts = await Post.find({ user: user._id })
       .populate('user')
