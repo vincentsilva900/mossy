@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema({
   profileSong: { type: String, default: '' },
   songBoxColor: { type: String, default: '#ffebf7' },
   mossbeacon: { type: Boolean, default: false }, // <<<< add this
+  backgroundImage: {
+    type: String, // This will hold the Cloudinary URL or a relative path
+    default: '/images/bg-mossy-portal.jpg',
+  },
+  
 });
 
 

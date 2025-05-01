@@ -1,4 +1,14 @@
 <%- include('partials/logoutToolbar') %>
+<% if (user.backgroundImage) { %>
+  <style>
+    body {
+      background-image: url("<%= user.backgroundImage %>");
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+<% } %>
+
 
 <form action="/user/search" method="GET" style="margin-bottom: 1rem;">
   <input
@@ -10,6 +20,11 @@
   <button type="submit" style="padding: 0.5rem; border-radius: 8px; background-color: #758E5C; border: none;">
     Search
   </button>
+</form>
+<form action="/user/update-background" method="POST" enctype="multipart/form-data">
+  <label for="backgroundImage">Upload Background:</label>
+  <input type="file" name="backgroundImage" accept="image/*" required>
+  <button type="submit">Upload</button>
 </form>
 
 <div style="display: flex; justify-content: center; gap: 1rem; margin: 2rem 0;">

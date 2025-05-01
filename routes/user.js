@@ -4,6 +4,23 @@ const router = express.Router();
 const User = require('../models/User');
 const Post = require('../models/Post');
 // ADD to routes/user.js
+
+
+const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'mossy/backgrounds',
+    allowed_formats: ['jpg', 'jpeg', 'png']
+  }
+});
+
+const upload = multer({ storage });
+
+
+
 const fs = require('fs'); // In case you handle local image deletions in the future
 
 const { unlink } = require('fs/promises'); // For deleting temp files if needed
@@ -28,6 +45,17 @@ cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
+});
+router.post('/update-background', isLoggedIn, upload.single('backgroundImage'), async (req, res) => {
+  try {
+    const user = await User.findById(req.session.userId);
+    user.backgroundImage = req.file.path; // Cloudinary URL
+    await user.save();
+    res.redirect('/user/profile');
+  } catch (err) {
+    console.error("❌ Error uploading background:", err);
+    res.status(500).send('Background upload failed');
+  }
 });
 
 router.post('/post', isLoggedIn, async (req, res) => {
