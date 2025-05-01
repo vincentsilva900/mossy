@@ -45,17 +45,6 @@ router.get('/profile', isLoggedIn, async (req, res) => {
 });
 
 
-router.post('/update-background', isLoggedIn, upload.single('backgroundImage'), async (req, res) => {
-  try {
-    const user = await User.findById(req.session.userId);
-    user.backgroundImage = req.file.path; // Cloudinary URL
-    await user.save();
-    res.redirect('/user/profile');
-  } catch (err) {
-    console.error("❌ Error uploading background:", err);
-    res.status(500).send('Background upload failed');
-  }
-});
 
 router.post('/post', isLoggedIn, async (req, res) => {
   let imageUrl = '';
@@ -122,6 +111,21 @@ router.post('/update-profile-pic', isLoggedIn, async (req, res) => {
   } catch (err) {
     console.error("❌ Error updating profile picture:", err);
     res.status(500).send("Couldn't update your profile pic");
+  }
+});
+router.post('/update-background', isLoggedIn, async (req, res) => {
+  try {
+    if (!req.files || !req.files.backgroundImage) return res.redirect('/user/profile');
+    const result = await cloudinary.uploader.upload(req.files.backgroundImage.tempFilePath, {
+      folder: 'mossy_background_images'
+    });
+    const user = await User.findById(req.session.userId);
+    user.backgroundImage = result.secure_url;
+    await user.save();
+    res.redirect('/user/profile');
+  } catch (err) {
+    console.error("❌ Error updating background:", err);
+    res.status(500).send("Couldn't update your background");
   }
 });
 router.post('/song', isLoggedIn, async (req, res) => {
