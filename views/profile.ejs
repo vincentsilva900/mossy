@@ -3,14 +3,16 @@
   <style>
     body {
       background-image: url("<%= user.backgroundImage %>");
-      background-size: cover;           /* Make image cover the whole background */
-      background-position: top center;      /* Center the image */
-      background-repeat: no-repeat;     /* Prevent tiling */
-      background-attachment: scroll;     /* Keep it in place while scrolling */
-      min-height: 100vh;                /* Ensure body is full height */
+      background-size: contain;         /* Show full image without cropping */
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      background-color: #000;           /* Fallback color around image */
+      min-height: 100vh;
     }
   </style>
 <% } %>
+
 
 
 
