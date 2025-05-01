@@ -12,21 +12,28 @@
     Search
   </button>
 </form>
-<form action="/user/update-background" method="POST" enctype="multipart/form-data" >
-  <label for="backgroundImage">Upload Background:</label>
-  <input type="file" name="backgroundImage" accept="image/*" required>
-  <button type="submit">Upload</button>
+<form id="backgroundForm" action="/update-background" method="POST" enctype="multipart/form-data">
+  <input type="file" id="backgroundInput" name="backgroundImage" accept="image/*" style="display: none;">
+  <button type="button" id="uploadBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow">
+    Change Background
+  </button>
 </form>
-<% if (user.backgroundImage) { %>
-  <style>
-    body {
-      background-image: url("<%= user.backgroundImage %>");
-      background-size: cover;
-      background-position: center;
-    }
-  </style>
-<% } %>
 
+<script>
+  const uploadBtn = document.getElementById('uploadBtn');
+  const backgroundInput = document.getElementById('backgroundInput');
+  const backgroundForm = document.getElementById('backgroundForm');
+
+  uploadBtn.addEventListener('click', () => {
+    backgroundInput.click(); // Trigger file input
+  });
+
+  backgroundInput.addEventListener('change', () => {
+    if (backgroundInput.files.length > 0) {
+      backgroundForm.submit(); // Auto-submit form on file select
+    }
+  });
+</script>
 
 <div style="display: flex; justify-content: center; gap: 1rem; margin: 2rem 0;">
   <a href="/shadowroom" style="
