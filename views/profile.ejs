@@ -3,12 +3,10 @@
   <style>
     body {
       background-image: url("<%= user.backgroundImage %>");
-      background-size: contain;         /* Show full image without cropping */
+      background-size: cover;
+      background-position: center center;  /* Zoomed out feel by shifting the focus upward */
       background-repeat: no-repeat;
-      background-position: center;
       background-attachment: fixed;
-      background-color: #000;           /* Fallback color around image */
-      min-height: 100vh;
     }
   </style>
 <% } %>
