@@ -52,7 +52,8 @@ router.post('/post', isLoggedIn, async (req, res) => {
 
   if (req.files?.image) {
     const result = await cloudinary.uploader.upload(req.files.image.tempFilePath, {
-      folder: 'mossy_posts'
+      resource_type: 'image',
+      folder: 'mossy_posts_images'
     });
     imageUrl = result.secure_url;
   }
